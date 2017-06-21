@@ -7,6 +7,8 @@
     "react-dom": "^15.6.1"
   },
   "devDependencies": {
+    "eslint-config-emsoft": "1.0.0",
+    "react-hot-loader": "next",
     "react-scripts-emsoft": "1.0.8"
   },
   "scripts": {
