@@ -532,6 +532,13 @@ babel-plugin-syntax-class-properties@^6.8.0:
   version "6.13.0"
   resolved "https://registry.yarnpkg.com/babel-plugin-syntax-class-properties/-/babel-plugin-syntax-class-properties-6.13.0.tgz#d7eb23b79a317f8543962c505b827c7d6cac27de"
 
+<<<<<<< HEAD
+=======
+babel-plugin-syntax-decorators@^6.1.18:
+  version "6.13.0"
+  resolved "https://registry.yarnpkg.com/babel-plugin-syntax-decorators/-/babel-plugin-syntax-decorators-6.13.0.tgz#312563b4dbde3cc806cee3e416cceeaddd11ac0b"
+
+>>>>>>> c9646ef2b618eecd4a0af7a79b5f397ebf8e6994
 babel-plugin-syntax-dynamic-import@6.18.0, babel-plugin-syntax-dynamic-import@^6.18.0:
   version "6.18.0"
   resolved "https://registry.yarnpkg.com/babel-plugin-syntax-dynamic-import/-/babel-plugin-syntax-dynamic-import-6.18.0.tgz#8d6a26229c83745a9982a441051572caa179b1da"
@@ -573,6 +580,17 @@ babel-plugin-transform-class-properties@6.24.1:
     babel-runtime "^6.22.0"
     babel-template "^6.24.1"
 
+<<<<<<< HEAD
+=======
+babel-plugin-transform-decorators-legacy@^1.3.4:
+  version "1.3.4"
+  resolved "https://registry.yarnpkg.com/babel-plugin-transform-decorators-legacy/-/babel-plugin-transform-decorators-legacy-1.3.4.tgz#741b58f6c5bce9e6027e0882d9c994f04f366925"
+  dependencies:
+    babel-plugin-syntax-decorators "^6.1.18"
+    babel-runtime "^6.2.0"
+    babel-template "^6.3.0"
+
+>>>>>>> c9646ef2b618eecd4a0af7a79b5f397ebf8e6994
 babel-plugin-transform-es2015-arrow-functions@^6.22.0:
   version "6.22.0"
   resolved "https://registry.yarnpkg.com/babel-plugin-transform-es2015-arrow-functions/-/babel-plugin-transform-es2015-arrow-functions-6.22.0.tgz#452692cb711d5f79dc7f85e440ce41b9f244d221"
@@ -862,13 +880,23 @@ babel-preset-jest@^20.0.3:
   dependencies:
     babel-plugin-jest-hoist "^20.0.3"
 
+<<<<<<< HEAD
 babel-preset-react-app@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/babel-preset-react-app/-/babel-preset-react-app-3.0.0.tgz#f4505092f8bba0f0147c764dc72055fe46ac1416"
+=======
+"babel-preset-react-app@https://github.com/1msoft/babel-preset-emsoft.git":
+  version "1.0.0"
+  resolved "https://github.com/1msoft/babel-preset-emsoft.git#5466c01736ad60506ac81e20b1fe4b51e85bf12e"
+>>>>>>> c9646ef2b618eecd4a0af7a79b5f397ebf8e6994
   dependencies:
     babel-plugin-dynamic-import-node "1.0.2"
     babel-plugin-syntax-dynamic-import "6.18.0"
     babel-plugin-transform-class-properties "6.24.1"
+<<<<<<< HEAD
+=======
+    babel-plugin-transform-decorators-legacy "^1.3.4"
+>>>>>>> c9646ef2b618eecd4a0af7a79b5f397ebf8e6994
     babel-plugin-transform-object-rest-spread "6.23.0"
     babel-plugin-transform-react-constant-elements "6.23.0"
     babel-plugin-transform-react-jsx "6.24.1"
@@ -902,14 +930,22 @@ babel-register@^6.24.1:
     mkdirp "^0.5.1"
     source-map-support "^0.4.2"
 
+<<<<<<< HEAD
 babel-runtime@6.23.0, babel-runtime@^6.18.0, babel-runtime@^6.22.0:
+=======
+babel-runtime@6.23.0, babel-runtime@^6.18.0, babel-runtime@^6.2.0, babel-runtime@^6.22.0:
+>>>>>>> c9646ef2b618eecd4a0af7a79b5f397ebf8e6994
   version "6.23.0"
   resolved "https://registry.yarnpkg.com/babel-runtime/-/babel-runtime-6.23.0.tgz#0a9489f144de70efb3ce4300accdb329e2fc543b"
   dependencies:
     core-js "^2.4.0"
     regenerator-runtime "^0.10.0"
 
+<<<<<<< HEAD
 babel-template@^6.16.0, babel-template@^6.24.1, babel-template@^6.7.0:
+=======
+babel-template@^6.16.0, babel-template@^6.24.1, babel-template@^6.3.0, babel-template@^6.7.0:
+>>>>>>> c9646ef2b618eecd4a0af7a79b5f397ebf8e6994
   version "6.25.0"
   resolved "https://registry.yarnpkg.com/babel-template/-/babel-template-6.25.0.tgz#665241166b7c2aa4c619d71e192969552b10c071"
   dependencies:
@@ -2054,9 +2090,15 @@ eslint-config-emsoft@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/eslint-config-emsoft/-/eslint-config-emsoft-1.0.0.tgz#6f0d9e9abd5178c01a059aa16a2a1d18f0d704b4"
 
+<<<<<<< HEAD
 eslint-config-react-app@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/eslint-config-react-app/-/eslint-config-react-app-1.0.4.tgz#c0178f535a922236c53daafea4f397203db7d9af"
+=======
+"eslint-config-react-app@https://github.com/1msoft/eslint-config-emsoft.git":
+  version "1.0.0"
+  resolved "https://github.com/1msoft/eslint-config-emsoft.git#7d735ce934548ac5b8fdfcafdadc2a51a7c65488"
+>>>>>>> c9646ef2b618eecd4a0af7a79b5f397ebf8e6994
 
 eslint-import-resolver-node@^0.2.0:
   version "0.2.3"
@@ -2527,12 +2569,21 @@ fs.realpath@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/fs.realpath/-/fs.realpath-1.0.0.tgz#1504ad2523158caa40db4a2787cb01411994ea4f"
 
+<<<<<<< HEAD
 fsevents@1.0.17, fsevents@^1.0.0:
   version "1.0.17"
   resolved "https://registry.yarnpkg.com/fsevents/-/fsevents-1.0.17.tgz#8537f3f12272678765b4fd6528c0f1f66f8f4558"
   dependencies:
     nan "^2.3.0"
     node-pre-gyp "^0.6.29"
+=======
+fsevents@1.1.2, fsevents@^1.0.0:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/fsevents/-/fsevents-1.1.2.tgz#3282b713fb3ad80ede0e9fcf4611b5aa6fc033f4"
+  dependencies:
+    nan "^2.3.0"
+    node-pre-gyp "^0.6.36"
+>>>>>>> c9646ef2b618eecd4a0af7a79b5f397ebf8e6994
 
 fstream-ignore@^1.0.5:
   version "1.0.5"
@@ -4011,7 +4062,11 @@ node-notifier@^5.0.2:
     shellwords "^0.1.0"
     which "^1.2.12"
 
+<<<<<<< HEAD
 node-pre-gyp@^0.6.29:
+=======
+node-pre-gyp@^0.6.36:
+>>>>>>> c9646ef2b618eecd4a0af7a79b5f397ebf8e6994
   version "0.6.36"
   resolved "https://registry.yarnpkg.com/node-pre-gyp/-/node-pre-gyp-0.6.36.tgz#db604112cb74e0d477554e9b505b17abddfab786"
   dependencies:
@@ -4868,23 +4923,37 @@ react-proxy@^3.0.0-alpha.0:
   dependencies:
     lodash "^4.6.1"
 
+<<<<<<< HEAD
 react-scripts@1.0.7:
   version "1.0.7"
   resolved "https://registry.yarnpkg.com/react-scripts/-/react-scripts-1.0.7.tgz#fe1436dda03bb45465c76d097cfea4f32eb7cbbb"
+=======
+react-scripts-emsoft@1.0.8:
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/react-scripts-emsoft/-/react-scripts-emsoft-1.0.8.tgz#f04c643a90dcf4d60637c89a0bd350ecc0460094"
+>>>>>>> c9646ef2b618eecd4a0af7a79b5f397ebf8e6994
   dependencies:
     autoprefixer "7.1.0"
     babel-core "6.24.1"
     babel-eslint "7.2.3"
     babel-jest "20.0.3"
     babel-loader "7.0.0"
+<<<<<<< HEAD
     babel-preset-react-app "^3.0.0"
+=======
+    babel-preset-react-app "https://github.com/1msoft/babel-preset-emsoft.git"
+>>>>>>> c9646ef2b618eecd4a0af7a79b5f397ebf8e6994
     babel-runtime "6.23.0"
     case-sensitive-paths-webpack-plugin "1.1.4"
     chalk "1.1.3"
     css-loader "0.28.1"
     dotenv "4.0.0"
     eslint "3.19.0"
+<<<<<<< HEAD
     eslint-config-react-app "^1.0.4"
+=======
+    eslint-config-react-app "https://github.com/1msoft/eslint-config-emsoft.git"
+>>>>>>> c9646ef2b618eecd4a0af7a79b5f397ebf8e6994
     eslint-loader "1.7.1"
     eslint-plugin-flowtype "2.33.0"
     eslint-plugin-import "2.2.0"
@@ -4909,7 +4978,11 @@ react-scripts@1.0.7:
     webpack-manifest-plugin "1.1.0"
     whatwg-fetch "2.0.3"
   optionalDependencies:
+<<<<<<< HEAD
     fsevents "1.0.17"
+=======
+    fsevents "1.1.2"
+>>>>>>> c9646ef2b618eecd4a0af7a79b5f397ebf8e6994
 
 react@^15.6.1:
   version "15.6.1"

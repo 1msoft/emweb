@@ -9,7 +9,7 @@
   "devDependencies": {
     "eslint-config-emsoft": "1.0.0",
     "react-hot-loader": "next",
-    "react-scripts": "1.0.7"
+    "react-scripts-emsoft": "1.0.8"
   },
   "scripts": {
     "start": "react-scripts start",

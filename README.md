@@ -690,7 +690,11 @@ To add Flow to a Create React App project, follow these steps:
 
 1. Run `npm install --save-dev flow-bin` (or `yarn add --dev flow-bin`).
 2. Add `"flow": "flow"` to the `scripts` section of your `package.json`.
+<<<<<<< HEAD
 3. Run `npm run flow -- init` (or `yarn flow -- init`) to create a [`.flowconfig` file](https://flowtype.org/docs/advanced-configuration.html) in the root directory.
+=======
+3. Run `npm run flow init` (or `yarn flow init`) to create a [`.flowconfig` file](https://flowtype.org/docs/advanced-configuration.html) in the root directory.
+>>>>>>> c9646ef2b618eecd4a0af7a79b5f397ebf8e6994
 4. Add `// @flow` to any files you want to type check (for example, to `src/App.js`).
 
 Now you can run `npm run flow` (or `yarn flow`) to check the files for type errors.
@@ -972,7 +976,11 @@ You may also narrow down matches using `*` and/or `**`, to match the path exactl
       "target": "<url_3>",
       // ...
     },
+<<<<<<< HEAD
     // Matches /bar/abc.html and /bar/sub/def.html
+=======
+    // Matches /baz/abc.html and /baz/sub/def.html
+>>>>>>> c9646ef2b618eecd4a0af7a79b5f397ebf8e6994
     "/baz/**/*.html": {
       "target": "<url_4>"
       // ...
@@ -1082,7 +1090,11 @@ The watcher includes an interactive command-line interface with the ability to r
 
 ### Version Control Integration
 
+<<<<<<< HEAD
 By default, when you run `npm test`, Jest will only run the tests related to files changed since the last commit. This is an optimization designed to make your tests runs fast regardless of how many tests you have. However it assumes that you don’t often commit the code that doesn’t pass the tests.
+=======
+By default, when you run `npm test`, Jest will only run the tests related to files changed since the last commit. This is an optimization designed to make your tests run fast regardless of how many tests you have. However it assumes that you don’t often commit the code that doesn’t pass the tests.
+>>>>>>> c9646ef2b618eecd4a0af7a79b5f397ebf8e6994
 
 Jest will always explicitly mention that it only ran tests related to the files changed since the last commit. You can also press `a` in the watch mode to force Jest to run all tests.
 
@@ -1171,10 +1183,17 @@ Additionally, you might find [jest-enzyme](https://github.com/blainekasten/enzym
 expect(wrapper).toContainReact(welcome)
 ```
 
+<<<<<<< HEAD
 To setup jest-enzyme with Create React App, follow the instructions for [initializing your test environment](#initializing-test-environment) to import `jest-enzyme`. **Note that currently only version 2.x is compatible with Create React App.**
 
 ```sh
 npm install --save-dev jest-enzyme@2.x
+=======
+To setup jest-enzyme with Create React App, follow the instructions for [initializing your test environment](#initializing-test-environment) to import `jest-enzyme`.
+
+```sh
+npm install --save-dev jest-enzyme
+>>>>>>> c9646ef2b618eecd4a0af7a79b5f397ebf8e6994
 ```
 
 ```js
@@ -1244,7 +1263,10 @@ Popular CI servers already set the environment variable `CI` by default but you 
 ```
 language: node_js
 node_js:
+<<<<<<< HEAD
   - 4
+=======
+>>>>>>> c9646ef2b618eecd4a0af7a79b5f397ebf8e6994
   - 6
 cache:
   directories:
@@ -1322,12 +1344,16 @@ If you use [Visual Studio Code](https://code.visualstudio.com), there is a [Jest
 
 ![VS Code Jest Preview](https://cloud.githubusercontent.com/assets/49038/20795349/a032308a-b7c8-11e6-9b34-7eeac781003f.png)
 
+<<<<<<< HEAD
 <!--
+=======
+>>>>>>> c9646ef2b618eecd4a0af7a79b5f397ebf8e6994
 ## Developing Components in Isolation
 
 Usually, in an app, you have a lot of UI components, and each of them has many different states.
 For an example, a simple button component could have following states:
 
+<<<<<<< HEAD
 * With a text label.
 * With an emoji.
 * In the disabled mode.
@@ -1341,11 +1367,31 @@ Create React App doesn’t include any tools for this by default, but you can ea
 You can also deploy your Storybook as a static app. This way, everyone in your team can view and review different states of UI components without starting a backend server or creating an account in your app.
 
 **Here’s how to setup your app with Storybook:**
+=======
+* In a regular state, with a text label.
+* In the disabled mode.
+* In a loading state.
+
+Usually, it’s hard to see these states without running a sample app or some examples.
+
+Create React App doesn’t include any tools for this by default, but you can easily add [Storybook for React](https://storybook.js.org) ([source](https://github.com/storybooks/storybook)) to your project. **It is a third-party tool that lets you develop components and see all their states in isolation from your app**.
+
+![Storybook for React Demo](http://i.imgur.com/7CIAWpB.gif)
+
+A storybook can also be deployed as a static app.
+This way, everyone in your team can view and review different states of UI components without starting a backend server or creating an account in your app.
+
+### Setup your app with Storybook
+>>>>>>> c9646ef2b618eecd4a0af7a79b5f397ebf8e6994
 
 First, install the following npm package globally:
 
 ```sh
+<<<<<<< HEAD
 npm install -g getstorybook
+=======
+npm install -g @storybook/cli
+>>>>>>> c9646ef2b618eecd4a0af7a79b5f397ebf8e6994
 ```
 
 Then, run the following command inside your app’s directory:
@@ -1359,10 +1405,16 @@ After that, follow the instructions on the screen.
 Learn more about React Storybook:
 
 * Screencast: [Getting Started with React Storybook](https://egghead.io/lessons/react-getting-started-with-react-storybook)
+<<<<<<< HEAD
 * [GitHub Repo](https://github.com/kadirahq/react-storybook)
 * [Documentation](https://storybooks.js.org/docs/react-storybook/basics/introduction/)
 * [Snapshot Testing](https://github.com/kadirahq/storyshots) with React Storybook
 -->
+=======
+* [GitHub Repo](https://github.com/storybooks/storybook)
+* [Documentation](https://storybook.js.org/basics/introduction/)
+* [Snapshot Testing UI](https://github.com/storybooks/storybook/tree/master/addons/storyshots) with Storybook + addon/storyshot
+>>>>>>> c9646ef2b618eecd4a0af7a79b5f397ebf8e6994
 
 ## Making a Progressive Web App
 
@@ -1381,7 +1433,11 @@ and it will take care of generating a service worker file that will automaticall
 precache all of your local assets and keep them up to date as you deploy updates.
 The service worker will use a [cache-first strategy](https://developers.google.com/web/fundamentals/instant-and-offline/offline-cookbook/#cache-falling-back-to-network)
 for handling all requests for local assets, including the initial HTML, ensuring
+<<<<<<< HEAD
 that you web app is reliably fast, even on a slow or unreliable network.
+=======
+that your web app is reliably fast, even on a slow or unreliable network.
+>>>>>>> c9646ef2b618eecd4a0af7a79b5f397ebf8e6994
 
 If you would prefer not to enable service workers prior to your initial
 production deployment, then remove the call to `serviceWorkerRegistration.register()`
@@ -1698,7 +1754,11 @@ You can configure a custom domain with GitHub Pages by adding a `CNAME` file to 
 
 GitHub Pages doesn’t support routers that use the HTML5 `pushState` history API under the hood (for example, React Router using `browserHistory`). This is because when there is a fresh page load for a url like `http://user.github.io/todomvc/todos/42`, where `/todos/42` is a frontend route, the GitHub Pages server returns 404 because it knows nothing of `/todos/42`. If you want to add a router to a project hosted on GitHub Pages, here are a couple of solutions:
 
+<<<<<<< HEAD
 * You could switch from using HTML5 history API to routing with hashes. If you use React Router, you can switch to `hashHistory` for this effect, but the URL will be longer and more verbose (for example, `http://user.github.io/todomvc/#/todos/42?_k=yknaj`). [Read more](https://github.com/reactjs/react-router/blob/master/docs/guides/Histories.md#histories) about different history implementations in React Router.
+=======
+* You could switch from using HTML5 history API to routing with hashes. If you use React Router, you can switch to `hashHistory` for this effect, but the URL will be longer and more verbose (for example, `http://user.github.io/todomvc/#/todos/42?_k=yknaj`). [Read more](https://reacttraining.com/react-router/web/api/Router) about different history implementations in React Router.
+>>>>>>> c9646ef2b618eecd4a0af7a79b5f397ebf8e6994
 * Alternatively, you can use a trick to teach GitHub Pages to handle 404 by redirecting to your `index.html` page with a special redirect parameter. You would need to add a `404.html` file with the redirection code to the `build` folder before deploying your project, and you’ll need to add code handling the redirect parameter to `index.html`. You can find a detailed explanation of this technique [in this guide](https://github.com/rafrex/spa-github-pages).
 
 ### Heroku
