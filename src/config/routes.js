@@ -5,6 +5,8 @@ import Home from '../pages/basic/Home'
 
 import { User, UpsertUser } from '../pages/auth/User'
 
+import QueryForm from '../pages/auth/QueryForm'
+
 import NotFound from '../pages/basic/NotFound'
 
 export default {
@@ -26,6 +28,11 @@ export default {
         id: 2, text: '首页', path:'/home', parent:'INDEX',
         nav: true, component: Home,
         exact: true,
+    },
+
+    QUERY: {
+        id:13, text: '查询组件测试', path:'/query', parent: 'INDEX',
+        component: QueryForm,
     },
 
     // 导航 - 用户管理

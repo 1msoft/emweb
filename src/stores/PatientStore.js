@@ -1,5 +1,4 @@
-import { observable, action, toJS } from 'mobx'
-import _ from 'lodash'
+import { observable, action } from 'mobx'
 import PouchDB from 'pouchdb'
 import {DATABASE_URL} from '../common/constant'
 import promiseMap from 'promise.map'

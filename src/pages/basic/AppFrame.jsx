@@ -32,7 +32,7 @@ class AppFrame extends Component {
     if(cookie.get("_id") === undefined){
       // this.props.history.push('/login')
     } else {
-      this.store.findId(cookie.get("_id"))
+      // this.store.findId(cookie.get("_id"))
     }
 
     this.permitHelper = new PermitHelper()
@@ -132,7 +132,7 @@ class AppFrame extends Component {
           <div className="version">
             <Dropdown overlay={this.menu} style={{ margin: 11 }}>
               <Button>
-                {this.store.loginUser.username} <Icon type="down" />
+                {this.store.loginUser} <Icon type="down" />
               </Button>
             </Dropdown>
           </div>

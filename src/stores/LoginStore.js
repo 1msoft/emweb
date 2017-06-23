@@ -22,7 +22,6 @@ export default class LoginStore {
 
 	constructor(){
 		this.db = new PouchDB(DB_URL)
-    console.log(this)
 	}
 
 	@action

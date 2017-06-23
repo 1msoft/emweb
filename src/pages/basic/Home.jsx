@@ -121,7 +121,7 @@ class PartSubject extends React.Component {
       <div style={{padding: '5px 50px', float: 'left'}}>
         <Card style={{width: 130, height: 100}} bodyStyle={{padding: 5}}>
           <div className="over">
-            <img style={{margin: '0px 8px', float: 'left'}} width="50px" src={imgStudy} />
+            <img style={{margin: '0px 8px', float: 'left'}} width="50px" src={imgStudy} alt="" />
             <p style={{marginTop: '20px', textAlign: 'center'}}> {count} </p>
             <p style={{marginTop: '10px', textAlign: 'center'}}> {title} </p>
           </div>
@@ -139,7 +139,7 @@ class PartSample extends React.Component {
       <div style={{padding: '5px 50px', float: 'left'}}>
         <Card style={{width: 130, height: 100}} bodyStyle={{padding: 5}}>
           <div className="over">
-            <img style={{margin: '0px 8px', float: 'left'}} width="50px" src={imgSample} />
+            <img style={{margin: '0px 8px', float: 'left'}} width="50px" src={imgSample} alt="" />
             <p style={{marginTop: '20px', textAlign: 'center'}}> {count} </p>
             <p style={{marginTop: '10px', textAlign: 'center'}}> {title} </p>
           </div>
@@ -157,7 +157,7 @@ class PartPatient extends React.Component {
       <div style={{padding: '5px 50px', float: 'left'}}>
         <Card style={{width: 130, height: 100}} bodyStyle={{padding: 5}}>
           <div className="over">
-            <img style={{margin: '0px 8px', float: 'left'}} width="50px" src={imgPatient} />
+            <img style={{margin: '0px 8px', float: 'left'}} width="50px" src={imgPatient} alt="" />
             <p style={{marginTop: '20px', textAlign: 'center'}}> {count} </p>
             <p style={{marginTop: '10px', textAlign: 'center'}}> {title} </p>
           </div>
@@ -175,7 +175,7 @@ class PartBreak extends React.Component {
       <div style={{padding: '5px 50px', float: 'left'}}>
         <Card style={{width: 130, height: 100}} bodyStyle={{padding: 5}}>
           <div className="over">
-            <img style={{margin: '0px 8px', float: 'left'}} width="50px" src={imgBreak} />
+            <img style={{margin: '0px 8px', float: 'left'}} width="50px" src={imgBreak} alt="" />
             <p style={{marginTop: '20px', textAlign: 'center'}}> {count} </p>
             <p style={{marginTop: '10px', textAlign: 'center'}}> {title} </p>
           </div>

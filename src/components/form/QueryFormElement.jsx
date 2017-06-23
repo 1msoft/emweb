@@ -1,35 +1,24 @@
-/**
- * 使用例子:
- * QueryFormsInput('input', 'casesNo', '病例编号:', 'number', '请输入',
-                      {onChange:()=>{console.log('+++++++')}})
- */
+
 export const QueryFormsInput =
-  (type, text, InputType, placeholder, eventFunction, value) => {
-  return Object.assign({type, text, InputType, placeholder, eventFunction, value })
+  (text, parms, queryName, queryValue, queryReg) => {
+  return Object.assign({type: 'input', text, parms, queryName, queryValue, queryReg })
 }
 
-/**
- * 使用例子:
- * QueryFormsSelect('select', '性别:', '请输入',
-                      [{opText: '男', opValue: 'man'}, {opText: '女', opValue: 'woman'}],
-                      {onSelect:()=>{console.log('+++++++性别')}})
- */
 export const QueryFormsSelect =
-  (type, text, placeholder, option, eventFunction, value) => {
-  return Object.assign({type, text, placeholder, option, eventFunction, value })
+  (text, parms, options, queryName, queryValue, queryReg) => {
+  return Object.assign({type: 'select', text, parms, options, queryName, queryValue, queryReg })
 }
 
-/**
- * 使用例子:
- *  QueryFormsButton('button', '查询', 'large', 'primary', 'search',
-                        {onClick:() => {console.log('+++++++查询')}})
- */
 export const QueryFormsButton =
-  (type, text, size, buttonType, icon, eventFunction) => {
-  return Object.assign({type, text, size, buttonType, icon, eventFunction })
+  (text, parms, queryName, queryValue, queryReg) => {
+  return Object.assign({type: 'button', text, parms, queryName, queryValue, queryReg })
 }
 
-export const QueryFormsTimePicker =
-  (type, text, placeholder, eventFunction, value) => {
-    return Object.assign({type, text, placeholder, eventFunction, value})
-  }
+export const QueryFormsDateTime =
+  (text, startParms, endParms, queryName, queryValue, queryReg) => {
+    return Object.assign({type: 'dateTime', text, startParms, endParms, queryName, queryValue, queryReg})
+}
+export const QueryFormsQuery =
+  (clickFunction, parms) => {
+      return Object.assign({type: 'query', clickFunction, parms})
+}
