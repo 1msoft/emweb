@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/1msoft/emweb.png?label=ready&title=Ready)](https://waffle.io/1msoft/emweb?utm_source=badge)
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>
