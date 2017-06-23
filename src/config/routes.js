@@ -7,6 +7,8 @@ import { User, UpsertUser } from '../pages/auth/User'
 
 import NotFound from '../pages/basic/NotFound'
 
+import CardTable from '../pages/works/CardTable'
+
 export default {
     // 登录
     LOGIN: {
@@ -27,6 +29,15 @@ export default {
         nav: true, component: Home,
         exact: true,
     },
+
+
+    // 大卡片 & 表格
+    CardTable: {
+        id: 13, text: '卡片&表格', path: '/cardtable', parent: 'INDEX',
+        nav: true, component: CardTable,
+        // exact: true,
+    },
+
 
     // 导航 - 用户管理
     USER: {
