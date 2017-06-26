@@ -30,7 +30,7 @@ export default class UserStore {
     this.db = new PouchDB(DB_URL)
     // console.log(this.db)
     // eslint-disable-next-line
-    this.getUserList()
+    // this.getUserList()
     this.queryWhenSetCurrentId()
   }
 

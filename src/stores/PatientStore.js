@@ -28,7 +28,7 @@ export default class DataStore {
 
   constructor() {
     this.db = new PouchDB(DB_URL)
-    this.getDataList()
+    // this.getDataList()
   }
   //获取样本列表
   getDataList = (cb) => {
