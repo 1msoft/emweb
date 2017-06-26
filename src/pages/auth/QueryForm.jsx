@@ -98,8 +98,8 @@ class TestQueryForm extends QueryForms {
 			id: '',
 			name: '',
 			gender: '',
-			sDate: '123',
-			eDate: '321',
+			sDate: '测试数据123',
+			eDate: '测试数据321',
 			tel: ''
 		}
 	}

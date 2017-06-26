@@ -1,17 +1,17 @@
 
 export const QueryFormsInput =
-  (text, parms, queryName, queryValue, queryReg) => {
-  return Object.assign({type: 'input', text, parms, queryName, queryValue, queryReg })
+  (label, parms, queryName, queryValue, queryReg) => {
+  return Object.assign({type: 'input', label, parms, queryName, queryValue, queryReg })
 }
 
 export const QueryFormsSelect =
-  (text, parms, options, queryName, queryValue, queryReg) => {
-  return Object.assign({type: 'select', text, parms, options, queryName, queryValue, queryReg })
+  (label, parms, options, queryName, queryValue, queryReg) => {
+  return Object.assign({type: 'select', label, parms, options, queryName, queryValue, queryReg })
 }
 
 export const QueryFormsDateTime =
-  (text, startParms, endParms, queryName, startQueryValue, endQueryValue) => {
-    return Object.assign({type: 'dateTime', text, startParms, endParms, queryName, startQueryValue, endQueryValue})
+  (label, startParms, endParms, queryName, startQueryValue, endQueryValue) => {
+    return Object.assign({type: 'dateTime', label, startParms, endParms, queryName, startQueryValue, endQueryValue})
 }
 
 export const QueryFormsButton =
