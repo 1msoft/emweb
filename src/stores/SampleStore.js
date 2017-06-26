@@ -31,7 +31,7 @@ export default class SampleStore {
 
   constructor() {
     this.db = new PouchDB(DB_URL)
-    this.getSampleList()
+    // this.getSampleList()
   }
   //获取样本列表
   getSampleList = (patient_id, cb) => {

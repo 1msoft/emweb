@@ -9,9 +9,18 @@ const formItemLayout = {
     	};
 export default class QueryForms extends Component {
 
+	componentDidMount() {
+		const autoFocus = this.props.aotu_focus
+		if (autoFocus) {
+			let queryForm_AotuFocus = document.getElementById("queryForm_AotuFocus")
+			queryForm_AotuFocus.focus()
+		}
+	}
+
 	queryType() {
 		const queryCondition = this.parmsList()
 		const enterKey = this.props.enterKey
+		const autoFocus = this.props.aotu_focus
 		const queryForm = queryCondition.map((item, index) => {
 				switch(item.type) {
 					case 'input':
@@ -20,6 +29,8 @@ export default class QueryForms extends Component {
 										key={index}
 										className="query-list">
 											<Input {...item.parms}
+											id={(autoFocus === true && index === 0) ?
+													'queryForm_AotuFocus' : null}
 											onKeyDown={enterKey !== undefined ?
 																((e) => e.keyCode === 13 ? enterKey() : null) :
 																null}
