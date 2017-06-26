@@ -6,14 +6,14 @@ import { Input, Select, Button, message, Form, DatePicker } from 'antd';
  * enterKey为函数，即当按下回车键时执行该函数，可选择不设置。默认不设置
  * aotu_focus为页面加载后自动聚焦，布尔值。true为开启。默认false
  * 
- * input: {type: 'input'(必填), text: 输入框名称(必填), parms: ant-design中input接口,
+ * input: {type: 'input'(必填), label: 输入框名称(必填), parms: ant-design中input接口,
  * 				 queryName,queryValue,queryReg为query按钮的自动拼接字段---queryName:{[queryReg]:queryValue} }
  * 
- * select: {type: 'select'(必填), text: 复选框名称(必填), parms: ant-design中select接口,
+ * select: {type: 'select'(必填), label: 复选框名称(必填), parms: ant-design中select接口,
  * 					options: select下的option，为数组，每个数组下有opValue和opText(必填),
  * 				 queryName,queryValue,queryReg为query按钮的自动拼接字段---queryName:{[queryReg]:queryValue} }
  * 
- * dateTime: {type: 'dateTime'(必填), text: 日期选择名称(必填), parms: ant-design中日期控件接口,
+ * dateTime: {type: 'dateTime'(必填), label: 日期选择名称(必填), parms: ant-design中日期控件接口,
  * 					  queryName,startQueryValue,endQueryValue为query按钮的自动拼接字段
  * 						---queryName:{'$gte':startQueryValue,'$lte':endQueryValue}}
  * 
@@ -49,7 +49,7 @@ export default class QueryForms extends Component {
 				switch(item.type) {
 					case 'input':
 						return <FormItem {...formItemLayout}
-										label={item.text}
+										label={item.label}
 										key={index}
 										className="query-list">
 											<Input {...item.parms}
@@ -62,7 +62,7 @@ export default class QueryForms extends Component {
 									</FormItem>
 					case 'select':
 						return <FormItem {...formItemLayout}
-										label={item.text}
+										label={item.label}
 										key={index}
 										className="query-list">
 										<Select className="query-select"
@@ -90,7 +90,7 @@ export default class QueryForms extends Component {
 									 </span>
 					case 'dateTime':
 						return <FormItem {...formItemLayout}
-											label={item.text}
+											label={item.label}
 											key={index}
 											className="query-date">
 												<DatePicker style={{width: '47%'}}
