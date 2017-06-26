@@ -132,7 +132,7 @@ class AppFrame extends Component {
           <div className="version">
             <Dropdown overlay={this.menu} style={{ margin: 11 }}>
               <Button>
-                {this.store.loginUser} <Icon type="down" />
+                {/*{this.store.loginUser} <Icon type="down" />*/}
               </Button>
             </Dropdown>
           </div>
