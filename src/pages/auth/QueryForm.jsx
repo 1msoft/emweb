@@ -98,6 +98,8 @@ class TestQueryForm extends QueryForms {
 			id: '',
 			name: '',
 			gender: '',
+			sDate: '123',
+			eDate: '321',
 			tel: ''
 		}
 	}
@@ -115,7 +117,8 @@ class TestQueryForm extends QueryForms {
 											options, 'gender', this.state.gender),
 			QueryFormsDateTime('日期选择：',
 												{placeholder: '起始日期'},
-												{placeholder: '结束日期'}),
+												{placeholder: '结束日期'},
+												'time', this.state.sDate, this.state.eDate),
 			QueryFormsInput('电话：', {placeholder: '电话',
 																onChange: (e) => {this.changeState('tel', e)}},
 											'tel', this.state.tel, '$regex'),
@@ -154,6 +157,5 @@ class TestQueryForm extends QueryForms {
 			}
 		}
 		this.props.changeDate(data)
-		// this.props.changeDate(a)
 	}
 }

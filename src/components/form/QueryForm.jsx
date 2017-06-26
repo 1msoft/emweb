@@ -86,8 +86,20 @@ export default class QueryForms extends Component {
 		const queryCondition = this.parmsList()
 		const conds = {}
 		queryCondition.map((item, index) => {
+			if (item.type === 'dateTime') {
+				console.log(item)
+				if (item.startQueryValue === undefined && item.endQueryValue === undefined) {
+					return conds
+				} else if (item.startQueryValue !== undefined && item.endQueryValue === undefined) {
+					return conds[item.queryName] = {'$gte': item.startQueryValue}
+				} else if (item.startQueryValue === undefined && item.endQueryValue !== undefined) {
+					return conds[item.queryName] = {'$lte': item.endQueryValue}
+				} else {
+					return conds[item.queryName] = {'$gte': item.startQueryValue, '$lte': item.endQueryValue}
+				}
+			}
 			if (item.queryName === undefined) {
-				return
+				return conds
 			}
 			if (item.queryReg) {
 				return conds[item.queryName] = {[item.queryReg] : item.queryValue}

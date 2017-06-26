@@ -15,8 +15,8 @@ export const QueryFormsButton =
 }
 
 export const QueryFormsDateTime =
-  (text, startParms, endParms, queryName, queryValue, queryReg) => {
-    return Object.assign({type: 'dateTime', text, startParms, endParms, queryName, queryValue, queryReg})
+  (text, startParms, endParms, queryName, startQueryValue, endQueryValue) => {
+    return Object.assign({type: 'dateTime', text, startParms, endParms, queryName, startQueryValue, endQueryValue})
 }
 export const QueryFormsQuery =
   (clickFunction, parms) => {

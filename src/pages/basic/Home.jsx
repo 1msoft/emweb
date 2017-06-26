@@ -194,7 +194,7 @@ class Subject extends React.Component {
         <Card style={{width: 180}} bodyStyle={{padding: 5}}>
           <div className="over">
             <Link to="/study/patientlist">
-              <img style={{margin: '15px 28px'}} width="100px" src={imgStudy} />
+              <img style={{margin: '15px 28px'}} width="100px" src={imgStudy} alt="" />
               <p style={{textAlign: 'center'}}> {title} </p>
             </Link>
           </div>
