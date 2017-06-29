@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Input, Select, Button, message, Form, DatePicker } from 'antd';
-import style from './QueryForm.css'
+import './QueryForm.css'
 
 /**
  * QueryForms定义了两个props，分别是enterKey和aotu_focus。
@@ -52,7 +52,7 @@ export default class QueryForms extends Component {
 						return <FormItem {...formItemLayout}
 										label={item.label}
 										key={index}
-										className="query-list">
+										className={"query-list"}>
 											<Input {...item.parms}
 											id={(autoFocus === true && index === 0) ?
 													'queryForm_AotuFocus' : null}
