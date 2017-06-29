@@ -1,22 +1,38 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { HashRouter as Router, Route } from 'react-router-dom';
 
-import logo from '../assets/images/logo.svg';
-import './App.css';
+import RouteHelper from '../utils/RouteHelper'
+import PermitHelper from '../utils/PermitHelper'
+import routes from '../config/routes'
 
-class App extends Component {
+import '../assets/style/ant-reset.css'
+import '../assets/style/style.css'
+
+class App extends React.Component {
+  componentWillMount() {
+    this.routeHelper = new RouteHelper({
+      routes,
+      permitHelper: new PermitHelper(),
+    })
+  }
+
   render() {
+    const routes = this.routeHelper.getComponentRouteList('Root', { cascade: false })
     return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
+      <Router>
+        <div style={{height: '100%'}}>
+          {
+            routes.map( ({ path, exact, component }, idx)=>{
+              return (
+                <Route key={idx} path={path} exact={exact} component={component} />
+              )
+            })
+          }
         </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
+      </Router>
     );
   }
 }
+
 
 export default App;
