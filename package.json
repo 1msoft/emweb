@@ -3,21 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "antd": "2.11.1",
-    "bcryptjs": "2.4.3",
-    "echarts": "3.6.2",
-    "mobx": "3.1.16",
-    "mobx-react": "4.2.1",
-    "pouchdb": "6.2.0",
-    "pouchdb-find": "6.2.0",
-    "promise.map": "0.0.2",
     "react": "^15.6.1",
-    "react-dom": "^15.6.1",
-    "react-router-dom": "4.1.1"
+    "react-dom": "^15.6.1"
   },
   "devDependencies": {
     "eslint-config-emsoft": "1.0.0",
-    "mobx-react-devtools": "4.2.15",
     "react-hot-loader": "next",
     "react-scripts-emsoft": "1.0.8"
   },
