@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Route, Redirect } from 'react-router-dom';
 import { Layout, Menu, Icon, Dropdown, Button, message, Modal, Form, Input } from 'antd';
 import { observer, inject } from 'mobx-react'
 
 import TopNavMenu from '../../components/layout/TopNavMenu'
+import ContentBlock from '../../components/layout/ContentBlock'
 
 import RouteHelper from '../../utils/RouteHelper'
 import PermitHelper from '../../utils/PermitHelper'
@@ -112,14 +112,14 @@ class AppFrame extends Component {
     // if(!route || !this.permitHelper.hasPermission(this.state.permitCode, route.code)){
     //   this.props.history.push('/notfound')
     // }
-    let { routeTree: navList, selectedKeys } = this.routeHelper.getRouteTree('INDEX', route.routeName, { cascade: false })
+    let { routeTree: navList, selectedKeys } = this.routeHelper.getRouteTree('Index', route.routeName, { cascade: true })
 
     // 暂时代码：当当前用户为管理员时，才显示用户管理tab
     // if (!this.store.loginUser.isAdmin) {
     //   navList = navList.filter( (item) => item.routeName !== 'USER')
     // }
 
-    const contentRoutes = this.routeHelper.getLinkableRouteList('INDEX', { cascade: false })
+    const contentRoutes = this.routeHelper.getComponentRouteList('Index', { cascade: false })
     return(
       <Layout className="page-wrapper">
         {/* header */}
@@ -154,35 +154,6 @@ class AppFrame extends Component {
     );
   }
 }
-
-// 内容页路由定义
-const ContentBlock = ({ routes, current }) => {
-  if (current.redirect) {
-    return <Redirect to={current.redirect} />
-  }
-  return (
-    <div>
-    {
-      routes.map( ({ path, exact, component }, idx)=>{
-        return(
-          <PrivateRoute key={idx} path={path} exact={exact} component={component} />
-        )
-      })
-    }
-    </div>
-  )
-}
-
-const PrivateRoute = ({ component: Component, ...rest }) => (
-  <Route {...rest} render={(props) => (
-    cookie.get("_id") !== undefined ? (
-      <Component {...props}/>
-    ) : (
-      /*<Redirect to='/login' />*/
-      <Component {...props}/>
-    )
-  )} />
-)
 
 export default AppFrame
 

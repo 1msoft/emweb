@@ -17,13 +17,13 @@ class App extends React.Component {
   }
 
   render() {
-    const routes = this.routeHelper.getLinkableRouteList('ROOT', { cascade: false })
+    const routes = this.routeHelper.getComponentRouteList('Root', { cascade: false })
     return (
       <Router>
         <div style={{height: '100%'}}>
           {
             routes.map( ({ path, exact, component }, idx)=>{
-              return(
+              return (
                 <Route key={idx} path={path} exact={exact} component={component} />
               )
             })
