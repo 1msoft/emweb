@@ -11,6 +11,7 @@ import { User, UpsertUser } from '../pages/auth/User'
 
 import QueryForm from '../pages/components/QueryForm'
 import CardTable from '../pages/components/CardTable'
+import CostomForm from '../pages/components/CostomForm'
 
 export default {
     // 登录
@@ -81,6 +82,13 @@ export default {
     CardTable: {
         id: 13, text: '卡片&表格', path: '/components/cardtable', parent: 'Components',
         nav: true, component: CardTable,
+        exact: true,
+    },
+
+    // 导航 - 组件 - 表单
+    CostomForm: {
+        id: 14, text: '表单', path: '/components/costomform', parent: 'Components',
+        nav: true, component: CostomForm,
         exact: true,
     },
 

@@ -14,7 +14,6 @@ import { Input, Select, Button, message, Form, DatePicker } from 'antd';
  * 				 queryName,queryValue,queryReg为query按钮的自动拼接字段---queryName:{[queryReg]:queryValue} }
  * 
  * dateTime: {type: 'dateTime'(必填), label: 日期选择名称(必填), parms: ant-design中日期控件接口,
->>>>>>> c0746a95b43ad58667e3e2af1ce939bd4b02301f
  * 					  queryName,startQueryValue,endQueryValue为query按钮的自动拼接字段
  * 						---queryName:{'$gte':startQueryValue,'$lte':endQueryValue}}
  * 
