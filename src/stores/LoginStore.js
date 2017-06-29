@@ -6,8 +6,8 @@ import bcrypt from '../utils/bcrypt'
 import cookie from '../utils/cookie'
 import {DATABASE_URL} from '../common/constant'
 
-const DB_URL = DATABASE_URL
-// const DB_URL = 'http://localhost:5984/fyzxk'
+// const DB_URL = DATABASE_URL
+const DB_URL = 'http://localhost:5984/fyzxk'
 
 PouchDB.plugin(require('pouchdb-find'))
 PouchDB.debug.enable('pouchdb:find')
@@ -22,21 +22,25 @@ export default class LoginStore {
 
 	constructor(){
 		this.db = new PouchDB(DB_URL)
+		console.log(this)
 	}
 
-	@action
-	getList = (userName, userPassWord, cb)=> {
+	getList = (userName, userPassWord, cb, butLoding) => {
 		this.isLoading = true
-
+		butLoding()
 		this.db.createIndex({
 			index:{fields:['username']}
-		}).then( ()=>{
+		}).catch(() => {
+			message.error('检查数据库链接是否正确')
+			butLoding()
+	  }).then( () => {
 			return this.db.find({
 				selector: {username: userName}
 			})
-		}).then( (res)=>{
+		}).then( (res) => {
 			if(res.docs[0] === undefined) {
 				message.error("账号不存在")
+				butLoding()
 				return
 			}
 			if (bcrypt.compareSync(userPassWord, res.docs[0].password)) {
@@ -48,7 +52,8 @@ export default class LoginStore {
 				message.error('密码不正确')
 			}
 			this.isLoading = false
-		}).catch( (err)=>{
+			butLoding()
+		}).catch( (err) => {
 		})
 	}
 

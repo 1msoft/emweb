@@ -15,15 +15,16 @@ class Login extends Component {
 			this.state = {
 					username: '',
 					password: '',
+					loginLoading:false
 			};
 	}
 
 	componentDidMount() {
-
+		let Login_Focus=document.getElementById("Login_Focus")
+		Login_Focus.focus()
 	}
 
 	componentWillUnmount() {
-
 	}
 
 	render () {
@@ -37,7 +38,7 @@ class Login extends Component {
 										<div className="signin-logo">
 											<img src={logo} alt={"AccuraGen"} />
 										</div>
-										<Input placeholder="用户名"
+										<Input placeholder="用户名" id="Login_Focus"
 										onKeyDown={(e) => e.keyCode === 13 ? this.login.bind(this)() : null }
 										onChange={this.changeState.bind(this, 'username')}
 										style={{width: 250, height: 38, marginBottom: 30}} />
@@ -46,7 +47,7 @@ class Login extends Component {
 										onChange={this.changeState.bind(this, 'password')}
 										style={{width: 250, height: 38, marginBottom: 30}} />
 										<span className="raised-button">
-											<Button type="primary" onClick={this.login.bind(this)}> 登录系统 </Button>
+											<Button type="primary" loading={this.state.loginLoading} onClick={this.login.bind(this)}> 登录系统 </Button>
 										</span>
 									</div>
 								</div>
@@ -66,8 +67,14 @@ class Login extends Component {
 
 	login() {
     const {username, password} = this.state
-    this.store.getList(username, password, this.goHomePage)
+    this.store.getList(username, password, this.goHomePage, this.changeLoginLoading)
   }
+
+	changeLoginLoading = () => {
+		this.setState({
+			loginLoading: !this.state.loginLoading
+		})
+	}
 
   goHomePage = () => {
     const {history} = this.props
