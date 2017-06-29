@@ -2,6 +2,7 @@ import React from 'react'
 import { Menu } from 'antd'
 
 import MenuItem from './MenuItem'
+import MenuItemText from './MenuItemText'
 
 // 头部导航
 const TopNavMenu = ({ navList, openKeys, selectedKeys }) => {
@@ -15,7 +16,23 @@ const TopNavMenu = ({ navList, openKeys, selectedKeys }) => {
         {
           navList.map( (item, idx) => {
             item.key = item.routeName
-            return MenuItem(item)
+            item.size = 'middle'
+
+            if (!item.children) {
+              return MenuItem(item)
+            } else {
+              return (
+                <Menu.SubMenu key={item.routeName} title={MenuItemText(item)}>
+                  {
+                    item.children.map( (child, i) => {
+                      child.key = child.routeName
+                      child.size = 'small'
+                      return MenuItem(child)
+                    })
+                  }
+                </Menu.SubMenu>
+              )
+            }
           })
         }
       </Menu>

@@ -2,7 +2,7 @@ import { matchPath } from 'react-router'
 
 /**
  * 路由工具类
- * 
+ *
  * @export
  * @class RouteHelper
  */
@@ -15,7 +15,7 @@ export default class RouteHelper {
 
   /**
    * 获取路由列表
-   * 
+   *
    * @param {any} filters      筛选函数，可选，多个逗号隔开
    * @returns
    */
@@ -45,15 +45,15 @@ export default class RouteHelper {
 
   /**
    * 获取可链接路由列表
-   * 
+   *
    * @param {any} rootRouteName  根路由名称
    * @param {any} cascade        是否级联获取下级路由
    */
-  getLinkableRouteList(rootRouteName, options = {}) {
+  getComponentRouteList(rootRouteName, options = {}) {
     const { cascade = true } = options
     let routeList = this.getRouteList()
     routeList = this._getSubRoutes(routeList, rootRouteName, { flatten: true, cascade })
-    return routeList.filter(this._checkLinkableRoute)
+    return routeList.filter(this._checkComponentRoute)
   }
 
   /**
@@ -64,10 +64,10 @@ export default class RouteHelper {
   }
 
   /**
-   * 筛选出可链接的路由
+   * 筛选出有对应组件的路由
    */
-  _checkLinkableRoute(route) {
-    return route.path
+  _checkComponentRoute(route) {
+    return route.component
   }
 
   /**
@@ -89,7 +89,7 @@ export default class RouteHelper {
     // 获取路由列表
     const routeList = this.getRouteList(...filters)
     // 组织路由树
-    let routeTree = this._getSubRoutes(routeList, rootRouteName, { cascade })
+    let routeTree = this._getSubRoutes(routeList, rootRouteName, { parentType: 'navParent', cascade })
     // 根据当前路由名称，标记当前路由路径字段 current
     const res = this._markRoutePath(routeTree, currentRouteName)
     return res
@@ -97,7 +97,7 @@ export default class RouteHelper {
 
   /**
    * 获取子级路由
-   * 
+   *
    * @param {any} routeList
    * @param {any} parent
    * @param {any} flatten      是否扁平化
@@ -105,11 +105,11 @@ export default class RouteHelper {
    * @returns
    */
   _getSubRoutes(routeList, parent, options = {}) {
-    const { flatten = false, cascade = true } = options
+    const { flatten = false, cascade = true, parentType = 'parent' } = options
     let routes = routeList
-    
+
     if (parent) {
-      routes = routes.filter( (route) => route.parent === parent)
+      routes = routes.filter( (route) => (route[parentType] || route.parent) === parent )
     }
 
     // 非级联，直接返回
@@ -119,8 +119,11 @@ export default class RouteHelper {
 
     // 级联，则遍历下级路由，以扁平/树状返回
     for (const route of routes) {
-      const branch = this._getSubRoutes(routeList, route.routeName, flatten)
-      
+      if (route.cascade === false) {
+        continue
+      }
+
+      const branch = this._getSubRoutes(routeList, route.routeName, { flatten, cascade, parentType })
       if (flatten) {
         routes = routes.concat(branch)
       } else {
@@ -132,7 +135,7 @@ export default class RouteHelper {
 
   /**
    * 判断特定路由是否从属于指定路由
-   * 
+   *
    * @param {any} routeName        子路由
    * @param {any} parentRouteName  父路由
    * @returns
@@ -146,8 +149,8 @@ export default class RouteHelper {
         return true
       }
 
-      parentName = route.parent
-      route = this.routes[route.parent]
+      parentName = route.navParent || route.parent
+      route = this.routes[parentName]
     }
 
     return false
@@ -155,7 +158,7 @@ export default class RouteHelper {
 
   /**
    * 标记根据特定路由，标记其在路由树中的路径
-   * 
+   *
    * @param {any} routeTree         路由树
    * @param {any} currentRouteName  当前路由名称
    * @param {any} markKey           标记字段名
@@ -165,7 +168,7 @@ export default class RouteHelper {
     options.markKey = options.markKey || 'current'
     options.openKeys = options.openKeys || []
     options.selectedKeys = options.selectedKeys || []
-    
+
     if (!currentRouteName) return routeTree
 
     for (const branch of routeTree) {
@@ -186,7 +189,7 @@ export default class RouteHelper {
    * 根据 url 路径返回匹配的路由定义
    */
   matchRoute(pathname) {
-    const routeList = this.getLinkableRouteList()
+    const routeList = this.getComponentRouteList()
 
     return routeList.find( (route) => {
       return matchPath(pathname, {
@@ -199,7 +202,7 @@ export default class RouteHelper {
 
   /**
    * 组织面包屑导航
-   * 
+   *
    * @param {any} routeName
    * @returns
    */
