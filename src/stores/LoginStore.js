@@ -22,25 +22,25 @@ export default class LoginStore {
 
 	constructor(){
 		this.db = new PouchDB(DB_URL)
-		console.log(this)
 	}
 
-	getList = (userName, userPassWord, cb, butLoding) => {
+	// @action
+	getList = (userName, userPassWord, cb, buttonLoding) => {
 		this.isLoading = true
-		butLoding()
+		buttonLoding()
 		this.db.createIndex({
 			index:{fields:['username']}
-		}).catch(() => {
-			message.error('检查数据库链接是否正确')
-			butLoding()
-	  }).then( () => {
+		}).then( () => {
 			return this.db.find({
 				selector: {username: userName}
 			})
-		}).then( (res) => {
+		}).catch(() => {
+			message.error('检查数据库链接是否正确')
+			buttonLoding()
+	  }).then( (res) => {
 			if(res.docs[0] === undefined) {
 				message.error("账号不存在")
-				butLoding()
+				buttonLoding()
 				return
 			}
 			if (bcrypt.compareSync(userPassWord, res.docs[0].password)) {
@@ -52,19 +52,19 @@ export default class LoginStore {
 				message.error('密码不正确')
 			}
 			this.isLoading = false
-			butLoding()
+			buttonLoding()
 		}).catch( (err) => {
 		})
 	}
 
-	@action
+	// @action
   findId = (id) => {
     this.db.get(id).then(date => {
       this.loginUser = date
     })
   }
 
-  @action
+  // @action
   changePassWord = (id, newpass, cb) => {
     this.db.get(id).then(date => {
       date.password = bcrypt.encryptSync(newpass)

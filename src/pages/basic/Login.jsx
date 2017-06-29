@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 // import { Link, history } from 'react-router-dom';
-import { Button, Input } from 'antd';
+import { Button, Input, message } from 'antd';
 import { observer, inject } from 'mobx-react'
 // import bcrypt from '../utils/bcrypt'
 import logo from '../../assets/image/LOGO.png'
@@ -67,6 +67,10 @@ class Login extends Component {
 
 	login() {
     const {username, password} = this.state
+		if (username === '' || password === '') {
+			message.error("用户名或者密码不能为空")
+			return
+		}
     this.store.getList(username, password, this.goHomePage, this.changeLoginLoading)
   }
 
