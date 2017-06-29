@@ -1,9 +1,8 @@
 
-export const DATABASE_USER = 'admin'
-export const DATABASE_PASSOWRD = 'admin'
-export const DATABASE_URL = process.env.NODE_ENV === 'production'
-    ? 'http://admin:admin@54.223.36.6:5984/portal'
-    : 'http://admin:admin@192.168.31.116:5984/portal'
-export const SAMPLE_TYPES = ['血浆', '白细胞', '切片', '蜡块', '组织']
-export const INSTANCE_TYPE = ['dna', 'rna']
-export const PATIENT_SEX = ['男', '女']
+export const DATABASE_USER = process.env.REACT_APP_COUCHDB_USER
+export const DATABASE_PASSOWRD = process.env.REACT_APP_COUCHDB_PWD
+export const DATABASE_DBHOST = process.env.REACT_APP_COUCHDB_HOST
+export const DATABASE_DBPORT = process.env.REACT_APP_COUCHDB_PORT
+export const DATABASE_DBNAME = process.env.REACT_APP_COUCHDB_DBNAME
+export const DATABASE_URL = `http://${DATABASE_USER}:${DATABASE_PASSOWRD}`
+  + `@${DATABASE_DBHOST}:${DATABASE_DBPORT}/${DATABASE_DBNAME}`
