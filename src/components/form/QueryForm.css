@@ -1,24 +1,24 @@
 /*查询组件样式*/
-.query-list{
+.queryForm .query-list{
   width: 22%;
   display: inline-block;
   overflow: hidden;
 }
-.query-select{
+.queryForm .query-select{
   width: 100%;
 }
-.query-date{
+.queryForm .query-date{
   width: 32%;
   display: inline-block;
   overflow: hidden;
 }
-.query-date .ant-calendar-picker .ant-calendar-picker-input{
+.queryForm .query-date .ant-calendar-picker .ant-calendar-picker-input{
   width: 100%;
 }
-.queryDate input{
+.queryForm .queryDate input{
   width: 48%;
 }
-.query-button{
+.queryForm .query-button{
   text-align: center;
   margin-right: 15px;
 }

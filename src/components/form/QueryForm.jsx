@@ -136,7 +136,7 @@ export default class QueryForms extends Component {
 
 	render() {
 		return (
-			<div>
+			<div className="queryForm">
 				{this.queryType()}
 			</div>
 		)
