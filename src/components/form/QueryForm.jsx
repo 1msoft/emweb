@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Input, Select, Button, message, Form, DatePicker } from 'antd';
+import style from './QueryForm.css'
 
 /**
  * QueryForms定义了两个props，分别是enterKey和aotu_focus。
@@ -111,7 +112,6 @@ export default class QueryForms extends Component {
 		const conds = {}
 		queryCondition.map((item, index) => {
 			if (item.type === 'dateTime') {
-				console.log(item)
 				if (item.startQueryValue === undefined && item.endQueryValue === undefined) {
 					return conds
 				} else if (item.startQueryValue !== undefined && item.endQueryValue === undefined) {

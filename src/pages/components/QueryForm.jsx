@@ -42,7 +42,6 @@ export default class QueryForm extends Component {
 	}
 
 	changeDate = (date) => {
-		console.log(date)
 		this.setState({
 			tableDateSource: date
 		})
@@ -76,8 +75,7 @@ export default class QueryForm extends Component {
 			key: 'time'
 		}]
 		return (
-			<div style={{width: '80%',
-									 margin: '0 auto',
+			<div style={{margin: '0 auto',
 									 background: '#fff',
 									 marginBottom: '30px',
 									 padding: '15px 0'}}>
