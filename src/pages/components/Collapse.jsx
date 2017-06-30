@@ -60,7 +60,7 @@ export default class Collapse extends Component {
 
   render() {
     return (
-      <div style={{width: '950px', margin: '50px'}}>
+      <div style={{margin: '50px'}}>
         <CollapsePanel header="近一个月">
           <InfoTable columns={this.props.columns} dataSource={data_month} />
         </CollapsePanel>
