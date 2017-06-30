@@ -25,35 +25,28 @@ export default class LoginStore {
 	}
 
 	// @action
-	getList = (userName, userPassWord, cb, buttonLoding) => {
-		this.isLoading = true
-		buttonLoding()
-		this.db.createIndex({
+	login = (userName, userPassWord) => {
+		return this.db.createIndex({
 			index:{fields:['username']}
 		}).then( () => {
 			return this.db.find({
+				limit: 1,
 				selector: {username: userName}
 			})
 		}).catch(() => {
-			message.error('检查数据库链接是否正确')
-			buttonLoding()
-	  }).then( (res) => {
-			if(res.docs[0] === undefined) {
-				message.error("账号不存在")
-				buttonLoding()
-				return
+			throw 'fail_dataBase'
+		}).then( (res) => {
+			const userData = res.docs[0]
+			if(userData === undefined) {
+				return 'fail_username'
 			}
-			if (bcrypt.compareSync(userPassWord, res.docs[0].password)) {
-				message.success('登录成功')
-				this.loginUser = res.docs[0]
-				cookie.set('_id', res.docs[0]._id)
-				cb()
+			if (bcrypt.compareSync(userPassWord, userData.password)) {
+				this.loginUser = userData
+				cookie.set('_id', userData._id)
+				return 'success'
 			} else {
-				message.error('密码不正确')
+				return 'fail_password'
 			}
-			this.isLoading = false
-			buttonLoding()
-		}).catch( (err) => {
 		})
 	}
 

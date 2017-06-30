@@ -71,8 +71,37 @@ class Login extends Component {
 			message.error("用户名或者密码不能为空")
 			return
 		}
-    this.store.getList(username, password, this.goHomePage, this.changeLoginLoading)
+		this.changeLoginLoading()
+		this.store.login(username, password).then(
+			(res) => {
+				this.loginResult(res)
+			}).catch(
+			(err) => {
+				this.loginResult(err)})
   }
+
+	loginResult = (result) => {
+		switch(result) {
+			case 'fail_dataBase':
+				message.error('检查数据库链接是否正确')
+				this.changeLoginLoading()
+				break
+			case 'fail_username':
+				message.error("账号不存在")
+				this.changeLoginLoading()
+				break
+			case 'fail_password':
+				message.error('密码不正确')
+				this.changeLoginLoading()
+				break
+			case 'success':
+				message.success('登录成功')
+				this.goHomePage()
+				this.changeLoginLoading()
+				break
+			default:
+		}
+	}
 
 	changeLoginLoading = () => {
 		this.setState({
