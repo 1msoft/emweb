@@ -10,7 +10,7 @@ import Scenes from '../pages/scenes'
 import { User, UpsertUser } from '../pages/auth/User'
 
 import QueryForm from '../pages/components/QueryForm'
-import CardTable from '../pages/components/CardTable'
+import Collapse from '../pages/components/Collapse'
 
 export default {
     // 登录
@@ -77,10 +77,10 @@ export default {
         exact: true,
     },
 
-    // 导航 - 组件 - 大卡片 & 表格
-    CardTable: {
-        id: 13, text: '卡片&表格', path: '/components/cardtable', parent: 'Components',
-        nav: true, component: CardTable,
+    // 导航 - 组件 - 折叠面板
+    Collapse: {
+        id: 13, text: '折叠面板', path: '/components/collapse', parent: 'Components',
+        nav: true, component: Collapse,
         exact: true,
     },
 
