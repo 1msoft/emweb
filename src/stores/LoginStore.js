@@ -17,8 +17,8 @@ PouchDB.debug.enable('pouchdb:find')
 export default class LoginStore {
 	db
 
-	@observable isLoading = false
-	@observable loginUser = {}
+	isLoading = false
+	loginUser = {}
 
 	constructor(){
 		this.db = new PouchDB(DB_URL)
@@ -52,21 +52,22 @@ export default class LoginStore {
 
 	// @action
   findId = (id) => {
-    this.db.get(id).then(date => {
+    return this.db.get(id).then(date => {
       this.loginUser = date
     })
   }
 
   // @action
-  changePassWord = (id, newpass, cb) => {
-    this.db.get(id).then(date => {
+  changePassWord = (id, newpass) => {
+    return this.db.get(id).then(date => {
       date.password = bcrypt.encryptSync(newpass)
       return this.db.put(date)
-    }).then(() => {
-      message.success('密码修改成功，请重新登录！')
-			cb()
-    }).catch((err) => {
-      console.log(err)
     })
+		// .then(() => {
+    //   message.success('密码修改成功，请重新登录！')
+		// 	cb()
+    // }).catch((err) => {
+    //   console.log(err)
+    // })
   }
 }
