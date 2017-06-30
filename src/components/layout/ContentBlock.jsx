@@ -9,7 +9,7 @@ const ContentBlock = ({ routes, current }) => {
     return <Redirect to={current.redirect} />
   }
   return (
-    <div>
+    <div style={{flex: 1}}>
     {
       routes.map( ({ path, exact, component }, idx)=>{
         return(
