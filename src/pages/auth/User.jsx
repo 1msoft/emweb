@@ -23,10 +23,8 @@ class User extends Component {
   }
 
   render() {
-    console.log("=======")
     return (
       <div>
-      <Layout className="main-wrapper">
         <QueryBlock
           getQueryParams={this.store.getQueryParams}
           setQueryParams={this.store.setQueryParams}
@@ -42,7 +40,6 @@ class User extends Component {
             onDelete={this.onDelete}
             onReset={this.onReset} />
         </div>
-      </Layout>
       </div>
     )
   }

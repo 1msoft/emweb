@@ -30,7 +30,7 @@ const dataSource = {
 class FormPage extends Component {
   render() {
     return (
-      <div style={{background: '#fff', margin: '20px'}}>
+      <div>
         <Checkout
           title="自定义表单"
           layout="horizontal"
