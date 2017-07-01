@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 // import { Link, history } from 'react-router-dom';
-import { Button, Input } from 'antd';
+import { Button, Input, message } from 'antd';
 import { observer, inject } from 'mobx-react'
 // import bcrypt from '../utils/bcrypt'
 import logo from '../../assets/image/LOGO.png'
@@ -15,15 +15,16 @@ class Login extends Component {
 			this.state = {
 					username: '',
 					password: '',
+					loginLoading:false
 			};
 	}
 
 	componentDidMount() {
-
+		let Login_Focus=document.getElementById("Login_Focus")
+		Login_Focus.focus()
 	}
 
 	componentWillUnmount() {
-
 	}
 
 	render () {
@@ -37,7 +38,7 @@ class Login extends Component {
 										<div className="signin-logo">
 											<img src={logo} alt={"AccuraGen"} />
 										</div>
-										<Input placeholder="用户名"
+										<Input placeholder="用户名" id="Login_Focus"
 										onKeyDown={(e) => e.keyCode === 13 ? this.login.bind(this)() : null }
 										onChange={this.changeState.bind(this, 'username')}
 										style={{width: 250, height: 38, marginBottom: 30}} />
@@ -46,7 +47,7 @@ class Login extends Component {
 										onChange={this.changeState.bind(this, 'password')}
 										style={{width: 250, height: 38, marginBottom: 30}} />
 										<span className="raised-button">
-											<Button type="primary" onClick={this.login.bind(this)}> 登录系统 </Button>
+											<Button type="primary" loading={this.state.loginLoading} onClick={this.login.bind(this)}> 登录系统 </Button>
 										</span>
 									</div>
 								</div>
@@ -66,8 +67,47 @@ class Login extends Component {
 
 	login() {
     const {username, password} = this.state
-    this.store.getList(username, password, this.goHomePage)
+		if (username === '' || password === '') {
+			message.error("用户名或者密码不能为空")
+			return
+		}
+		this.changeLoginLoading()
+		this.store.login(username, password).then(
+			(res) => {
+				this.loginResult(res)
+			}).catch(
+			(err) => {
+				this.loginResult(err)})
   }
+
+	loginResult = (result) => {
+		switch(result) {
+			case 'fail_dataBase':
+				message.error('检查数据库链接是否正确')
+				this.changeLoginLoading()
+				break
+			case 'fail_username':
+				message.error("账号不存在")
+				this.changeLoginLoading()
+				break
+			case 'fail_password':
+				message.error('密码不正确')
+				this.changeLoginLoading()
+				break
+			case 'success':
+				message.success('登录成功')
+				this.goHomePage()
+				this.changeLoginLoading()
+				break
+			default:
+		}
+	}
+
+	changeLoginLoading = () => {
+		this.setState({
+			loginLoading: !this.state.loginLoading
+		})
+	}
 
   goHomePage = () => {
     const {history} = this.props

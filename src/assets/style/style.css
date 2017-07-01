@@ -114,30 +114,7 @@ element.style {
 .ant-popover-inner {
   max-width: 200px
 }
-/*查询组件样式*/
-.query-list{
-  width: 22%;
-  display: inline-block;
-  overflow: hidden;
-}
-.query-select{
-  width: 100%;
-}
-.query-date{
-  width: 32%;
-  display: inline-block;
-  overflow: hidden;
-}
-.query-date .ant-calendar-picker .ant-calendar-picker-input{
-  width: 100%;
-}
-.queryDate input{
-  width: 48%;
-}
-.query-button{
-  text-align: center;
-  margin-right: 15px;
-}
+
 
 /**** signin ****/
 .signin {

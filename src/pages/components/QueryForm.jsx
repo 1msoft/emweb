@@ -42,7 +42,6 @@ export default class QueryForm extends Component {
 	}
 
 	changeDate = (date) => {
-		console.log(date)
 		this.setState({
 			tableDateSource: date
 		})
