@@ -59,18 +59,16 @@ export default class CardTable extends Component {
   }
 
   render() {
-    
+
     return (
-      <Layout className="main-wrapper">
-        <div style={{ margin: '10px 20px'}}>
-          <CollapsePanel header="近一个月">
-            <InfoTable columns={this.props.columns} dataSource={data_month} />
-          </CollapsePanel>
-          <CollapsePanel header="近一个星期">
-            <InfoTable columns={this.props.columns} dataSource={data_week} />
-          </CollapsePanel>
-        </div>
-      </Layout>
+      <div>
+        <CollapsePanel header="近一个月">
+          <InfoTable columns={this.props.columns} dataSource={data_month} />
+        </CollapsePanel>
+        <CollapsePanel header="近一个星期">
+          <InfoTable columns={this.props.columns} dataSource={data_week} />
+        </CollapsePanel>
+      </div>
     )
   }
 }

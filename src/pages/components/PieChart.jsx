@@ -12,7 +12,7 @@ for(let i=1; i <= 5; i++) {
 class SimplePieChart extends Component {
   render() {
     return (
-      <div style={{margin: '10px'}}>
+      <div>
         <div style={{marginBottom: '20px'}}>
           <PieChart rate='50%' />
           <PieChart rate='30%' />

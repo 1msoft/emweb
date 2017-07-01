@@ -41,22 +41,26 @@ html, body {
 
 .main-wrapper {
   width: 1264px;
-  margin:0 48px;
+  margin: 30px auto 30px auto;
   border-radius: 4px;
-  padding: 48px 0 0;
-  margin-bottom: 24px;
-  margin-left: auto;
-  margin-right: auto;
-  background: #fff;
+  padding: 30px;
+  background-color: #fff;
   min-height: 700px;
+}
 
+.breadcrumb {
+  margin-bottom: 26px;
+}
+
+.content {
+  flex: 1;
+  background-color: #fff;
 }
 
 .header {
   transition: opacity .5s;
   background: #fff;
   height: 80px;
-  margin-bottom: 24px;
   padding: 0 48px;
   width:100%;
 }

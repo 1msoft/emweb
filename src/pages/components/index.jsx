@@ -35,9 +35,9 @@ class Components extends React.Component {
     const contentRoutes = this.routeHelper.getComponentRouteList('Components', { cascade: false })
 
     return (
-      <Layout className="main-wrapper ant-layout-has-sider">
+      <Layout className="ant-layout-has-sider">
         <LeftNavMenu navList={navList} openKeys={openKeys} selectedKeys={selectedKeys} />
-        <ContentBlock routes={contentRoutes} current={route} />
+        <ContentBlock routes={contentRoutes} current={route} className="content" />
       </Layout>
     )
   }

@@ -3,6 +3,7 @@ import { Layout, Menu, Icon, Dropdown, Button, message, Modal, Form, Input } fro
 import { observer, inject } from 'mobx-react'
 
 import TopNavMenu from '../../components/layout/TopNavMenu'
+import Breadcrumb from '../../components/layout/Breadcrumb'
 import ContentBlock from '../../components/layout/ContentBlock'
 
 import RouteHelper from '../../utils/RouteHelper'
@@ -113,13 +114,13 @@ class AppFrame extends Component {
     //   this.props.history.push('/notfound')
     // }
     let { routeTree: navList, selectedKeys } = this.routeHelper.getRouteTree('Index', route.routeName, { cascade: true })
-
+    const contentRoutes = this.routeHelper.getComponentRouteList('Index', { cascade: false })
+    const breadcrumbs = this.routeHelper.getBreadCrumb(route.routeName)
     // 暂时代码：当当前用户为管理员时，才显示用户管理tab
     // if (!this.store.loginUser.isAdmin) {
     //   navList = navList.filter( (item) => item.routeName !== 'USER')
     // }
 
-    const contentRoutes = this.routeHelper.getComponentRouteList('Index', { cascade: false })
     return(
       <Layout className="page-wrapper">
         {/* header */}
@@ -139,7 +140,11 @@ class AppFrame extends Component {
           <TopNavMenu navList={navList} selectedKeys={selectedKeys} />
         </Header>
         {/* content */}
-        <ContentBlock routes={contentRoutes} current={route} />
+        <Layout className="main-wrapper">
+          <Breadcrumb breadcrumbs={breadcrumbs} className="breadcrumb"
+            style={{ display: route.routeName === 'Home' ? 'none' : 'block' }} />
+          <ContentBlock routes={contentRoutes} current={route} className="content" />
+        </Layout>
         {/* footer */}
         <Footer className="footer">
           Copyright &copy; 2017 Emsoft Incorporated. All rights reserved
