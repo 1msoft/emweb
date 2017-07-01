@@ -52,14 +52,13 @@ const data_week = [{
 }]
 
 @observer
-export default class CardTable extends Component {
+export default class Collapse extends Component {
   constructor(props) {
     super(props)
     this.state = {}
   }
 
   render() {
-
     return (
       <div>
         <CollapsePanel header="近一个月">

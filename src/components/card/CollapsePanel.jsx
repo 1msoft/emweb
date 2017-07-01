@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Collapse } from 'antd'
 
 /**
- * 大卡片，可展开、收缩，支持标题自定义
+ * 折叠面板，可展开、收缩，支持标题自定义
  * 配置参数：
  * --header 标题
  * 使用方法：
