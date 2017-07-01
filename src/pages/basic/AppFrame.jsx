@@ -3,6 +3,7 @@ import { Layout, Menu, Icon, Dropdown, Button, message, Modal, Form, Input } fro
 import { observer, inject } from 'mobx-react'
 
 import TopNavMenu from '../../components/layout/TopNavMenu'
+import Breadcrumb from '../../components/layout/Breadcrumb'
 import ContentBlock from '../../components/layout/ContentBlock'
 
 import RouteHelper from '../../utils/RouteHelper'
@@ -32,7 +33,7 @@ class AppFrame extends Component {
     if(cookie.get("_id") === undefined){
       // this.props.history.push('/login')
     } else {
-      // this.store.findId(cookie.get("_id"))
+      this.store.findId(cookie.get("_id")).catch(() => {message.error('检查数据库连接，无法获取当前用户')})
     }
 
     this.permitHelper = new PermitHelper()
@@ -56,34 +57,9 @@ class AppFrame extends Component {
   }
 
   displayDialog = () => {
-    if(this.state.dialog) {
-      this.setState({
-        oldPassWord: '',
-        rOldPassWord: '',
-        newPassWord: ''
-      })
-    }
     this.setState({
       dialog: !this.state.dialog
     })
-  }
-
-  changeState = (name) =>(e) => {
-    this.setState({[name]: e.target.value});
-  }
-
-  subChangePass = () => {
-    if (this.state.oldPassWord === this.state.rOldPassWord &&
-        this.state.newPassWord !== '') {
-      if (bcrypt.compareSync(this.state.oldPassWord, this.store.loginUser.password)) {
-        this.store.changePassWord(this.store.loginUser._id, this.state.newPassWord, this.clearStoreCoookie)
-        this.state.dialog = false
-      } else {
-        message.error("密码不正确")
-      }
-    } else {
-      message.error("填写有误，按照提示修改")
-    }
   }
 
   //清空 loginUser  cookie  返回登录页
@@ -113,13 +89,13 @@ class AppFrame extends Component {
     //   this.props.history.push('/notfound')
     // }
     let { routeTree: navList, selectedKeys } = this.routeHelper.getRouteTree('Index', route.routeName, { cascade: true })
-
+    const contentRoutes = this.routeHelper.getComponentRouteList('Index', { cascade: false })
+    const breadcrumbs = this.routeHelper.getBreadCrumb(route.routeName)
     // 暂时代码：当当前用户为管理员时，才显示用户管理tab
     // if (!this.store.loginUser.isAdmin) {
     //   navList = navList.filter( (item) => item.routeName !== 'USER')
     // }
 
-    const contentRoutes = this.routeHelper.getComponentRouteList('Index', { cascade: false })
     return(
       <Layout className="page-wrapper">
         {/* header */}
@@ -139,17 +115,21 @@ class AppFrame extends Component {
           <TopNavMenu navList={navList} selectedKeys={selectedKeys} />
         </Header>
         {/* content */}
-        <ContentBlock routes={contentRoutes} current={route} />
+        <Layout className="main-wrapper">
+          <Breadcrumb breadcrumbs={breadcrumbs} className="breadcrumb"
+            style={{ display: route.routeName === 'Home' ? 'none' : 'block' }} />
+          <ContentBlock routes={contentRoutes} current={route} className="content" />
+        </Layout>
         {/* footer */}
         <Footer className="footer">
           Copyright &copy; 2017 Emsoft Incorporated. All rights reserved
         </Footer>
         {/* 弹窗 */}
-        <ChangePassWDia
+        <WrappedChangePassWDia
           state={this.state}
           displayDialog={this.displayDialog}
-          changeState={this.changeState}
-          subChangePass={this.subChangePass} />
+          clearStoreCoookie={this.clearStoreCoookie}
+          displayDialog={this.displayDialog} />
       </Layout>
     );
   }
@@ -160,12 +140,58 @@ export default AppFrame
 /**
  * 修改密码弹窗
  */
+@inject(['loginStore'])
+@observer
 class ChangePassWDia extends Component{
-  state = {
-    confirmDirty: false,
-    autoCompleteResult: [],
-  };
 
+  constructor(props) {
+    super(props);
+    this.store = this.props.loginStore
+    this.state = {
+      oldPassWord: '',
+      rOldPassWord: '',
+      newPassWord: '',
+      confirmDirty: false,
+      autoCompleteResult: [],
+    }
+  }
+
+  changeState = (name) =>(e) => {
+    this.setState({[name]: e.target.value});
+  }
+
+  subChangePass = () => {
+    if (this.store.loginUser.password === undefined) {
+      message.error('请检查数据库的链接，无法获取当前用户的信息')
+      return
+    }
+    if (this.state.oldPassWord === this.state.rOldPassWord &&
+        this.state.oldPassWord !== '' &&
+        this.state.newPassWord !== '') {
+      if (bcrypt.compareSync(this.state.oldPassWord, this.store.loginUser.password)) {
+        this.store.changePassWord(this.store.loginUser._id, this.state.newPassWord).then(
+          () => {
+            message.success("密码修改成功，请重新登录！")
+            this.clear_Pass_Dialog_State()
+            this.props.clearStoreCoookie()
+          })
+      } else {
+        message.error("密码不正确")
+      }
+    } else {
+      message.error("填写有误，按照提示修改")
+    }
+  }
+
+  clear_Pass_Dialog_State =() => {
+    this.setState({
+      oldPassWord: '',
+      rOldPassWord: '',
+      newPassWord: ''
+    })
+    this.props.displayDialog()
+  }
+  
   checkConfirm = (rule, value, callback) => {
     const form = this.props.form;
     if (value && this.state.confirmDirty) {
@@ -173,7 +199,7 @@ class ChangePassWDia extends Component{
     }
     callback();
   }
-
+  
   checkPassword = (rule, value, callback) => {
     const form = this.props.form;
     if (value && value !== form.getFieldValue('password')) {
@@ -184,14 +210,14 @@ class ChangePassWDia extends Component{
   }
 
   render() {
-    const {state, displayDialog, changeState, subChangePass} = this.props
+    const {state, displayDialog} = this.props
     const { getFieldDecorator } = this.props.form;
     return(
       <div>
         {state.dialog ? <Modal
         title="修改密码"
         visible={state.dialog}
-        onOk={subChangePass}
+        onOk={this.subChangePass}
         onCancel={displayDialog}
         >
           <Form>
@@ -205,7 +231,7 @@ class ChangePassWDia extends Component{
               })(
                 <Input placeholder="请输入您的原密码"
                     type="password"
-                    onChange={changeState('oldPassWord')}
+                    onChange={this.changeState('oldPassWord')}
                      />
               )}
             </Form.Item>
@@ -219,7 +245,7 @@ class ChangePassWDia extends Component{
               })(
                 <Input placeholder="请再次输入您的原密码"
                     type="password"
-                    onChange={changeState('rOldPassWord')}
+                    onChange={this.changeState('rOldPassWord')}
                      />
               )}
             </Form.Item>
@@ -231,7 +257,7 @@ class ChangePassWDia extends Component{
               })(
                 <Input placeholder="请输入您的新密码"
                     type="password"
-                    onChange={changeState('newPassWord')}
+                    onChange={this.changeState('newPassWord')}
                      />
               )}
             </Form.Item>
@@ -242,4 +268,4 @@ class ChangePassWDia extends Component{
   }
 }
 
-ChangePassWDia = Form.create()(ChangePassWDia)
+const WrappedChangePassWDia = Form.create()(ChangePassWDia)

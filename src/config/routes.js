@@ -24,7 +24,7 @@ export default {
 
     // 根目录
     Index: {
-        id: 1, text: '根目录', path: '/', redirect: '/home', parent: 'Root',
+        id: 1, text: '首页', path: '/', redirect: '/home', parent: 'Root',
         component: AppFrame,
     },
 
