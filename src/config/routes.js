@@ -11,6 +11,8 @@ import { User, UpsertUser } from '../pages/auth/User'
 
 import QueryForm from '../pages/components/QueryForm'
 import CardTable from '../pages/components/CardTable'
+import CostomForm from '../pages/components/CostomForm'
+import PieChart from '../pages/components/PieChart'
 
 export default {
     // 登录
@@ -22,7 +24,7 @@ export default {
 
     // 根目录
     Index: {
-        id: 1, text: '根目录', path: '/', redirect: '/home', parent: 'Root',
+        id: 1, text: '首页', path: '/', redirect: '/home', parent: 'Root',
         component: AppFrame,
     },
 
@@ -81,6 +83,20 @@ export default {
     CardTable: {
         id: 13, text: '卡片&表格', path: '/components/cardtable', parent: 'Components',
         nav: true, component: CardTable,
+        exact: true,
+    },
+
+    // 导航 - 组件 - 表单
+    CostomForm: {
+        id: 14, text: '表单', path: '/components/costomform', parent: 'Components',
+        nav: true, component: CostomForm,
+        exact: true,
+    },
+
+    // 导航 - 组件 - 简单饼图
+    PieChart: {
+        id: 15, text: '简单饼图', path: '/components/piechart', parent: 'Components',
+        nav: true, component: PieChart,
         exact: true,
     },
 

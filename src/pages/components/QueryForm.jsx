@@ -75,10 +75,7 @@ export default class QueryForm extends Component {
 			key: 'time'
 		}]
 		return (
-			<div style={{margin: '0 auto',
-									 background: '#fff',
-									 marginBottom: '30px',
-									 padding: '15px 0'}}>
+			<div>
 					<TestQueryForm changeDate={this.changeDate} enterKey={this.enterKey} aotu_focus={true} />
 					<Table style={{width: '95%', margin: '0 auto'}}
 								 columns={columns}

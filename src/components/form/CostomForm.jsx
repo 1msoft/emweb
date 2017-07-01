@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
-import { Form, Col } from 'antd'
+import { Form, Col, Row } from 'antd'
 import _ from 'lodash'
+import './CostomForm.css'
 
 /* 配置参数
 *  -- dataSource 源数据对象 例：{住院号：1, 入院日期: "2015-09-16T00:00:00"}
 *  -- costomData 自定义数据对象  例：{show: [], fields: {}}
-*     -- show   要显示字段  例：['住院号', '入院日期', {title: 'title', value: 'value', col: 0-24, sn: 'number'}]
+*     -- show   要显示字段  例：['住院号', '入院日期', {title: 'title', value: 'value', grid: 0-24, sn: 'number'}]
 *     -- hide   要隐藏字段  例：['fieds_1', 'fieds_2']
 *     -- fields 自定义字段
 *        例：{
@@ -13,17 +14,18 @@ import _ from 'lodash'
 *                title: '',
 *                alias: '别名', //设置alias则会覆盖title
 *                value: '',
-*                col: 0-24,  //设置表单字段的栅格个数
-*                sn: number,
-*                render(field){ return (string|Node) },
+*                grid: 0-24,  //设置表单字段的栅格个数
+*                sn: number,  //排序依据
+*                render(field， dataSource){ return (string|Node) },
 *                ...
 *              }
 *            }
 *  -- title 表单表头  string
-*  -- layout 表单布局 'horizontal'|'vertical'|'inline'
+*  -- layout 表单布局 'horizontal'|'vertical'|'inline' 默认'horizontal'
+*  -- labelWidth 表单label的宽度设置
 *  -- labelHide 控制label的显示隐藏 默认为false
 *  -- bordered 表单边框
-*  -- col 控制表单栅格个数（只针对子表单设置）
+*  -- grid 控制表单栅格个数（只针对子表单设置）
 *  例：
 *  <ConstomForm
 *     dataSource={{}}
@@ -34,6 +36,7 @@ import _ from 'lodash'
 *
 *     <ConstomForm
 *       title='title'
+*       grid={24}
 *       layout='horizontal'>
 *
 *       <Table />
@@ -44,83 +47,153 @@ import _ from 'lodash'
 */
 
 class ConstomForm extends Component {
+  state = {
+    fields: [],
+    dataSource: {}
+  }
+
+  componentWillMount() {
+    const { costomData, dataSource } = this.props
+    if (!costomData && !this.costomFields()) throw Error('填写字段')
+    this.costomData = this.props.costomData
+    const costomFields = this.costomFields()
+    this.setState({fields: this.getFields(dataSource, costomFields), dataSource: dataSource})
+  }
+
   render() {
-    const { title, layout, dataSource, costomData, children, bordered } = this.props
-    const fields = this.getFields(dataSource, costomData)
-    const titleCls =  bordered ? 'antd-form-title' : 'antd-form-title'
-    const formCls = bordered ? 'antd-form-body clearfix' : 'antd-childForm-body clearfix'
-    const formLayout = (layout === 'vertical') ? 24 : 6
-    const wrap = (layout === 'vertical') ? 'antd-form-span-break' : ''
-    // let count = 0
-    // let contentArr = []
+    const { title, layout, children, labelWidth = 0, bordered } = this.props
+    const { fields, dataSource } = this.state
+
+    const toggleBorder = bordered ? "" : 'hide-border'
+    const fieldsGrid = (layout === 'vertical') ? 24 : 6
+
+    let count = 0, cacheArr = [], cacheFields = fields, cacheChildren = children
+
     return (
-      <div className="formWrap">
-        <h3 className={titleCls}>{title}</h3>
+      <div className='antd-form-container'>
+        { title ? <h3 className='antd-form-title'>{title}</h3> : <div />}
         <Form
           layout={layout || 'horizontal'}
-          className={formCls}>
+          className={`antd-form-box ${toggleBorder}`}>
           {
             fields ? fields.map((field, index) => {
-              const contentVal = (typeof field.render === 'function') ? field.render(field, dataSource) : (field.value || '')
-              const titleVal = (typeof contentVal === 'object') ? '' : contentVal
-              const labelHide = (field.labelHide || false) ? 'none' : '-webkit-box'
-              // const labelMapSpan = labelHide === 'none' ? 'none' : 1
-              // contentArr.push(field.title)
-              // count += (field.col || formLayout)
-              //count 为24,签闭合一次 到结束如果不满24也必须闭合
-              // if (count === 24) {
-              //   count = 0
-              //   console.log(contentArr, 'contentArr')
-              //   return (
-              //     <Row>
-              //       {
-              //         contentArr.map(value => {
-              //           <Col span={value.col || formLayout}>
-              //             {value.title}
-              //           </Col>
-              //         })
-              //       }
-              //     </Row>
-              //   )
-              //   contentArr = []
-              //   console.log(field)
-              // } else {
-                // console.log(field.col || formLayout)
-              // }
-              return (
-                <Col className="antd-form-col" span={field.col || formLayout} key={index} >
-                  <label className="antd-form-label" title={field.alias || field.title} style={{display: labelHide}}>
-                    {field.alias || field.title}
-                  </label>
-                  <span className={`${wrap} antd-form-span`} title={titleVal}>
-                    {contentVal}
-                  </span>
-                </Col>
-              )
-              // return (
-              //     `<Col className=antd-form-col span={${field.col || formLayout}} key=${index} >
-              //       <label className="antd-form-label">
-              //         ${field.title}
-              //       </label>
-              //       <span className=${wrap} antd-form-span title=${titleVal}>
-              //         ${contentVal}
-              //       </span>
-              //     </Col>`
-              //   )
+
+              cacheArr.push(field)
+              count += (field.grid || fieldsGrid)
+
+              if (count >= 24) {
+
+                count = 0
+                cacheFields = _.difference(cacheFields, cacheArr)
+
+                return (
+                  <Row key={index} style={{marginBottom: '12px'}}>
+                    {
+                      cacheArr.map((value, idx) => {
+
+                        cacheArr = []
+                        const renderVal = (typeof value.render === 'function') ?
+                           value.render(value, dataSource) : (value.value || '')
+                        const labelHide = value.labelHide ? 'hide-label' : ""
+                        const changeWidth = value.labelHide ? '0' : labelWidth
+
+                        return (
+                          <Col span={value.grid || fieldsGrid} key={`last_${idx}`}>
+                            <label className={`antd-form-row-label ${labelHide}`} style={{width: `${labelWidth || 100}px`}}>
+                              {value.alias || value.title}
+                            </label>
+                            <div className='antd-form-row-content' style={{width: `calc(100% - ${changeWidth || (labelWidth || 105)}px)`}}>
+                              {renderVal}
+                            </div>
+                          </Col>
+                        )
+                      })
+                    }
+                  </Row>
+                )
+              }
+              if(fields.indexOf(field) === fields.length -1 ) {
+
+                return (
+                  <Row key={index} style={{marginBottom: '12px'}}>
+                    {
+                      cacheFields.map((value, idx) => {
+
+                        const renderVal = (typeof value.render === 'function') ?
+                           value.render(value, dataSource) : (value.value || '')
+                        const labelHide = value.labelHide ? 'hide-label' : ""
+
+                        return (
+                          <Col span={value.grid || fieldsGrid} key={`last_${idx}`}>
+                            <label className={`antd-form-row-label ${labelHide}`} style={{width: `${labelWidth || 100}px`}}>
+                              {value.alias || value.title}
+                            </label>
+                            <div className='antd-form-row-content' style={{width: `calc(100% - ${labelWidth || 105}px)`}}>
+                              {renderVal}
+                            </div>
+                          </Col>
+                        )
+                      })
+                    }
+                  </Row>
+                )
+              }
             }) : ''
           }
           {
-            children ? React.Children.map(this.props.children, (child, index) => {
-              return (
-                <Col span={child.props.col || 24} key={index}>
-                  {child}
-                </Col>
-              )
+            children ? React.Children.map(children, (child, index) => {
+
+              cacheArr.push(child)
+              count += (child.props.grid || 24)
+
+              if(count >= 24) {
+
+                count = 0
+                cacheChildren = _.difference(cacheChildren, cacheArr)
+
+                return (
+                  <Row key={index} style={{marginBottom: '12px'}}>
+                    {
+                      cacheArr.map((value, idx) => {
+
+                        cacheArr = []
+
+                        return (
+                          <Col span={value.props.grid || 24} key={idx} style={{padding: '16px 18px'}}>
+                            {value}
+                          </Col>
+                        )
+                      })
+                    }
+                  </Row>
+                )
+              }
+              if(children.indexOf(child) === children.length - 1 ) {
+
+                return (
+                  <Row key={index} style={{marginBottom: '12px'}}>
+                    {
+                      cacheChildren.map((value, idx) => {
+
+                        return (
+                          <Col span={value.props.grid || 24} key={idx} style={{padding: '16px 18px'}}>
+                            {value}
+                          </Col>
+                        )
+                      })
+                    }
+                  </Row>
+                )
+              }
             }) : ''
           }
         </Form>
       </div>
     )
+  }
+  //自定义字段
+  costomFields() {
+    return {}
   }
   //字段操作
   getFields(dataSource, costomData) {

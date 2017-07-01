@@ -1,0 +1,66 @@
+.antd-form-container {
+  box-sizing: border-box;
+  font-size: 12px;
+  word-break: break-all;
+  background: #fff;
+  /*padding: 16px 18px;*/
+  margin-bottom: 20px;
+}
+
+.antd-form-title {
+  font-family: 'PingFangSC-Semibold', 'PingFang SC Semibold', 'PingFang SC';
+  font-size: 16px;
+  line-height: 16px;
+  margin-bottom: 10px;
+}
+
+.antd-form-box {
+  box-sizing: border-box;
+  padding: 8px 12px;
+  border: 1px solid rgba(235, 235, 235, 0.9);
+  border-radius: 5px;
+  height: auto;
+}
+
+.antd-form-container .hide-border {
+  border: none
+}
+
+.antd-form-row-label {
+  float: left;
+  display: inline-block;
+  box-sizing: border-box;
+  width: 100px;
+  height: 32px;
+  line-height: 32px;
+  text-align: right;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.antd-form-container .hide-label{
+  display: none
+}
+
+/*.antd-form-row-label:before {
+  display: inline-block;
+  margin-right: 4px;
+  content: "*";
+  font-family: SimSun;
+  line-height: 1;
+  font-size: 12px;
+  color: #f04134;
+}*/
+
+.antd-form-row-label:after {
+  content: ":";
+  margin: 0 8px 0 2px;
+  position: relative;
+  top: -.5px;
+}
+
+.antd-form-row-content {
+  float: left;
+  width: calc( 100% - 100px );
+  line-height: 32px;
+}

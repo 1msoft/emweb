@@ -4,12 +4,17 @@ import cookie from '../../utils/cookie'
 
 
 // 内容页路由定义
-const ContentBlock = ({ routes, current }) => {
+const ContentBlock = ({ ...props }) => {
+  const { routes, current, style } = props
   if (current.redirect) {
-    return <Redirect to={current.redirect} />
+    return (
+      <div { ...props }>
+        <Redirect to={current.redirect} />
+      </div>
+    )
   }
   return (
-    <div>
+    <div { ...props }>
     {
       routes.map( ({ path, exact, component }, idx)=>{
         return(
