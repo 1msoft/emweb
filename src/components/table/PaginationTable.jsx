@@ -4,6 +4,7 @@ import './PaginationTable.css'
 
 /*
  * --activeColumn 支持列动态移动 Boolean 默认false
+ * --controllerPage 控制分页 Boolean 默认后端分页，为true
  */
 
 class PaginationTable extends Component {
@@ -60,18 +61,18 @@ class PaginationTable extends Component {
   }
 
   render() {
+    const { controllerPage = true } = this.props
     //分页设置
-    const pagination = {
+    const pagination = Object.assign({
       showSizeChanger: true,
-      showQuickJumper: true,
+      showQuickJumper: !controllerPage,
       defaultCurrent: 1,
       defaultPageSize: this.state.pageSize,
       showTotal: this.showTotal,
       total: this.props.dataLength,
-      // current: this.props.currentPage,
       onChange: this.onPageChange,
       onShowSizeChange: this.onPageChangeCb,
-    }
+    }, (controllerPage ? {current: this.props.currentPage} : {}))
 
     this.columns = this.columns.map( (col, index) => {
       if (col.sorter) {
@@ -97,23 +98,28 @@ class PaginationTable extends Component {
     return (
       <div className="antd-inline-table row-highLight clearfix">
         <Table
-          loading={this.state.loading}
-          pagination={pagination}
+          loading={this.props.loading}
+          pagination={controllerPage ? false : pagination}
           dataSource={this.props.dataSource}
           columns={this.columns}
           onChange={this.fetchData.bind(this)}
           onRowClick={this.onRowClick}
           {...this.config} />
-        {/*<ul
-          style={{ clear: 'none', padding: '12px 0' }}
-          className="ant-pagination">
-          <div className="ant-pagination-options">
-            <div className="ant-pagination-options-quick-jumper">
-              跳至<input type="text" value={this.state.jumper} onChange={this.onJumperChange} onKeyDown={this.onJumpToPage} />页
-            </div>
-          </div>
-        </ul>*/}
-        {/*<Pagination ref='pagination' style={{ clear: 'none', paddingRight: 0 }} {...pagination} />*/}
+          {
+            controllerPage ? 
+            <div>
+              <ul
+                style={{ clear: 'none', padding: '12px 0' }}
+                className="ant-pagination">
+                <div className="ant-pagination-options">
+                  <div className="ant-pagination-options-quick-jumper">
+                    跳至<input type="text" value={this.state.jumper} onChange={this.onJumperChange} onKeyDown={this.onJumpToPage} />页
+                  </div>
+                </div>
+              </ul>
+              <Pagination ref='pagination' style={{ clear: 'none', paddingRight: 0 }} {...pagination} />
+            </div> : ''
+          }
       </div>
     )
   }

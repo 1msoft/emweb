@@ -60,7 +60,7 @@ const ActionButton = (props) => {
 /*
 * 渲染列
 */
-export const Column = (title, dataIndex, sorter = false, filter = false, options) => {
+export const Column = (title, dataIndex, sorter = false, options) => {
     return Object.assign({title, dataIndex, key: dataIndex, sorter}, options)
 }
 

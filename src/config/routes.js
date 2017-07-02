@@ -13,6 +13,7 @@ import QueryForm from '../pages/components/QueryForm'
 import CardTable from '../pages/components/CardTable'
 import CostomForm from '../pages/components/CostomForm'
 import PieChart from '../pages/components/PieChart'
+import TablePage from '../pages/components/TablePage'
 
 export default {
     // 登录
@@ -97,6 +98,13 @@ export default {
     PieChart: {
         id: 15, text: '简单饼图', path: '/components/piechart', parent: 'Components',
         nav: true, component: PieChart,
+        exact: true,
+    },
+
+    // 导航 - 组件 - 表格
+    TablePage: {
+        id: 15, text: '表格', path: '/components/tablepage', parent: 'Components',
+        nav: true, component: TablePage,
         exact: true,
     },
 
