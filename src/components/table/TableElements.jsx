@@ -60,13 +60,8 @@ const ActionButton = (props) => {
 /*
 * 渲染列
 */
-export const Column = (title, dataIndex, sorter = false, filter = false, options) => {
-    return Object.assign(
-      {
-        title, dataIndex, key: dataIndex, sorter,
-        filterDropdown: filter ?((typeof filter === 'function')
-          ? filter() : <Search placeholder="请输入查询内容" onSearch={value => console.log(value)} />) : '',
-      }, options)
+export const Column = (title, dataIndex, sorter = false, options) => {
+    return Object.assign({title, dataIndex, key: dataIndex, sorter}, options)
 }
 
 /**
