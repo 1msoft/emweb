@@ -119,7 +119,7 @@ export default {
     },
 
     // 导航 - 组件 - 卡片式列表
-    CardList: {
+    PaginationCard: {
         id: 16, text: '卡片式列表', path: '/components/paginationcard', parent: 'Components',
         nav: true, component: PaginationCard,
         exact: true,
@@ -162,4 +162,3 @@ export default {
         exact: true,
     }
 }
-
