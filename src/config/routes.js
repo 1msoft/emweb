@@ -13,7 +13,7 @@ import QueryForm from '../pages/components/QueryForm'
 import Collapse from '../pages/components/Collapse'
 import CostomForm from '../pages/components/CostomForm'
 import PieChart from '../pages/components/PieChart'
-import CardList from '../pages/components/CardList'
+import PaginationCard from '../pages/components/PaginationCard'
 
 export default {
     // 登录
@@ -103,8 +103,8 @@ export default {
 
     // 导航 - 组件 - 卡片式列表
     CardList: {
-        id: 16, text: '卡片式列表', path: '/components/cardlist', parent: 'Components',
-        nav: true, component: CardList,
+        id: 16, text: '卡片式列表', path: '/components/paginationcard', parent: 'Components',
+        nav: true, component: PaginationCard,
         exact: true,
     },
 

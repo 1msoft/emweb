@@ -1,7 +1,14 @@
 import React, { Component } from 'react'
 import { Card, Pagination } from 'antd'
+import './PaginationCard.css'
 
-export default class PaginationCard extends Component {
+/**
+ * 卡片式列表
+ * 配置参数 data为数组，包含image，title，content
+ * 使用方式：
+ * <PaginationCards data={} />
+ */
+export default class PaginationCards extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
@@ -14,22 +21,14 @@ export default class PaginationCard extends Component {
 	render() {
 		// 分页设置
 		const pagination = {
-			// showSizeChanger: true,
-			// showQuickJumper: false,
-			// defaultCurrent: 1,
-			// defaultPageSize: this.state.pageSize,
 			showTotal: this.showTotal,
 			total: this.props.data.length,
 			onChange: this.onChange,
-			// current: this.props.currentPage,
-			// onShowSizeChange: this.onPageChangeCb,
 		}
-		console.log(this.props.data)
-		console.log(pagination.total)
 
 		return (
-			<div id="border-area" style={{ width: '100%', overflow: 'hidden' }}>
-				<div id="content-area" style={{ width: `${35 * pagination.total}%`, marginLeft: `${this.state.distance}` }}>
+			<div style={{ width: '100%', overflow: 'hidden' }} ref='border_area'>
+				<div style={{ width: `${35 * pagination.total}%`, marginLeft: `${this.state.distance}` }} ref='content_area'>
 					{this.cards()}
 				</div>
 				<div className="card-page">
@@ -66,13 +65,8 @@ export default class PaginationCard extends Component {
 	}
 
 	onChange = (page, pageSize) => {
-		console.log('=====', this)
-		console.log('=====', page, pageSize)
-
-		const contentWide = document.getElementById('border-area').clientWidth
+		const contentWide = this.refs.border_area.clientWidth
 		console.log('contentWide', contentWide)
-		document.getElementById('content-area').style.marginLeft = `${-contentWide * (page - 1)}px`
+		this.refs.content_area.style.marginLeft = `${-contentWide * (page - 1)}px`
 	}
-
-
 }
