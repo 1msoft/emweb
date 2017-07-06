@@ -1,5 +1,4 @@
 import { observable, action } from 'mobx'
-import _ from 'lodash'
 import PouchDB from 'pouchdb'
 
 import {DATABASE_URL} from '../common/constant'
@@ -56,9 +55,10 @@ export default class SampleStore {
       })
     })).then( () => {
       return this.db.find({
-        sort: this.queryParams.sort,
+        // sort: this.queryParams.sort,
         selector:this.queryParams.conds,
         limit: this.queryParams.page.pageSize + 1,
+        // limit: 1000,
         skip: (this.queryParams.page.current - 1) * this.queryParams.page.pageSize,
       }).then( (res) => {
         // const offset = (this.queryParams.page.current - 1) * this.queryParams.page.pageSize
@@ -126,6 +126,40 @@ export default class SampleStore {
       } else {
         Object.assign(this.queryParams, option)
       }
+    })
+  }
+  //编辑行
+  @action
+  editRow = (_id, changeData) => {
+    if(!_id) {
+      const num_1 = Math.floor(Math.random() * 10)
+      const num_2 = Math.floor(Math.random() * 10)
+      const num_3 = Math.floor(Math.random() * 10)
+      this.db.put({
+        _id: `sample_${num_1}${num_2}${num_3}`,
+        portalDataType: 'D_SAMPLE',
+        ...changeData
+      }).then((doc) => {
+        this.getSampleList()
+        return
+      })
+    }
+    this.db.get(_id).then(doc => {
+      doc.sample_id = changeData.sample_id
+      doc.sample_type = changeData.sample_type
+      doc.patient_id = changeData.patient_id
+      return this.db.put(doc)
+    }).then((doc) => {
+      this.getSampleList()
+    })
+  }
+  //删除行
+  @action
+  deleteRow = (_id) => {
+    this.db.get(_id).then(doc => {
+      return this.db.remove(doc)
+    }).then(() => {
+      this.getSampleList()
     })
   }
 }

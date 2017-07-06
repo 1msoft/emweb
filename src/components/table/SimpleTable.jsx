@@ -29,12 +29,17 @@ export default class SimpleTable extends Component {
             bordered
             columns={this.columns}
             onRowClick={this.onRowClick()}
-            dataSource={this.props.dataSource} />
+            dataSource={this.props.dataSource}
+            {...this.configTable()} />
         </div>
       </div>
     )
   }
-
+  // 配置表格
+  configTable() {
+    return {}
+  }
+  // 列定义
   renderColumns() {
     return []
   }

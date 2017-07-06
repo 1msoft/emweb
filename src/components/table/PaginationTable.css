@@ -14,7 +14,7 @@
 }
 
 .active-column {
-  cursor: e-resize;
+  cursor: ew-resize;
   position: absolute;
   right: 0px;
   width: 35px;
