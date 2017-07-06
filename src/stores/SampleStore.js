@@ -1,12 +1,13 @@
 import { observable, action } from 'mobx'
+import _ from 'lodash'
 import PouchDB from 'pouchdb'
 
 import {DATABASE_URL} from '../common/constant'
 
-const DB_URL = DATABASE_URL
 PouchDB.plugin(require('pouchdb-find'))
 PouchDB.debug.enable('pouchdb:find')
 
+const DB_URL = DATABASE_URL
 //突变
 export default class SampleStore {
   db
@@ -31,13 +32,22 @@ export default class SampleStore {
 
   constructor() {
     this.db = new PouchDB(DB_URL)
-    // this.getSampleList()
+    this.getSampleList()
   }
   //获取样本列表
-  getSampleList = (patient_id, cb) => {
-    this.isLoading = false
-    const indexes = ['patient_id', 'sample_id', 'sample_type', 'instance_id', 'instance_type', 'recruit_time', '检测情况', 'portalDataType']
-
+  @action
+  getSampleList = (cb) => {
+    this.isLoading = true
+    const indexes = ['patient_id', 'sample_id', 'sample_type', 'instance_id', 'instance_type', 'recruit_time', 'recruit_type',
+      'raw_input_key','raw_yield_key','raw_yield_value','seq_id','seq_time','seq_input_key','seq_input_value','mean_seq_depth',
+      'target_rate','median_length','raw_seq_file','seq_quailty_file','analysis_result_file','compare_sample','compare_instance_id',
+      'compare_seq_id', 'compare_seq_time', 'portalDataType']
+    this.db.find({
+      selector:this.queryParams.conds,
+      limit: 10000
+    }).then((res) => {
+      this.queryParams.page.total = res.docs.length
+    })
     Promise.all(indexes.map( (index) => {
       return this.db.createIndex({
         index: {
@@ -45,19 +55,15 @@ export default class SampleStore {
         }
       })
     })).then( () => {
-      // return this.db.find({
-      //   selector: Object.assign(this.queryParams.conds, mustField, {"sample_id": {"$regex": ""}}),
-      //   limit: this.queryParams.page.pageSize + 1,
-      //   skip: (this.queryParams.page.current - 1) * this.queryParams.page.pageSize,
-      // }).then( (res) => {
       return this.db.find({
         sort: this.queryParams.sort,
         selector:this.queryParams.conds,
         limit: this.queryParams.page.pageSize + 1,
         skip: (this.queryParams.page.current - 1) * this.queryParams.page.pageSize,
       }).then( (res) => {
-        const offset = (this.queryParams.page.current - 1) * this.queryParams.page.pageSize
-        this.queryParams.page.total = offset + res.docs.length
+        // const offset = (this.queryParams.page.current - 1) * this.queryParams.page.pageSize
+        // this.queryParams.page.total = offset + res.docs.length
+        // this.queryParams.page.total = res.docs.length
 
         res.docs.length > this.queryParams.page.pageSize && res.docs.pop()
         this.sampleList = res.docs
@@ -68,8 +74,9 @@ export default class SampleStore {
       })
     })
   }
-
+  
   //获取病人下的样本
+  @action
   getPatientSampleList = (patient, cb) => {
     const patient_id = patient ? {$regex: patient} : undefined
     this.db.createIndex({
@@ -89,6 +96,7 @@ export default class SampleStore {
     })
   }
   //获取查询查询所有数据
+  @action
   getAllData = (cb) => {
     this.db.createIndex({
       index: {
@@ -107,7 +115,7 @@ export default class SampleStore {
       })
     })
   }
-
+  
   //设置查询条件
   @action
   setQueryParams = (...options) => {
