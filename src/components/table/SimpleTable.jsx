@@ -17,21 +17,20 @@ export default class SimpleTable extends Component {
   }
 
   columns = this.renderColumns()
-  onRowClick = this.onRowClick()
 
   render() {
     return (
       <div className="inline-table">
-          <div className="table-style">
-        <Table
-          pagination={false}
-          loading={this.state.loading}
-          size="small"
-          bordered
-          columns={this.columns}
-          onRowClick={this.onRowClick}
-          dataSource={this.props.dataSource} />
-          </div>
+        <div className="table-style">
+          <Table
+            pagination={false}
+            loading={this.state.loading}
+            size="small"
+            bordered
+            columns={this.columns}
+            onRowClick={this.onRowClick()}
+            dataSource={this.props.dataSource} />
+        </div>
       </div>
     )
   }

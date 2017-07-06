@@ -13,7 +13,12 @@ import QueryForm from '../pages/components/QueryForm'
 import Collapse from '../pages/components/Collapse'
 import CostomForm from '../pages/components/CostomForm'
 import PieChart from '../pages/components/PieChart'
+
 import PaginationCard from '../pages/components/PaginationCard'
+
+import PreviewPicture from '../pages/components/PreviewPicture'
+import TablePage from '../pages/components/TablePage'
+
 
 export default {
     // 登录
@@ -98,6 +103,18 @@ export default {
     PieChart: {
         id: 15, text: '简单饼图', path: '/components/piechart', parent: 'Components',
         nav: true, component: PieChart,
+        exact: true,
+    },
+  
+    // 导航 - 组件 - 图片预览
+    PreviewPicture: {
+        id: 20, text: '上传图片预览', path: '/components/previewPicture', parent: 'Components',
+        nav: true, component: PreviewPicture,
+  
+    // 导航 - 组件 - 表格
+    TablePage: {
+        id: 15, text: '表格', path: '/components/tablepage', parent: 'Components',
+        nav: true, component: TablePage,
         exact: true,
     },
 
