@@ -110,7 +110,8 @@ export default {
     PreviewPicture: {
         id: 20, text: '上传图片预览', path: '/components/previewPicture', parent: 'Components',
         nav: true, component: PreviewPicture,
-  
+    },
+
     // 导航 - 组件 - 表格
     TablePage: {
         id: 15, text: '表格', path: '/components/tablepage', parent: 'Components',

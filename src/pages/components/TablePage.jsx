@@ -7,7 +7,7 @@ import SimpleTable from '../../components/table/SimpleTable'
 import { Column } from '../../components/table/TableElements'
 import { sorter } from '../../utils/helper'
 
-const dataSource = [
+const student = [
   {name: '小明', age: 14, sex: '男', birthday: '2001-05-03', school: '西湖小学', grade: '小学6年级', class: '三班', studentId: 1},
   {name: '小红', age: 13, sex: '女', birthday: '2000-04-03', school: '西湖小学', grade: '小学6年级', class: '二班', studentId: 2},
   {name: '小东', age: 15, sex: '男', birthday: '2003-05-07', school: '西湖小学', grade: '小学6年级', class: '一班', studentId: 3},
@@ -19,6 +19,7 @@ const dataSource = [
 const students = []
 for(let i = 0; i<100; i++) {
   const student = {
+    _id: `student_${i}`,
     name: `A${i}`,
     age: `${Math.floor(Math.random() * (12 - 9 + 1) + 9)}`,
     sex: (Math.random() * 10) > 5 ? '男' : '女',
@@ -38,31 +39,31 @@ class TablePage extends Component {
     super(props)
     this.store = this.props.sampleStore
     this.state = {
-      data: students
+      dataSource: students
     }
   }
   
 
   render() {
-    const { data } = this.state
+    const { dataSource } = this.state
     return (
       <div>
         <div style={{margin: '15px'}}>
           <h3>简单表格</h3>
           <CommonTable
-            dataSource={dataSource}/>
+            dataSource={student}/>
         </div>
         <div style={{margin: '15px'}}>
           <h3>固定行/列</h3>
           <ChangeTable
-            dataSource={dataSource}/>
+            dataSource={student}/>
         </div>
         <div style={{margin: '15px'}}>
           <h3>前端操作/分页/排序/过滤</h3>
-          <OperationTable
-            dataSource={data}
-            dataLength={data.length}
-            controllerPage={false}
+          <FrontEndTable
+            dataSource={dataSource}
+            dataLength={dataSource.length}
+            pageType={false}
             searchText={this.state.searchText}
             operation={{
               searchText: this.searchText.bind(this),
@@ -77,7 +78,32 @@ class TablePage extends Component {
             currentPage={this.store.queryParams.page.current}
             setQueryParams={this.store.setQueryParams}
             getSampleList={this.store.getSampleList}
-            loading={this.store.isLoading}/>
+            resizable={true}
+            isLoading={this.store.isLoading}/>
+        </div>
+        <div style={{margin: '15px'}}>
+          <h3>可操作表格/后端数据</h3>
+          <RearEndOperationTable
+            dataSource={toJS(this.store.sampleList)}
+            dataLength={this.store.queryParams.page.total}
+            currentPage={this.store.queryParams.page.current}
+            setQueryParams={this.store.setQueryParams}
+            getSampleList={this.store.getSampleList}
+            editRow={this.store.editRow}
+            deleteRow={this.store.deleteRow}
+            isEditRow={true}
+            isDeleteRow={true}
+            isAddRow={true}/>
+        </div>
+        <div style={{margin: '15px'}}>
+          <h3>可操作表格/前端数据</h3>
+          <FrontEndOperationTable
+            dataSource={dataSource}
+            resizable={true}
+            pageType={false}
+            isEditRow={true}
+            isDeleteRow={true}
+            isAddRow={true}/>
         </div>
       </div>
     )
@@ -87,7 +113,7 @@ class TablePage extends Component {
   }
 
   dataFilter(attr) {
-    const { searchText, data } = this.state;
+    const { searchText } = this.state;
     const reg = new RegExp(searchText, 'gi');
     this.setState({data: students.map((record) => {
         const match = record[attr].match(reg);
@@ -114,16 +140,12 @@ class CommonTable extends SimpleTable {
       Column('学号', 'studentId', false),
     ]
   }
-
-  onRowClick(record, index, e) {
-    console.log(record, index, e)
-  }
 }
 
 class ChangeTable extends SimpleTable {
   configTable() {
     return {
-      scroll: {x: '115%', y: 130}
+      scroll: {x: '115%', y: 120}
     }
   }
 
@@ -139,8 +161,8 @@ class ChangeTable extends SimpleTable {
     ]
   }
 }
-
-class OperationTable extends PaginationTable {
+// 前端分页/排序/过滤
+class FrontEndTable extends PaginationTable {
   configTable() {
     return {
       bordered: true,
@@ -213,7 +235,7 @@ class OperationTable extends PaginationTable {
     ]
   }
 }
-
+// 后端分页/排序
 class RearEndTable extends PaginationTable {
   constructor(props) {
     super(props)
@@ -227,7 +249,7 @@ class RearEndTable extends PaginationTable {
   }
 
   changeState = (field, e) => {
-    this.setState({[field]: e.target.value}, () => console.log(this.state))
+    this.setState({[field]: e.target.value})
   }
 
   queryParams() {
@@ -281,7 +303,79 @@ class RearEndTable extends PaginationTable {
   }
 
   onChange = (page, filters, sorter) => {
-    console.log(filters)
+    const set = []
+    const orderMap = {
+      descend: 'desc',
+      ascend: 'asc',
+    }
+    Object.keys(page).length > 0 && set.push({
+      page: { current: page.current, pageSize: page.pageSize }, change: true
+    })
+    if (Object.keys(sorter).length > 0) {
+      set.push({ sort: [{ [sorter.columnKey]: orderMap[sorter.order] }] })
+    } else {
+      set.push({ sort: undefined })
+    }
+    this.props.setQueryParams(...set)
+    this.props.getSampleList()
+  }
+}
+// 前端表格操作-增删改查
+class FrontEndOperationTable extends PaginationTable {
+  configTable() {
+    return {
+      bordered: true,
+    }
+  }
+
+  editDone(changeFields, currentRow, dataSource) {
+    console.log(changeFields, currentRow)
+  }
+
+  deleteRow(currentRow, dataSource, index) {
+    dataSource.splice(index, 1)
+  }
+
+  renderColumns() {
+    return [
+      Column('姓名', 'name', true),
+      Column('年龄', 'age', false),
+      Column('班级', 'class', false),
+    ]
+  }
+}
+// 后端表格操作-增删改查
+class RearEndOperationTable extends PaginationTable {
+
+  configTable() {
+    return {
+      bordered: true
+    }
+  }
+
+  renderColumns() {
+    return [
+      Column('病人编号', 'patient_id', true),
+      Column('样本编号', 'sample_id', true),
+      Column('样本类型', 'sample_type', true),
+    ]
+  }
+
+  editDone(changeFields, currentRow, dataSource) {
+    const _id = currentRow._id
+    this.props.editRow(_id, changeFields)
+  }
+
+  deleteRow(currentRow, dataSource, index) {
+    const _id = currentRow._id
+    if(!_id) {
+      dataSource.splice(index, 1)
+    } else {
+      this.props.deleteRow(_id)
+    }
+  }
+
+  onChange = (page, filters, sorter) => {
     const set = []
     const orderMap = {
       descend: 'desc',
