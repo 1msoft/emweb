@@ -47,3 +47,33 @@ export function sorter(a, b, type) {
       break
   }
 }
+
+//删除对象的空属性值
+export function filterAttr(o) {
+  if(o === "") return
+  if(typeof o !== 'object') return
+  for(let i in o) {
+    if(!o[i] && o[i] !== 0) {
+      delete o[i]
+      filterAttr(o[i])
+      filterAttr(o)
+    }else if (JSON.stringify(o[i]) === '{}') {
+      delete o[i]
+      filterAttr(o[i])
+      filterAttr(o)
+    } else {
+      filterAttr(o[i])
+    }
+  }
+  return ((o) => {
+    if(JSON.stringify(o) === '{}') return null
+    for(let i in o) {
+      if(o[i] === '') {
+        delete o[i]
+      }else if (JSON.stringify(o[i]) === '{}') {
+        delete o[i]
+      }
+    }
+    return o
+  })(o)
+}
