@@ -1,0 +1,13 @@
+.ant-layout-has-sider{
+  background: #fff !important;
+  zoom: 1;
+}
+
+.ant-layout-has-sider>.ant-layout-sider{
+  float: left;
+}
+
+.ant-layout-has-sider>.content{
+  float: left;
+  width: calc(100% - 200px);
+}
