@@ -1,10 +1,39 @@
 import React, { Component } from 'react'
-import { Table, Pagination } from 'antd'
+import { Table, Pagination, Button, Popconfirm, Input } from 'antd'
 import './PaginationTable.css'
 
-/*
- * --activeColumn 支持列动态移动 Boolean 默认false
- * --controllerPage 控制分页 Boolean 默认后端分页，为true
+/* 配置参数
+ *  -- props参数
+ *     -- dataSource     表格数据         Array
+ *     -- pageType       控制分页类型      Boolean  后端分页：true, 前端分页：false
+ *     -- currentPage    当前显示的页数    Number   后端分页必须
+ *     -- resizable      列动态宽度       Boolean  默认：false
+ *     -- isLoading      加载提示         Boolean  默认：false
+ *     -- isEditRow      是否显示编辑      Boolean  默认：false
+ *     -- isAddRow       是否显示新增      Boolean  默认：false
+ *     -- isDeleteRow    是否显示删除      Boolean  默认：false
+ * 
+ *  -- 继承
+ *     -- configTable   配置表格
+ *        configTable() {
+ *          return {表格配置参数}
+ *        }
+ *     -- renderColumns 配置表格列
+ *        renderColumns() {
+ *          return [{column_1}, ...]
+ *        }
+ *     -- onRowClick(record, index) 点击行事件
+ *        -- record 当前行数据
+ *        -- index  当前行索引
+ *     -- onChange 分页/排序/过滤变化时触发
+ *     -- editDone(changeFields, currentRow, dataSource) 编辑/保存当前行数据
+ *        -- changeFields 修改的字段      例：{field1: 'B', ...}
+ *        -- currentRow   编辑的当前行    例：{field1: 'A', field2: ...}
+ *        -- dataSource   当前数据源      例：[{}, ...]
+ *     -- deleteRow(currentRow, dataSource, index) 删除当前行数据
+ *        -- currentRow   编辑的当前行    例：{field1: 'A', field2: ...}
+ *        -- dataSource   当前数据源      例：[{}, ...]
+ *        -- index        当前行索引
  */
 
 class PaginationTable extends Component {
@@ -17,75 +46,196 @@ class PaginationTable extends Component {
     drag: false,
     oldX: 0,
     oldWidth: 0,
+    dataSource: this.props.dataSource,
+    editable: {}
   }
 
-  columns = this.renderColumns()
+  editCache = {}
 
-  config = this.configTable()
+  componentWillMount() {
+    this.config = this.configTable()
+    this.columns = this.renderColumns()
+    this.columns = this.getComponentColumns()
+  }
 
-  mouseDown(e, index) {
-    e.preventDefault()
-    const node = ((e.target.parentNode).parentNode).parentNode
-    const offsetWidth = node.offsetWidth
-    this.setState({node: node})
-    if (e.pageX > offsetWidth) {
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.dataSource !== this.props.dataSource) {
       this.setState({
-        drag: true,
-        oldX: e.pageX,
-        oldWidth: offsetWidth
-      }, () => console.log(this.state))
+        dataSource: nextProps.dataSource
+      })
     }
-    e.stopPropagation();
   }
 
-  mouseUp(e) {
-    e.preventDefault()
-    this.setState({
-      node: undefined,
-      drag: false,
-      oldX: 0,
-      oldWidth: 0,
-    }, () => console.log(this.state))
-    e.stopPropagation();
-  }
-
-  mousemove = (e, index) => {
-    e.preventDefault()
-    const {oldX, oldWidth, drag, node} = this.state
-    if (drag != null && drag === true) {
-      if (oldWidth + (e.pageX - oldX) > 0) {
-        node.width = oldWidth + (e.pageX - oldX)
+  getComponentColumns() {
+    const { isEditRow, isDeleteRow } = this.props
+    const self = this
+    this.columns = this.columns.map((value, idx) => {
+      const data = {
+        ...value,
+        render(text, record, idx) {
+          text = typeof value.formatter === 'function' ? value.formatter(text) : text
+          return (
+            <div>
+              {
+                self.state.editable[idx] ?
+                  <Input type="text"
+                  defaultValue={text}
+                  onChange={(e) => self.handleEdit(idx, value.key, e.target.value)} />
+                  :
+                  <span>{text}</span>
+              }
+            </div>
+          )
+        }
       }
+      return data
+    })
+
+    if((!isEditRow && !isDeleteRow)) return this.columns
+    this.columns = [
+      ...this.columns,
+      {
+        title: '操作',
+        dataIndex: 'operations',
+        key: 'operations',
+        render(text, record, index) {
+          return (
+            <div className="operation-group">
+              {
+                isEditRow ?
+                self.state.editable[index] ?
+                  <span>
+                    <span style={{marginLeft: 10}}
+                      onClick={() => self.changeEditState('save', index)}>
+                      <Button icon="save">保存</Button>
+                    </span>
+                    <span style={{marginLeft: 10}}
+                      onClick={() => self.changeEditState('cancel', index)}>
+                      <Button type="danger" icon="close">取消</Button>
+                    </span>
+                  </span>
+                  :
+                  <span style={{marginLeft: 10}}
+                    onClick={() => self.changeEditState('edit', index)}>
+                    <Button icon="edit">编辑</Button>
+                  </span>
+                : ''
+              }
+              {
+                isDeleteRow ?
+                <span style={{marginLeft: 10}}>
+                  <Popconfirm
+                    title="确定删除"
+                    onConfirm={() => self.changeEditState('delete', index)}>
+                    <Button type="danger" icon="delete">删除</Button>
+                  </Popconfirm>
+                </span>
+                : ''
+              }
+            </div>
+          )
+        },
+      }
+    ]
+    return this.columns
+  }
+
+  changeEditState(type, index) {
+    switch (type) {
+      case 'edit':
+        this.setState({
+          editable: { ...this.state.editable, [index]: true }
+        })
+        break
+      case 'save':
+        if (this.editCache[index]) {
+          let dataSource = [...this.state.dataSource]
+          const currentRow = dataSource[index]
+          const cacheData = this.editCache[index]
+          let changeFields = {}
+          for(let key in cacheData) {
+            if(currentRow[key] !== cacheData[key]) {
+              changeFields = {
+                ...changeFields,
+                [key]: cacheData[key]
+              }
+            }
+          }
+          const frontEndCurPage = this.state.pagination ? (this.state.pagination.current - 1) : 0
+          const mergeIndex = frontEndCurPage * 10 + index
+          dataSource[mergeIndex] = this.editCache[index]
+          this.editDone(changeFields, currentRow, dataSource)
+          this.setState({
+            editable: { ...this.state.editable, [index]: false },
+            dataSource
+          })
+        } else {
+          this.setState({
+            editable: { ...this.state.editable, [index]: false },
+          })
+        }
+        break
+      case 'cancel':
+        this.editCache[index] = undefined
+        this.setState({
+          editable: { ...this.state.editable, [index]: false }
+        })
+        break
+      case 'delete':
+        const dataSource = [...this.state.dataSource]
+        const currentRow = dataSource[index]
+        const frontEndCurPage = this.state.pagination ? (this.state.pagination.current - 1) : 0
+        const mergeIndex = frontEndCurPage * 10 + index
+        this.deleteRow(currentRow, dataSource, mergeIndex)
+        this.setState({
+          editable: { ...this.state.editable, [index]: false },
+          dataSource
+        }, () => this.editCache = {})
+        break
+      default:
+        break
     }
-    e.stopPropagation();
+  }
+
+  handleEdit(index, key, value) {
+    if (!this.editCache[index]) {
+      this.editCache[index] = { ...this.state.dataSource[index] }
+    }
+    this.editCache[index][key] = value
   }
 
   render() {
-    const { controllerPage = true } = this.props
+    const { pageType = true } = this.props
+    const { dataSource } = this.state
+
     //分页设置
     const pagination = Object.assign({
       showSizeChanger: true,
-      showQuickJumper: !controllerPage,
+      showQuickJumper: !pageType,
       defaultCurrent: 1,
       defaultPageSize: this.state.pageSize,
       showTotal: this.showTotal,
-      total: this.props.dataLength,
+      total: (pageType ? this.props.dataLength : this.state.dataSource.length),
       onChange: this.onPageChange,
       onShowSizeChange: this.onPageChangeCb,
-    }, (controllerPage ? {current: this.props.currentPage} : {}))
+    }, (pageType ? {current: this.props.currentPage} : {}))
 
     this.columns = this.columns.map( (col, index) => {
       if (col.sorter) {
         col.title = typeof col.title === 'string'
           ? (
-            <span style={{ cursor: 'pointer'}} onClick={this.changeOrder(col.key)}>
-              {col.title}
+            <span>
+              <span style={{ cursor: 'pointer'}} onClick={this.changeOrder(col.key)}>
+                {col.title}
+              </span>
               {
-                this.props.activeColumn ? <span
-                className="active-column"
-                onMouseDown={(e) => this.mouseDown(e, index)}
-                onMouseUp={(e) => this.mouseUp(e, index)}
-                onMouseMove={(e) => this.mousemove(e, index)}></span> : ''
+                this.props.resizable ?
+                <span
+                  className="active-column"
+                  onMouseDown={(e) => this.handleMouseDown(e, index)}
+                  onMouseUp={(e) => this.handleMouseUp(e, index)}
+                  onMouseMove={(e) => this.handleMouseMove(e, index)}>
+                </span> : ''
               }
             </span>)
           : col.title
@@ -94,19 +244,29 @@ class PaginationTable extends Component {
       }
       return col
     })
-
+    console.log(this.columns)
     return (
       <div className="antd-inline-table row-highLight clearfix">
+        {
+          this.props.isAddRow ?
+          <Button
+            className="editable-add-btn"
+            style={{marginBottom: '5px'}}
+            icon="plus" type="primary"
+            onClick={() => this.addRowBefore()}>
+              添加
+          </Button> : ""
+        }
         <Table
-          loading={this.props.loading}
-          pagination={controllerPage ? false : pagination}
-          dataSource={this.props.dataSource}
+          pagination={pageType ? false : pagination}
+          dataSource={dataSource}
           columns={this.columns}
           onChange={this.fetchData.bind(this)}
           onRowClick={this.onRowClick}
+          loading={this.props.isLoading}
           {...this.config} />
           {
-            controllerPage ? 
+            pageType ?
             <div>
               <ul
                 style={{ clear: 'none', padding: '12px 0' }}
@@ -125,7 +285,7 @@ class PaginationTable extends Component {
   }
   //配置表格
   configTable() {
-    return {};
+    return {}
   }
 
   changeOrder = (key) => (e) => {
@@ -146,7 +306,7 @@ class PaginationTable extends Component {
 
   //配置列
   renderColumns() {
-    return [];
+    return []
   }
   //显示条数
   showTotal(total, range) {
@@ -177,29 +337,82 @@ class PaginationTable extends Component {
   }
   //页码改变
   onPageChange = (page, pageSize) => {
-    this.setState({ pageSize }, () => {
+    this.setState({ pageSize, editable: {} }, () => {
       this.onChange({ current: page, pageSize }, {}, {})
     })
   }
   //PageSize变化回调
   onPageChangeCb = (current, pageSize) => {
-    this.setState({ pageSize }, () => {
+    this.setState({ pageSize, editable: {} }, () => {
       this.onChange({ current: current, pageSize }, {}, {})
     })
   }
   //表格分页、排序、筛选变化
   fetchData(pagination, filters, sorter) {
-    this.setState({ pagination, filters, sorter }, () => {
+    this.setState({ pagination, filters, sorter, editable: {} }, () => {
       this.onChange(pagination, filters, !sorter.order ? {} : sorter)
     })
   }
 
   onChange(pagination, filters, sorter) {
-    console.log(pagination, filters, sorter)
+    // console.log(pagination, filters, sorter)
   }
   //点击行
   onRowClick(record, index) {
-    console.log(record, index)
+    // console.log(record, index)
+  }
+  // 动态列宽度
+  // 动态列宽度--鼠标按下
+  handleMouseDown(e, index) {
+    e.preventDefault()
+    const node = ((e.target.parentNode).parentNode).parentNode
+    const offsetWidth = node.offsetWidth
+    this.setState({node: node})
+    if (e.pageX > offsetWidth) {
+      this.setState({
+        drag: true,
+        oldX: e.pageX,
+        oldWidth: offsetWidth
+      })
+    }
+  }
+  // 动态列宽度--鼠标弹出
+  handleMouseUp(e) {
+    e.preventDefault()
+    this.setState({
+      node: undefined,
+      drag: false,
+      oldX: 0,
+      oldWidth: 0,
+    })
+  }
+  // 动态列宽度--鼠标移动
+  handleMouseMove = (e, index) => {
+    e.preventDefault()
+    const {oldX, oldWidth, drag, node} = this.state
+    if (drag != null && drag === true) {
+      if (oldWidth + (e.pageX - oldX) > 0) {
+        node.width = oldWidth + (e.pageX - oldX)
+      }
+    }
+  }
+  //保存编辑
+  editDone(changeFields, currentRow, dataSource) {
+  }
+  // 删除行
+  deleteRow(currentRow, dataSource, index) {
+  }
+  //添加行
+  addRowBefore() {
+    const dataSource = [...this.state.dataSource]
+    const frontEndCurPage = this.state.pagination ? (this.state.pagination.current - 1) : 0
+    const mergeIndex = frontEndCurPage * 10
+    this.addRow(dataSource, mergeIndex)
+    this.setState({dataSource}, () => this.editCache = {})
+  }
+
+  addRow(dataSource, curPageFirstRow) {
+    dataSource.splice(curPageFirstRow, 0, {})
   }
 }
 
