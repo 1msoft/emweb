@@ -531,31 +531,3 @@ element.style {
   color: #108ee9;
 }
 /*TimeLine-end*/
-
-/*PaginationCard-start*/
-.custom-div {
-  float: left;
-  margin: 30px 30px 0 30px;
-}
-
-.custom-image img {
-  display: block;
-  height: 286px;
-}
-
-.custom-card {
-  padding: 10px 16px;
-  overflow: hidden;
-}
-
-.custom-card p {
-  color: #999;
-}
-
-.card-page .ant-pagination {
-  float: left;
-  clear: both;
-  margin-left: 600px;
-}
-
-/*PaginationCard-end*/
