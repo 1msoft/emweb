@@ -43,7 +43,8 @@ export default class SampleStore {
       'compare_seq_id', 'compare_seq_time', 'portalDataType']
     this.db.find({
       selector:this.queryParams.conds,
-      limit: 10000
+      limit: 10000,
+      fields: ['_id']
     }).then((res) => {
       this.queryParams.page.total = res.docs.length
     })
@@ -55,16 +56,11 @@ export default class SampleStore {
       })
     })).then( () => {
       return this.db.find({
-        // sort: this.queryParams.sort,
+        sort: this.queryParams.sort,
         selector:this.queryParams.conds,
         limit: this.queryParams.page.pageSize + 1,
-        // limit: 1000,
         skip: (this.queryParams.page.current - 1) * this.queryParams.page.pageSize,
       }).then( (res) => {
-        // const offset = (this.queryParams.page.current - 1) * this.queryParams.page.pageSize
-        // this.queryParams.page.total = offset + res.docs.length
-        // this.queryParams.page.total = res.docs.length
-
         res.docs.length > this.queryParams.page.pageSize && res.docs.pop()
         this.sampleList = res.docs
         cb && cb()
@@ -74,7 +70,7 @@ export default class SampleStore {
       })
     })
   }
-  
+
   //获取病人下的样本
   @action
   getPatientSampleList = (patient, cb) => {
@@ -115,7 +111,7 @@ export default class SampleStore {
       })
     })
   }
-  
+
   //设置查询条件
   @action
   setQueryParams = (...options) => {
@@ -128,39 +124,4 @@ export default class SampleStore {
       }
     })
   }
-  //编辑行
-  @action
-  editRow = (_id, changeData) => {
-    if(!_id) {
-      const num_1 = Math.floor(Math.random() * 10)
-      const num_2 = Math.floor(Math.random() * 10)
-      const num_3 = Math.floor(Math.random() * 10)
-      this.db.put({
-        _id: `sample_${num_1}${num_2}${num_3}`,
-        portalDataType: 'D_SAMPLE',
-        ...changeData
-      }).then((doc) => {
-        this.getSampleList()
-        return
-      })
-    }
-    this.db.get(_id).then(doc => {
-      doc.sample_id = changeData.sample_id
-      doc.sample_type = changeData.sample_type
-      doc.patient_id = changeData.patient_id
-      return this.db.put(doc)
-    }).then((doc) => {
-      this.getSampleList()
-    })
-  }
-  //删除行
-  @action
-  deleteRow = (_id) => {
-    this.db.get(_id).then(doc => {
-      return this.db.remove(doc)
-    }).then(() => {
-      this.getSampleList()
-    })
-  }
 }
-
