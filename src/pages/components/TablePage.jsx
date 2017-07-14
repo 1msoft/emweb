@@ -65,6 +65,7 @@ class TablePage extends Component {
             dataLength={dataSource.length}
             pageType={false}
             searchText={this.state.searchText}
+            isSelectColumns={true}
             operation={{
               searchText: this.searchText.bind(this),
               dataFilter: this.dataFilter.bind(this)
@@ -79,6 +80,7 @@ class TablePage extends Component {
             setQueryParams={this.store.setQueryParams}
             getSampleList={this.store.getSampleList}
             resizable={true}
+            isSelectColumns={true}
             isLoading={this.store.isLoading}/>
         </div>
         <div style={{margin: '15px'}}>
@@ -127,7 +129,7 @@ class TablePage extends Component {
     }, () => console.log(this.state.data))
   }
 }
-
+// 简单表格
 class CommonTable extends SimpleTable {
   renderColumns() {
     return [
@@ -141,7 +143,7 @@ class CommonTable extends SimpleTable {
     ]
   }
 }
-
+// 固定列/表头表格
 class ChangeTable extends SimpleTable {
   configTable() {
     return {
@@ -229,8 +231,14 @@ class FrontEndTable extends PaginationTable {
       }),
       Column('性别', 'sex', false),
       Column('学校', 'school', false),
-      Column('年级', 'grade', false),
-      Column('三班', 'class', false),
+      Column('年级', 'grade', false, {
+        sorter: (a, b) => {
+          const field_a = a.grade
+          const field_b = b.grade
+          return sorter(field_a, field_b, 'string')
+        },
+      }),
+      Column('班级', 'class', false),
       Column('学号', 'studentId', false),
     ]
   }

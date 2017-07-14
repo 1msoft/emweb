@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Table, Pagination, Button, Popconfirm, Input } from 'antd'
+import { Table, Pagination, Button, Popconfirm, Input, Icon, Select, Checkbox, Switch } from 'antd'
 import './PaginationTable.css'
 
 /* 配置参数
@@ -12,6 +12,7 @@ import './PaginationTable.css'
  *     -- isEditRow      是否显示编辑      Boolean  默认：false
  *     -- isAddRow       是否显示新增      Boolean  默认：false
  *     -- isDeleteRow    是否显示删除      Boolean  默认：false
+ *     -- isSelectColumns 是否显示筛选字段  Boolean   默认: false   
  * 
  *  -- 继承
  *     -- configTable   配置表格
@@ -47,7 +48,8 @@ class PaginationTable extends Component {
     oldX: 0,
     oldWidth: 0,
     dataSource: this.props.dataSource,
-    editable: {}
+    editable: {},
+    filterFields: this.props_columns_keys
   }
 
   editCache = {}
@@ -56,6 +58,7 @@ class PaginationTable extends Component {
     this.config = this.configTable()
     this.columns = this.renderColumns()
     this.columns = this.getComponentColumns()
+    this.setState({ filterFields: this.props_columns_keys })
   }
 
   componentWillReceiveProps(nextProps) {
@@ -79,8 +82,8 @@ class PaginationTable extends Component {
               {
                 self.state.editable[idx] ?
                   <Input type="text"
-                  defaultValue={text}
-                  onChange={(e) => self.handleEdit(idx, value.key, e.target.value)} />
+                    defaultValue={text}
+                    onChange={(e) => self.handleEdit(idx, value.key, e.target.value)} />
                   :
                   <span>{text}</span>
               }
@@ -91,7 +94,7 @@ class PaginationTable extends Component {
       return data
     })
 
-    if((!isEditRow && !isDeleteRow)) return this.columns
+    if ((!isEditRow && !isDeleteRow)) return this.columns
     this.columns = [
       ...this.columns,
       {
@@ -103,34 +106,34 @@ class PaginationTable extends Component {
             <div className="operation-group">
               {
                 isEditRow ?
-                self.state.editable[index] ?
-                  <span>
-                    <span style={{marginLeft: 10}}
-                      onClick={() => self.changeEditState('save', index)}>
-                      <Button icon="save">保存</Button>
+                  self.state.editable[index] ?
+                    <span>
+                      <span style={{ marginLeft: 10 }}
+                        onClick={() => self.changeEditState('save', index)}>
+                        <Button icon="save">保存</Button>
+                      </span>
+                      <span style={{ marginLeft: 10 }}
+                        onClick={() => self.changeEditState('cancel', index)}>
+                        <Button type="danger" icon="close">取消</Button>
+                      </span>
                     </span>
-                    <span style={{marginLeft: 10}}
-                      onClick={() => self.changeEditState('cancel', index)}>
-                      <Button type="danger" icon="close">取消</Button>
+                    :
+                    <span style={{ marginLeft: 10 }}
+                      onClick={() => self.changeEditState('edit', index)}>
+                      <Button icon="edit">编辑</Button>
                     </span>
-                  </span>
-                  :
-                  <span style={{marginLeft: 10}}
-                    onClick={() => self.changeEditState('edit', index)}>
-                    <Button icon="edit">编辑</Button>
-                  </span>
-                : ''
+                  : ''
               }
               {
                 isDeleteRow ?
-                <span style={{marginLeft: 10}}>
-                  <Popconfirm
-                    title="确定删除"
-                    onConfirm={() => self.changeEditState('delete', index)}>
-                    <Button type="danger" icon="delete">删除</Button>
-                  </Popconfirm>
-                </span>
-                : ''
+                  <span style={{ marginLeft: 10 }}>
+                    <Popconfirm
+                      title="确定删除"
+                      onConfirm={() => self.changeEditState('delete', index)}>
+                      <Button type="danger" icon="delete">删除</Button>
+                    </Popconfirm>
+                  </span>
+                  : ''
               }
             </div>
           )
@@ -148,13 +151,14 @@ class PaginationTable extends Component {
         })
         break
       case 'save':
+        console.log(index)
         if (this.editCache[index]) {
           let dataSource = [...this.state.dataSource]
           const currentRow = dataSource[index]
           const cacheData = this.editCache[index]
           let changeFields = {}
-          for(let key in cacheData) {
-            if(currentRow[key] !== cacheData[key]) {
+          for (let key in cacheData) {
+            if (currentRow[key] !== cacheData[key]) {
               changeFields = {
                 ...changeFields,
                 [key]: cacheData[key]
@@ -206,7 +210,7 @@ class PaginationTable extends Component {
 
   render() {
     const { pageType = true } = this.props
-    const { dataSource } = this.state
+    const { dataSource, filterFields } = this.state
 
     //分页设置
     const pagination = Object.assign({
@@ -218,24 +222,24 @@ class PaginationTable extends Component {
       total: (pageType ? this.props.dataLength : this.state.dataSource.length),
       onChange: this.onPageChange,
       onShowSizeChange: this.onPageChangeCb,
-    }, (pageType ? {current: this.props.currentPage} : {}))
+    }, (pageType ? { current: this.props.currentPage } : {}))
 
-    this.columns = this.columns.map( (col, index) => {
+    this.columns = this.columns.map((col, index) => {
       if (col.sorter) {
         col.title = typeof col.title === 'string'
           ? (
             <span>
-              <span style={{ cursor: 'pointer'}} onClick={this.changeOrder(col.key)}>
+              <span style={{ cursor: 'pointer' }} onClick={this.changeOrder(col.key)}>
                 {col.title}
               </span>
               {
                 this.props.resizable ?
-                <span
-                  className="active-column"
-                  onMouseDown={(e) => this.handleMouseDown(e, index)}
-                  onMouseUp={(e) => this.handleMouseUp(e, index)}
-                  onMouseMove={(e) => this.handleMouseMove(e, index)}>
-                </span> : ''
+                  <span
+                    className="active-column"
+                    onMouseDown={(e) => this.handleMouseDown(e, index)}
+                    onMouseUp={(e) => this.handleMouseUp(e, index)}
+                    onMouseMove={(e) => this.handleMouseMove(e, index)}>
+                  </span> : ''
               }
             </span>)
           : col.title
@@ -244,29 +248,41 @@ class PaginationTable extends Component {
       }
       return col
     })
-    console.log(this.columns)
+
+    const render_columns = this.props.isSelectColumns ?
+      this.columns.reduce((prev, value, index) => {
+        if (filterFields.includes(value.key)) {
+          prev.push(value)
+        }
+        return prev
+      }, [])
+      : this.columns
     return (
       <div className="antd-inline-table row-highLight clearfix">
+        {!!this.props.isSelectColumns ?
+          <SelectColumns
+            columns={this.columns}
+            getColumns={this.getColumns.bind(this)} /> : ''}
         {
           this.props.isAddRow ?
-          <Button
-            className="editable-add-btn"
-            style={{marginBottom: '5px'}}
-            icon="plus" type="primary"
-            onClick={() => this.addRowBefore()}>
+            <Button
+              className="editable-add-btn"
+              style={{ marginBottom: '5px' }}
+              icon="plus" type="primary"
+              onClick={() => this.addRowBefore()}>
               添加
           </Button> : ""
         }
         <Table
           pagination={pageType ? false : pagination}
           dataSource={dataSource}
-          columns={this.columns}
+          columns={render_columns}
           onChange={this.fetchData.bind(this)}
           onRowClick={this.onRowClick}
           loading={this.props.isLoading}
           {...this.config} />
-          {
-            pageType ?
+        {
+          pageType ?
             <div>
               <ul
                 style={{ clear: 'none', padding: '12px 0' }}
@@ -279,9 +295,12 @@ class PaginationTable extends Component {
               </ul>
               <Pagination ref='pagination' style={{ clear: 'none', paddingRight: 0 }} {...pagination} />
             </div> : ''
-          }
+        }
       </div>
     )
+  }
+  getColumns(keys) {
+    this.setState({ filterFields: keys })
   }
   //配置表格
   configTable() {
@@ -316,10 +335,10 @@ class PaginationTable extends Component {
   onJumperChange = (e) => {
     const { dataLength } = this.props
     const { pageSize } = this.state
-    let jumper = Number( e.target.value.trim() )
-    const max = Math.ceil(dataLength/pageSize)
+    let jumper = Number(e.target.value.trim())
+    const max = Math.ceil(dataLength / pageSize)
 
-    if ( isNaN(jumper) || jumper === 0) {
+    if (isNaN(jumper) || jumper === 0) {
       jumper = ''
     } else if (jumper >= max) {
       jumper = max
@@ -367,7 +386,7 @@ class PaginationTable extends Component {
     e.preventDefault()
     const node = ((e.target.parentNode).parentNode).parentNode
     const offsetWidth = node.offsetWidth
-    this.setState({node: node})
+    this.setState({ node: node })
     if (e.pageX > offsetWidth) {
       this.setState({
         drag: true,
@@ -389,7 +408,7 @@ class PaginationTable extends Component {
   // 动态列宽度--鼠标移动
   handleMouseMove = (e, index) => {
     e.preventDefault()
-    const {oldX, oldWidth, drag, node} = this.state
+    const { oldX, oldWidth, drag, node } = this.state
     if (drag != null && drag === true) {
       if (oldWidth + (e.pageX - oldX) > 0) {
         node.width = oldWidth + (e.pageX - oldX)
@@ -408,11 +427,133 @@ class PaginationTable extends Component {
     const frontEndCurPage = this.state.pagination ? (this.state.pagination.current - 1) : 0
     const mergeIndex = frontEndCurPage * 10
     this.addRow(dataSource, mergeIndex)
-    this.setState({dataSource}, () => this.editCache = {})
+    this.setState({ dataSource }, () => this.editCache = {})
   }
 
   addRow(dataSource, curPageFirstRow) {
     dataSource.splice(curPageFirstRow, 0, {})
+  }
+
+  get props_columns_keys() {
+    return (this.columns && this.props.isSelectColumns) && this.columns.reduce((prev, value, index) => {
+      prev.push(value.key)
+      return prev
+    }, [])
+  }
+}
+
+class SelectColumns extends Component {
+  state = {
+    checkedList: this.props_columns_keys,
+    indeterminate: true,
+    checkAll: true,
+    toggleSelect: false,
+    settings: {}
+  }
+
+  componentWillMount() {
+    this.setState({ settings: this.setSelectorColumns(this.props_columns) })
+  }
+
+  setSelectorColumns(columns) {
+    return {
+      render_columns: !!columns.length && columns.map((value, index) =>
+        <div key={index} className="ant-select-field">
+          <Checkbox value={value.key}>{value.title}</Checkbox>
+        </div>
+      )
+    }
+  }
+
+  render() {
+    const { settings } = this.state
+    const toggleSelectFieldsBox = this.state.toggleSelect ? 'block' : 'none'
+    return (
+      <div className="ant-select-container clearfix">
+        <Switch
+          className="ant-select-btn"
+          onChange={this.toggle.bind(this)}
+          checkedChildren="开"
+          unCheckedChildren="关" />
+        <div className="ant-select-fields-box" style={{ display: toggleSelectFieldsBox }}>
+          <div className="ant-select-fields-header">
+            <Checkbox
+              indeterminate={this.state.indeterminate}
+              onChange={this.selectorAll.bind(this)}
+              checked={this.state.checkAll} />
+            <span>{this.state.checkedList.length}/{this.props_columns_keys.length}</span>
+            <Input
+              style={{ width: 'calc(100% - 60px)' }}
+              placeholder="搜索字段"
+              onChange={this.onSearch.bind(this)}
+              size='default' />
+          </div>
+          <Checkbox.Group
+            className="ant-select-fields-body"
+            value={this.state.checkedList}
+            onChange={(keys) => {
+              this.changeCheck(keys)
+              this.props.getColumns(keys)
+            }}>
+            {settings.render_columns}
+          </Checkbox.Group>
+        </div>
+      </div>
+    )
+  }
+  // 按钮切换
+  toggle(checked) {
+    this.setState({ toggleSelect: !!checked })
+  }
+  // 搜索字段
+  onSearch(event) {
+    const regex = new RegExp(event.target.value, 'g')
+    const selectResult = this.props_columns.filter(field => {
+      const title = typeof field.title === 'object' ?
+        field.title.props.children[0].props.children
+        : field.title
+      const status = !!regex.test(title)
+      return true === status
+    })
+    console.log(selectResult, 'selectResult')
+    const _columns = selectResult.reduce((prev, value, index) => {
+      prev.push(value)
+      return prev
+    }, [])
+    _columns.length === 0 ?
+      this.setState({ settings: this.setSelectorColumns(this.props_columns) })
+      :
+      this.setState({ settings: this.setSelectorColumns(_columns) })
+  }
+  // 全选/全取消
+  selectorAll(event) {
+    this.setState({
+      checkedList: event.target.checked ? this.props_columns_keys : [],
+      indeterminate: false,
+      checkAll: event.target.checked,
+    }, () => {
+      event.target.checked || this.props.getColumns(this.state.checkedList);
+      event.target.checked && this.props.getColumns(this.state.checkedList);
+    })
+  }
+  // 单个状态改变
+  changeCheck = (checkedList) => {
+    this.setState({
+      checkedList,
+      indeterminate: !!checkedList.length && (checkedList.length < this.props_columns_keys.length),
+      checkAll: checkedList.length === this.props_columns_keys.length,
+    });
+  }
+
+  get props_columns() {
+    return this.props.columns
+  }
+
+  get props_columns_keys() {
+    return this.props.columns.reduce((prev, value, index) => {
+      prev.push(value.key)
+      return prev
+    }, [])
   }
 }
 
