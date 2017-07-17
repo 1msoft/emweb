@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Table, Pagination, Button, Popconfirm, Input } from 'antd'
+import { Table, Pagination, Button, Popconfirm, Input, Icon, Select, Checkbox, Switch } from 'antd'
 import './PaginationTable.css'
 
 /* 配置参数
@@ -12,7 +12,7 @@ import './PaginationTable.css'
  *     -- isEditRow      是否显示编辑      Boolean  默认：false
  *     -- isAddRow       是否显示新增      Boolean  默认：false
  *     -- isDeleteRow    是否显示删除      Boolean  默认：false
- *     -- isFilterFields 是否使用字段过滤   Boolean  默认：false
+ *     -- isSelectColumns 是否显示筛选字段  Boolean   默认: false   
  * 
  *  -- 继承
  *     -- configTable   配置表格
@@ -49,6 +49,7 @@ class PaginationTable extends Component {
     oldWidth: 0,
     dataSource: this.props.dataSource,
     editable: {},
+    filterFields: this.props_columns_keys,
     saveStatus: {}
   }
 
@@ -58,6 +59,7 @@ class PaginationTable extends Component {
     this.config = this.configTable()
     this.columns = this.renderColumns()
     this.columns = this.getComponentColumns()
+    this.setState({ filterFields: this.props_columns_keys })
   }
 
   componentWillReceiveProps(nextProps) {
@@ -231,7 +233,7 @@ class PaginationTable extends Component {
 
   render() {
     const { pageType = true } = this.props
-    const { dataSource } = this.state
+    const { dataSource, filterFields } = this.state
 
     //分页设置
     const pagination = Object.assign({
@@ -270,8 +272,20 @@ class PaginationTable extends Component {
       return col
     })
 
+    const render_columns = this.props.isSelectColumns ?
+      this.columns.reduce((prev, value, index) => {
+        if (filterFields.includes(value.key)) {
+          prev.push(value)
+        }
+        return prev
+      }, [])
+      : this.columns
     return (
       <div className="antd-inline-table row-highLight clearfix">
+        {!!this.props.isSelectColumns ?
+          <SelectColumns
+            columns={this.columns}
+            getColumns={this.getColumns.bind(this)} /> : ''}
         {
           this.props.isAddRow ?
             <Button
@@ -286,7 +300,7 @@ class PaginationTable extends Component {
         <Table
           pagination={pageType ? false : pagination}
           dataSource={dataSource}
-          columns={this.columns}
+          columns={render_columns}
           onChange={this.fetchData.bind(this)}
           onRowClick={this.onRowClick}
           loading={this.props.isLoading}
@@ -308,6 +322,9 @@ class PaginationTable extends Component {
         }
       </div>
     )
+  }
+  getColumns(keys) {
+    this.setState({ filterFields: keys })
   }
   //配置表格
   configTable() {
@@ -457,6 +474,128 @@ class PaginationTable extends Component {
 
   addRow(dataSource, curPageFirstRow) {
     dataSource.splice(curPageFirstRow, 0, {})
+  }
+
+  get props_columns_keys() {
+    return (this.columns && this.props.isSelectColumns) && this.columns.reduce((prev, value, index) => {
+      prev.push(value.key)
+      return prev
+    }, [])
+  }
+}
+
+class SelectColumns extends Component {
+  state = {
+    checkedList: this.props_columns_keys,
+    indeterminate: true,
+    checkAll: true,
+    toggleSelect: false,
+    settings: {}
+  }
+
+  componentWillMount() {
+    this.setState({ settings: this.setSelectorColumns(this.props_columns) })
+  }
+
+  setSelectorColumns(columns) {
+    return {
+      render_columns: !!columns.length && columns.map((value, index) =>
+        <div key={index} className="ant-select-field">
+          <Checkbox value={value.key}>{value.title}</Checkbox>
+        </div>
+      )
+    }
+  }
+
+  render() {
+    const { settings } = this.state
+    const toggleSelectFieldsBox = this.state.toggleSelect ? 'block' : 'none'
+    return (
+      <div className="ant-select-container clearfix">
+        <Switch
+          className="ant-select-btn"
+          onChange={this.toggle.bind(this)}
+          checkedChildren="开"
+          unCheckedChildren="关" />
+        <div className="ant-select-fields-box" style={{ display: toggleSelectFieldsBox }}>
+          <div className="ant-select-fields-header">
+            <Checkbox
+              indeterminate={this.state.indeterminate}
+              onChange={this.selectorAll.bind(this)}
+              checked={this.state.checkAll} />
+            <span>{this.state.checkedList.length}/{this.props_columns_keys.length}</span>
+            <Input
+              style={{ width: 'calc(100% - 60px)' }}
+              placeholder="搜索字段"
+              onChange={this.onSearch.bind(this)}
+              size='default' />
+          </div>
+          <Checkbox.Group
+            className="ant-select-fields-body"
+            value={this.state.checkedList}
+            onChange={(keys) => {
+              this.changeCheck(keys)
+              this.props.getColumns(keys)
+            }}>
+            {settings.render_columns}
+          </Checkbox.Group>
+        </div>
+      </div>
+    )
+  }
+  // 按钮切换
+  toggle(checked) {
+    this.setState({ toggleSelect: !!checked })
+  }
+  // 搜索字段
+  onSearch(event) {
+    const regex = new RegExp(event.target.value, 'g')
+    const selectResult = this.props_columns.filter(field => {
+      const title = typeof field.title === 'object' ?
+        field.title.props.children[0].props.children
+        : field.title
+      const status = !!regex.test(title)
+      return true === status
+    })
+    console.log(selectResult, 'selectResult')
+    const _columns = selectResult.reduce((prev, value, index) => {
+      prev.push(value)
+      return prev
+    }, [])
+    _columns.length === 0 ?
+      this.setState({ settings: this.setSelectorColumns(this.props_columns) })
+      :
+      this.setState({ settings: this.setSelectorColumns(_columns) })
+  }
+  // 全选/全取消
+  selectorAll(event) {
+    this.setState({
+      checkedList: event.target.checked ? this.props_columns_keys : [],
+      indeterminate: false,
+      checkAll: event.target.checked,
+    }, () => {
+      event.target.checked || this.props.getColumns(this.state.checkedList);
+      event.target.checked && this.props.getColumns(this.state.checkedList);
+    })
+  }
+  // 单个状态改变
+  changeCheck = (checkedList) => {
+    this.setState({
+      checkedList,
+      indeterminate: !!checkedList.length && (checkedList.length < this.props_columns_keys.length),
+      checkAll: checkedList.length === this.props_columns_keys.length,
+    });
+  }
+
+  get props_columns() {
+    return this.props.columns
+  }
+
+  get props_columns_keys() {
+    return this.props.columns.reduce((prev, value, index) => {
+      prev.push(value.key)
+      return prev
+    }, [])
   }
 }
 
