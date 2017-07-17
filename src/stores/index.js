@@ -13,5 +13,6 @@ export default {
     initPatientStore: new PatientStore(),
     patientDetail: new PatientDetail(),
     userStore: new UserStore(),
-    sampleStore: new SampleStore()
+    sampleStore: new SampleStore(),
+    mutationStore: new MutationStore()
 }

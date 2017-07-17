@@ -13,8 +13,12 @@ import QueryForm from '../pages/components/QueryForm'
 import Collapse from '../pages/components/Collapse'
 import CostomForm from '../pages/components/CostomForm'
 import PieChart from '../pages/components/PieChart'
+
+import PaginationCard from '../pages/components/PaginationCard'
+
 import PreviewPicture from '../pages/components/PreviewPicture'
 import TablePage from '../pages/components/TablePage'
+
 
 export default {
     // 登录
@@ -112,6 +116,13 @@ export default {
     TablePage: {
         id: 15, text: '表格', path: '/components/tablepage', parent: 'Components',
         nav: true, component: TablePage,
+        exact: true,
+    },
+
+    // 导航 - 组件 - 卡片式列表
+    PaginationCard: {
+        id: 16, text: '卡片式列表', path: '/components/paginationcard', parent: 'Components',
+        nav: true, component: PaginationCard,
         exact: true,
     },
 
