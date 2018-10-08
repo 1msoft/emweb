@@ -1,3 +1,6 @@
+/**
+ *
+ */
 import { observable, action } from 'mobx'
 import { message } from 'antd'
 import PouchDB from 'pouchdb'
@@ -7,14 +10,25 @@ import cookie from '../utils/cookie'
 import {DATABASE_URL} from '../common/constant'
 
 // const DB_URL = DATABASE_URL
+
+/**
+ * DB_URL
+ * @constant
+ * @type {String}
+ * @default
+ */
 const DB_URL = 'http://localhost:5984/fyzxk'
 
 PouchDB.plugin(require('pouchdb-find'))
 PouchDB.debug.enable('pouchdb:find')
 
-
-
-export default class LoginStore {
+/**
+ * LoginStore
+ *
+ * @export
+ * @class LoginStore
+ */
+class LoginStore {
 	db
 
 	isLoading = false
@@ -24,7 +38,14 @@ export default class LoginStore {
 		this.db = new PouchDB(DB_URL)
 	}
 
-	// @action
+  /**
+    * 登录
+    *
+    * @param {String} userName     用户名称
+    * @param {String} userPassWord 用户密码
+    * @memberof LoginStore
+    */
+  @action
 	login = (userName, userPassWord) => {
 		return this.db.createIndex({
 			index:{fields:['username']}
@@ -50,14 +71,26 @@ export default class LoginStore {
 		})
 	}
 
-	// @action
+  /**
+   * 查询指定用户
+   * @param {String} id  用户id
+   * @returns {Object}   用户信息
+   * @memberof LoginStore
+   */
   findId = (id) => {
     return this.db.get(id).then(date => {
       this.loginUser = date
     })
   }
 
-  // @action
+  /**
+   * 修改密码
+   *
+   * @param {String} id      用户id
+   * @param {String} newpass 新密码
+   * @returns
+   * @memberof LoginStore
+   */
   changePassWord = (id, newpass) => {
     return this.db.get(id).then(date => {
       date.password = bcrypt.encryptSync(newpass)
@@ -71,3 +104,5 @@ export default class LoginStore {
     // })
   }
 }
+
+export default LoginStore

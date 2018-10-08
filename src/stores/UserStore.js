@@ -5,12 +5,24 @@ import bcrypt from '../utils/bcrypt'
 import UserModel from '../models/UserModel'
 import {DATABASE_URL} from '../common/constant'
 
+/**
+ * DB_URL
+ * @constant
+ * @type {String}
+ * @default
+ */
 const DB_URL = DATABASE_URL
 PouchDB.plugin(require('pouchdb-find'))
 PouchDB.debug.enable('pouchdb:find')
 // const DB_URL = 'http://localhost:5984/fyzxk'
 
-export default class UserStore {
+/**
+ * UserStore
+ *
+ * @export
+ * @class UserStore
+ */
+class UserStore {
   db
 
   @observable isLoading = false
@@ -34,7 +46,12 @@ export default class UserStore {
     this.queryWhenSetCurrentId()
   }
 
-  //获取用户列表
+  /**
+   * 获取用户列表
+   *
+   * @memberof UserStore
+   * @returns {Object[]} 用户列表
+   */
   @action
   getUserList() {
     this.isLoading = true
@@ -61,7 +78,14 @@ export default class UserStore {
     })
   }
 
+
   //设置查询条件
+  /**
+   * 设置查询条件
+   *
+   * @param {Object[]}    扩展选项
+   * @memberof UserStore
+   */
   @action
   setQueryParams = (...options) => {
     options.forEach((option) => {
@@ -74,7 +98,12 @@ export default class UserStore {
     })
   }
 
-  //新建用户
+  /**
+   * 新建用户
+   *
+   * @returns {Object} 用户信息
+   * @memberof UserStore
+   */
   @action
   create() {
     const user = new UserModel(this)
@@ -83,7 +112,12 @@ export default class UserStore {
     return user
   }
 
-  //设置当前用户ID
+  /**
+   * 设置当前用户id
+   *
+   * @param {String} _id id值
+   * @memberof UserStore
+   */
   @action
   setCurrentUserId = (_id) => {
     this.currentUserId = _id
@@ -96,7 +130,12 @@ export default class UserStore {
     )
   }
 
-  //查询
+  /**
+   * 查询指定用户
+   *
+   * @param {String} _id id值
+   * @memberof UserStore
+   */
   @action
   findById(_id) {
     if(!_id) return
@@ -107,7 +146,12 @@ export default class UserStore {
     })
   }
 
-  //表单提交
+  /**
+   * 创建用户
+   *
+   * @param {Object} currentUser 用户信息
+   * @memberof UserStore
+   */
   @action
   submit = (currentUser) => {
     // console.log("表单提交")
@@ -118,7 +162,12 @@ export default class UserStore {
     }).catch(err => console.log(err))
   }
 
-  //删除对应数据
+  /**
+   * 删除用户
+   *
+   * @param {String} _id id值
+   * @memberof UserStore
+   */
   @action
   onDelete(_id) {
     this.db.get(_id)
@@ -131,7 +180,13 @@ export default class UserStore {
     })
   }
 
-  //重置密码
+
+  /**
+   * 重置密码
+   *
+   * @param {String} _id id值
+   * @memberof UserStore
+   */
   @action
   onReset(_id) {
     this.db.get(_id).then(response => {
@@ -142,3 +197,5 @@ export default class UserStore {
     })
   }
 }
+
+export default UserStore

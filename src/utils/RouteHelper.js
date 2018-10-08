@@ -5,8 +5,11 @@ import { matchPath } from 'react-router'
  *
  * @export
  * @class RouteHelper
+ * @param {Object} props={}
+ * @param {Object} props.permitCode 许可证号
+ * @param {Object} props.permitHelper 帮手
  */
-export default class RouteHelper {
+class RouteHelper {
   constructor(props = {}) {
     this.routes = props.routes
     this.permitCode = props.permitCode
@@ -16,13 +19,14 @@ export default class RouteHelper {
   /**
    * 获取路由列表
    *
-   * @param {any} filters      筛选函数，可选，多个逗号隔开
-   * @returns
+   * @param {Function[]} filters 筛选函数，可选，多个逗号隔开
+   * @returns {Array} 路由列表
+   * @memberof RouteHelper
    */
   getRouteList(...filters) {
     const routeList = []
 
-    Object.keys(this.routes).forEach( (routeName) => {
+    Object.keys(this.routes).forEach((routeName) => {
       const routeItem = this.routes[routeName]
       let route = {
         code: routeItem.id === undefined
@@ -32,7 +36,7 @@ export default class RouteHelper {
       }
 
       for (const filter of filters) {
-        if ( !filter.bind(this)(route) ) {
+        if (!filter.bind(this)(route)) {
           return
         }
       }
@@ -46,8 +50,11 @@ export default class RouteHelper {
   /**
    * 获取可链接路由列表
    *
-   * @param {any} rootRouteName  根路由名称
-   * @param {any} cascade        是否级联获取下级路由
+   * @param {String} rootRouteName 根路由名称
+   * @param {Object} [options={}] 扩展选项
+   * @param {Boolean} options.cascade=true 是否级联获取下级路由
+   * @returns {Array} 路由列表
+   * @memberof RouteHelper
    */
   getComponentRouteList(rootRouteName, options = {}) {
     const { cascade = true } = options
@@ -58,6 +65,10 @@ export default class RouteHelper {
 
   /**
    * 筛选出导航菜单可见的路由
+   *
+   * @param {*} route 路由
+   * @returns {Boolean} true|false
+   * @memberof RouteHelper
    */
   _checkVisibleRoute(route) {
     return route.nav === true
@@ -65,6 +76,10 @@ export default class RouteHelper {
 
   /**
    * 筛选出有对应组件的路由
+   *
+   * @param {*} route 路由
+   * @returns {Boolean} true|false
+   * @memberof RouteHelper
    */
   _checkComponentRoute(route) {
     return route.component
@@ -72,6 +87,10 @@ export default class RouteHelper {
 
   /**
    * 筛选出有进入权限的路由
+   *
+   * @param {*} route 路由
+   * @returns {Boolean} true|false
+   * @memberof RouteHelper
    */
   _checkPermittedRoute(route) {
     const code = this.permitHelper.genPermitBitById(route.id)
@@ -80,6 +99,12 @@ export default class RouteHelper {
 
   /**
    * 获取路由树（用于导航菜单）
+   *
+   * @param {String} rootRouteName 根路由名称
+   * @param {String} currentRouteName 当前路由名称
+   * @param {Object} [options={}] 扩展选项
+   * @returns {Array} 路由树
+   * @memberof RouteHelper
    */
   getRouteTree(rootRouteName, currentRouteName, options = {}) {
     const { cascade } = options
@@ -98,18 +123,20 @@ export default class RouteHelper {
   /**
    * 获取子级路由
    *
-   * @param {any} routeList
-   * @param {any} parent
-   * @param {any} flatten      是否扁平化
-   * @param {any} cascade      是否级联
-   * @returns
+   * @param {*} routeList                     路由列表
+   * @param {*} parent                        父级名称
+   * @param {Object} [options={}]             扩展选项
+   * @param {Boolean} [options.flatten=false] 是否扁平化
+   * @param {Boolean} [options.cascade=true]  是否级联
+   * @returns {Array} 子级路由
+   * @memberof RouteHelper
    */
   _getSubRoutes(routeList, parent, options = {}) {
     const { flatten = false, cascade = true, parentType = 'parent' } = options
     let routes = routeList
 
     if (parent) {
-      routes = routes.filter( (route) => (route[parentType] || route.parent) === parent )
+      routes = routes.filter((route) => (route[parentType] || route.parent) === parent)
     }
 
     // 非级联，直接返回
@@ -136,9 +163,10 @@ export default class RouteHelper {
   /**
    * 判断特定路由是否从属于指定路由
    *
-   * @param {any} routeName        子路由
-   * @param {any} parentRouteName  父路由
-   * @returns
+   * @param {Strng} routeName         路由名称
+   * @param {String} parentRouteName   父级路由名称
+   * @returns {Boolean} true或者false
+   * @memberof RouteHelper
    */
   _belongTo(routeName, parentRouteName) {
     let route = this.routes[routeName]
@@ -159,10 +187,12 @@ export default class RouteHelper {
   /**
    * 标记根据特定路由，标记其在路由树中的路径
    *
-   * @param {any} routeTree         路由树
-   * @param {any} currentRouteName  当前路由名称
-   * @param {any} markKey           标记字段名
+   * @param {Object[]} routeTree                      路由树
+   * @param {String} currentRouteName               当前路由名称
+   * @param {Object} [options={}]              扩展选项
+   * @param {String} [options.markKey='current']    扩展选项
    * @returns
+   * @memberof RouteHelper
    */
   _markRoutePath(routeTree, currentRouteName, options = {}) {
     options.markKey = options.markKey || 'current'
@@ -172,7 +202,7 @@ export default class RouteHelper {
     if (!currentRouteName) return routeTree
 
     for (const branch of routeTree) {
-      if ( this._belongTo(currentRouteName, branch.routeName) ) {
+      if (this._belongTo(currentRouteName, branch.routeName)) {
         branch[options.markKey] = true
         if (branch.children) {
           options.openKeys.push(branch.routeName)
@@ -187,11 +217,15 @@ export default class RouteHelper {
 
   /**
    * 根据 url 路径返回匹配的路由定义
+   *
+   * @param {String} pathname 路径名称
+   * @returns
+   * @memberof RouteHelper
    */
   matchRoute(pathname) {
     const routeList = this.getComponentRouteList()
 
-    return routeList.find( (route) => {
+    return routeList.find((route) => {
       return matchPath(pathname, {
         path: route.path,
         exact: true,
@@ -203,10 +237,11 @@ export default class RouteHelper {
   /**
    * 组织面包屑导航
    *
-   * @param {any} routeName
+   * @param {String} routeName 路由名称
    * @returns
+   * @memberof RouteHelper
    */
-   getBreadCrumb(routeName) {
+  getBreadCrumb(routeName) {
     let breadCrumbs = []
 
     let route = routeName ? this.routes[routeName] : null
@@ -219,3 +254,5 @@ export default class RouteHelper {
     return breadCrumbs
   }
 }
+
+export default RouteHelper

@@ -1,6 +1,16 @@
+/**
+ * 通用工具类
+ * @module Helper
+ */
 import moment from 'moment'
 
-//金额格式化
+/**
+ * 金额格式化
+ *
+ * @export
+ * @param {String|Number} amount 金额
+ * @returns {String} 格式化后金额
+ */
 export function fmoney(amount) {
   amount = `${parseFloat(amount).toFixed(2)} `;
   let t = '';
@@ -12,21 +22,38 @@ export function fmoney(amount) {
   }
   let l = amount.split('.')[0].split('').reverse();
   let r = amount.split('.')[1];
-  for (let i = 0; i < l.length; i ++ ) {
+  for (let i = 0; i < l.length; i++) {
     t += l[i] + ((i + 1) % 3 === 0 && (i + 1) !== l.length ? ',' : '');
   }
   return `${m}${t.split('').reverse().join('')}.${r}`;
 }
 
-//日期格式化
+/**
+ * 日期格式化
+ *
+ * @author JFJ
+ * @export
+ * @param {Date} time 日期
+ * @returns {String} 格式化后日期
+ */
 export function dateFormat(time) {
   const dateTime = time ? moment(time).format('YYYY-MM-DD') : ''
   return dateTime
 }
 
 //排序
+/**amazon
+ * 排序方法
+ *
+ * @author JFJ
+ * @export
+ * @param {*} a
+ * @param {*} b
+ * @param {String} type 类型
+ * @returns {Number} 排序类型
+ */
 export function sorter(a, b, type) {
-  switch(true) {
+  switch (true) {
     case type === 'date':
       const data_a = a ? isNaN(new Date(a)) ? new Date('0000').getTime() : new Date(a).getTime() : new Date('0000').getTime()
       const data_b = b ? isNaN(new Date(b)) ? new Date('0000').getTime() : new Date(b).getTime() : new Date('0000').getTime()
@@ -37,40 +64,47 @@ export function sorter(a, b, type) {
       return number_a - number_b
     case type === 'string':
       if (a < b) {
-          return -1;
+        return -1;
       } else if (a > b) {
-          return 1;
+        return 1;
       } else {
-          return 0;
+        return 0;
       }
     default:
       break
   }
 }
 
-//删除对象的空属性值
-export function filterAttr(o) {
-  if(o === "") return
-  if(typeof o !== 'object') return
-  for(let i in o) {
-    if(!o[i] && o[i] !== 0) {
+/**
+ * 过滤对象空属性
+ *
+ * @author JFJ
+ * @export
+ * @param {*} o 过滤源
+ * @returns {Object} 过滤之后的对象
+ */
+export function removeEmptyProperty(o) {
+  if (o === "") return
+  if (typeof o !== 'object') return
+  for (let i in o) {
+    if (!o[i] && o[i] !== 0) {
       delete o[i]
-      filterAttr(o[i])
-      filterAttr(o)
-    }else if (JSON.stringify(o[i]) === '{}') {
+      removeEmptyProperty(o[i])
+      removeEmptyProperty(o)
+    } else if (JSON.stringify(o[i]) === '{}') {
       delete o[i]
-      filterAttr(o[i])
-      filterAttr(o)
+      removeEmptyProperty(o[i])
+      removeEmptyProperty(o)
     } else {
-      filterAttr(o[i])
+      removeEmptyProperty(o[i])
     }
   }
   return ((o) => {
-    if(JSON.stringify(o) === '{}') return null
-    for(let i in o) {
-      if(o[i] === '') {
+    if (JSON.stringify(o) === '{}') return null
+    for (let i in o) {
+      if (o[i] === '') {
         delete o[i]
-      }else if (JSON.stringify(o[i]) === '{}') {
+      } else if (JSON.stringify(o[i]) === '{}') {
         delete o[i]
       }
     }
