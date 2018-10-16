@@ -52,7 +52,7 @@ const data_week = [{
 }]
 
 @observer
-export default class Collapse extends Component {
+class Collapse extends Component {
   constructor(props) {
     super(props)
     this.state = {}
@@ -97,3 +97,5 @@ class InfoTable extends SimpleTable {
     }]
   }
 }
+
+export default Collapse

@@ -1,10 +1,22 @@
+/**
+ * 表格按钮配套组件
+ * @module TableElement
+ */
+
 import React from 'react'
 import { Icon, Button, Input, Popconfirm } from 'antd'
 import { Link } from 'react-router-dom'
 
 const Search = Input.Search;
+
 /**
  * 普通按钮
+ *
+ * @param {Object} props                 参数
+ * @param {String} props.type            类型
+ * @param {String} props.icon            图标
+ * @param {String} props.text            内容
+ * @param {Function} props.onClick       点击调用函数
  */
 const GeneralButton = ({ type, icon, text, onClick }) => {
   return (
@@ -14,6 +26,14 @@ const GeneralButton = ({ type, icon, text, onClick }) => {
 
 /**
  * 链接按钮
+ *
+ * @param {Object} props                 参数
+ * @param {String} props.type            类型
+ * @param {String} props.icon            图标
+ * @param {String|Function} props.path   链接地址或者方法
+ * @param {Function} props.onClick       点击调用函数
+ * @param {Object} props.record          当前记录
+ * @param {String} props.text            内容
  */
 const LinkButton = ({ type, path, text, icon, record, onClick }) => {
   let linkUrl
@@ -36,6 +56,14 @@ const LinkButton = ({ type, path, text, icon, record, onClick }) => {
 
 /**
  * 气泡按钮
+ *
+ * @param {Object} props                 参数
+ * @param {String} props.type            类型
+ * @param {String} props.icon            图标
+ * @param {Function} props.onConfirm     确认调用函数
+ * @param {Object} props.record          当前记录
+ * @param {String} props.title           标题
+ * @param {String} props.text            内容
  */
 const PopconfirmButton = ({ type, icon, onConfirm, record, title, text }) => {
   return (
@@ -47,6 +75,8 @@ const PopconfirmButton = ({ type, icon, onConfirm, record, title, text }) => {
 
 /**
  * 操作按钮
+ *
+ * @param {*} props 参数
  */
 const ActionButton = (props) => {
   if (props.path)
@@ -57,15 +87,24 @@ const ActionButton = (props) => {
     return GeneralButton(props)
 }
 
-/*
-* 渲染列
-*/
+/**
+ * 渲染列
+ *
+ * @param {String} title      标题
+ * @param {String} dataIndex  索引
+ * @param {Boolean} sorter    是否排序
+ * @param {*} options         扩展选项
+ * @returns {Object}
+ */
 export const Column = (title, dataIndex, sorter = false, options) => {
-    return Object.assign({title, dataIndex, key: dataIndex, sorter}, options)
+  return Object.assign({ title, dataIndex, key: dataIndex, sorter }, options)
 }
 
 /**
  * 跳转链接列
+ *
+ * @param   {...any} params 参数
+ * @returns {Document}
  */
 export const LinkableColumn = (...params) => (path, text, onClick) => {
   const col = Column(...params)
@@ -79,19 +118,22 @@ export const LinkableColumn = (...params) => (path, text, onClick) => {
 
 /**
  * 操作列
+ *
+ * @param  {...any} params 参数
+ * @returns {Document}
  */
 export const ActionColumn = (...params) => (actions) => {
   const col = Column(...params)
   col.render = (text, record, index) => (
     <div>
       {
-        actions.map( (act) => {
+        actions.map((act) => {
           const props = Object.assign({ text, record, index }, act)
           return ActionButton(props)
         })
       }
     </div>
   )
-  
+
   return col
 }

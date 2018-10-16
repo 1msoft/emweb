@@ -2,16 +2,12 @@ import React, { Component } from 'react'
 import { Table } from 'antd'
 
 /**
- * 表格 用于显示简单信息，只读不可编辑，无分页功能，如化疗信息、检查信息、基因检测信息...
- * 使用方式:
- * class SimpleTables extends Simple {
- *    renderColumns(){
- *        return renderColumn数组
- *    }
- * }
- * renderColumns为传进来的参数
+ * 简单表格-不分页
+ *
+ * @class SimpleTable
+ * @extends {Component}
  */
-export default class SimpleTable extends Component {
+class SimpleTable extends Component {
   state = {
     loading: false
   }
@@ -35,15 +31,36 @@ export default class SimpleTable extends Component {
       </div>
     )
   }
-  // 配置表格
+
+  /**
+   * 配置表格
+   *
+   * @returns
+   * @memberof SimpleTable
+   */
   configTable() {
     return {}
   }
-  // 列定义
+
+  /**
+   * 列定义
+   *
+   * @returns {Array}
+   * @memberof SimpleTable
+   */
   renderColumns() {
     return []
   }
 
+  /**
+   * 点击行回调
+   *
+   * @param {*} record 当前行记录
+   * @param {*} index  索引值
+   * @memberof SimpleTable
+   */
   onRowClick(record, index) {
   }
 }
+
+export default SimpleTable

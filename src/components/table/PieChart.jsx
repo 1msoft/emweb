@@ -3,10 +3,20 @@ import React, { Component } from 'react'
 /**
  * 配置参数
  * --rate 百分比数值 string 例：'50%'
- * --width 宽度设置 number 默认为20 例：20 
+ * --width 宽度设置 number 默认为20 例：20
  * <PieChart rate=’50%‘ width={30} />
  */
 
+/**
+ * 自定义饼图
+ *
+ * @class PieChart
+ * @extends {Component}
+ * @param {Object} props
+ * @param {String} props.rate    百分比
+ * @param {Number} props.width   宽高
+ *
+ */
 class PieChart extends Component {
   componentDidMount() {
     this.updateCanvas()
