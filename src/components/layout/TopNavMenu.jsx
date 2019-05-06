@@ -9,7 +9,7 @@ const TopNavMenu = ({ navList, openKeys, selectedKeys }) => {
   return(
     <div style={{ fontSize:'14px', border:0, float: 'right'}}>
       <Menu
-        theme="ligth"
+        theme="light"
         mode="horizontal"
         selectedKeys={selectedKeys}
         style={{ lineHeight: '80px', float:'right'}}>

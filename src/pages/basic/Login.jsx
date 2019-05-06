@@ -1,118 +1,138 @@
 import React, { Component } from 'react';
-// import { Link, history } from 'react-router-dom';
-import { Button, Input, message } from 'antd';
-import { observer, inject } from 'mobx-react'
-// import bcrypt from '../utils/bcrypt'
-import logo from '../../assets/image/LOGO.png'
+import { Link } from 'react-router-dom';
+import { Form, Icon, Input, Button } from 'antd';
+import { setCookie, encrypt } from '../../utils/helper';
+import userImg from '../../assets/images/userBg.png';
 
-@inject(['loginStore'])
-@observer
+const FormItem = Form.Item;
+
 class Login extends Component {
-
-	constructor(props){
-			super(props);
-			this.store = this.props.loginStore
-			this.state = {
-					username: '',
-					password: '',
-					loginLoading:false
-			};
-	}
-
-	componentDidMount() {
-		let Login_Focus=document.getElementById("Login_Focus")
-		Login_Focus.focus()
-	}
-
-	componentWillUnmount() {
-	}
-
-	render () {
-
-			return(
-					<div style={{height: '100%'}}>
-							<div className="signin">
-								<div className="signin-box">
-									<div className="signin-title">AccuraGen 肿瘤临床数据平台</div>
-									<div className="signin-block">
-										<div className="signin-logo">
-											<img src={logo} alt={"AccuraGen"} />
-										</div>
-										<Input placeholder="用户名" id="Login_Focus"
-										onKeyDown={(e) => e.keyCode === 13 ? this.login.bind(this)() : null }
-										onChange={this.changeState.bind(this, 'username')}
-										style={{width: 250, height: 38, marginBottom: 30}} />
-										<Input placeholder="密码" type="password"
-										onKeyDown={(e) => e.keyCode === 13 ? this.login.bind(this)() : null }
-										onChange={this.changeState.bind(this, 'password')}
-										style={{width: 250, height: 38, marginBottom: 30}} />
-										<span className="raised-button">
-											<Button type="primary" loading={this.state.loginLoading} onClick={this.login.bind(this)}> 登录系统 </Button>
-										</span>
-									</div>
-								</div>
-								<div className="signin-footer">
-									Copyright &copy; 2017 Emsoft Incorporated. All rights reserved.
-								</div>
-							</div>
-					</div>
-			);
-	}
-
-	changeState(name, e) {
-			this.setState({
-					[name]: e.target.value
-			})
-	}
-
-	login() {
-    const {username, password} = this.state
-		if (username === '' || password === '') {
-			message.error("用户名或者密码不能为空")
-			return
-		}
-		this.changeLoginLoading()
-		this.store.login(username, password).then(
-			(res) => {
-				this.loginResult(res)
-			}).catch(
-			(err) => {
-				this.loginResult(err)})
+  constructor(props) {
+    super(props);
+    this.state = {};
   }
 
-	loginResult = (result) => {
-		switch(result) {
-			case 'fail_dataBase':
-				message.error('检查数据库链接是否正确')
-				this.changeLoginLoading()
-				break
-			case 'fail_username':
-				message.error("账号不存在")
-				this.changeLoginLoading()
-				break
-			case 'fail_password':
-				message.error('密码不正确')
-				this.changeLoginLoading()
-				break
-			case 'success':
-				message.success('登录成功')
-				this.goHomePage()
-				this.changeLoginLoading()
-				break
-			default:
-		}
-	}
+  componentDidMount(){
+     this.setLoginBackgroundSize();
+     window.onresize = this.setLoginBackgroundSize;
+  }
+  render() {
+    const { getFieldDecorator } = this.props.form;
+    const layout = {
+      labelCol: { span: 0 },
+      wrapperCol: { span: 24 }
+    };
+    return (
+      <div className="login" id="login">
+        <div className="login-center">
+          <div className="login-content-right">
+            <div className="login-form-position">
+              <div className="form">
+                <div className="user-bg">
+                  <img src={userImg} alt=""/>
+                </div>
+                <h2>系统登录</h2>
+                <Form style={{padding: '0 0.30rem'}}>
+                  <FormItem {...layout}>
+                    {
+                      getFieldDecorator('username', {
+                        rules: [{ required: true, message: '请输入用户名' }]
+                      })(<Input
+                        style={{fontSize: '0.16rem', height: '0.48rem'}}
+                        placeholder="请输入用户名"
+                        size="large"
+                        prefix={<Icon type="user" style={{fontSize: '0.20rem'}} />}
+                        onKeyDown={(e) => { if (e.keyCode === 13) { this.handleLogin(e) } }} />)
+                    }
+                  </FormItem>
+                  <FormItem {...layout}>
+                    {
+                      getFieldDecorator('password', {
+                        rules: [
+                          { required: true, message: '请输入密码' },
+                          // { min: 6, message: '密码长度必须大于6位字符' },
+                        ]
+                      })(<Input
+                        style={{fontSize: '0.16rem', height: '0.48rem'}}
+                        placeholder="请输入密码"
+                        prefix={<Icon type="lock" style={{fontSize: '0.20rem'}}/>}
+                        type="password"
+                        size="large"
+                        onKeyDown={(e) => { if (e.keyCode === 13) { this.handleLogin(e) } }} />)
+                    }
+                  </FormItem>
+                  <Button type="primary" style={{ width: '100%', height: '0.60rem', fontSize: '0.24rem'}}
+                      onClick={this.handleLogin.bind(this)}>登录</Button>
+                </Form>
+              </div>
+            </div>
+          </div>
+          <div style={{clear: 'both'}}></div>
+        </div>
+        
+        <div className="login-footer">
+          <div style={{ marginBottom: '0.10rem', color: '#fff'}}>
+            <Link style={{ color: '#fff', padding: '0 0.20rem' }} to="/">帮助</Link>|
+            <Link style={{ color: '#fff', padding: '0 0.20rem' }} to="/">隐私</Link>|
+            <Link style={{ color: '#fff', padding: '0 0.20rem' }} to="/">条款</Link>
+          </div>
+          <div style={{ color: '#fff' }}>Copyright &copy; 2018 福建英迈软件有限公司</div>
+        </div>
+      </div>
+    );
+  }
 
-	changeLoginLoading = () => {
-		this.setState({
-			loginLoading: !this.state.loginLoading
-		})
-	}
+  // 设置 html font-size字体大小 
+  // relyOnW: 是否根据高度计算值  true || false
+  setHtmlFontSize = (relyOnW) => {
+    // 缩放比例：自己瞎加的
+    const fontAdjustment = 1;
+    // 假设 设计稿为: 1920 * 1008
+    let scale;
+    if(relyOnW){
+      // 按照宽度缩放比例计算字体大小
+      scale = document.body.clientWidth / 1920;
+    } else {
+      // 安装高度缩放比例计算字体大小
+      scale = document.body.clientHeight / 1008;
+    }
+    const fontSize = 100 * scale * fontAdjustment + 'px';
+    document.getElementsByTagName('html')[0].setAttribute('style', `font-size: ${fontSize}`);
+  }
 
-  goHomePage = () => {
-    const {history} = this.props
-    history.push('/')
+  // 设置背景图大小:
+  setLoginBackgroundSize = () => {
+    const dom = document.getElementById('login');
+    const bodyW = document.body.clientWidth;
+    const bodyH = document.body.clientHeight;
+    // 背景图: 1920 * 1008
+    // 计算当前背景图高度:
+    const scale = bodyW / 1920;
+    const bgH = 1008 * scale;
+    if(bgH <  bodyH){
+      // 计算 html 字体大小; 根据高度缩放
+      this.setHtmlFontSize(false);
+      dom && dom.setAttribute('style', 'background-size: auto 100%');
+    } else {
+      // 计算 html 字体大小; 根据宽度缩放
+      this.setHtmlFontSize(true);
+      dom && dom.setAttribute('style', 'background-size: 100% auto');
+    }
+  }
+
+  // 登录
+  handleLogin(e) {
+    e.preventDefault();
+    const { validateFields, getFieldsValue } = this.props.form;
+    validateFields((err, values) => {
+      if (!err) {
+        const body = getFieldsValue();
+        console.log('------ 登录 ------');
+        this.props.history.push('/home');        
+      }
+    });
   }
 }
+Login = Form.create({})(Login);
 
 export default Login;

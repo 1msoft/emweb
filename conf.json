@@ -1,9 +1,0 @@
-{
-  "recurseDepth": 10,
-  "sourceType": "module",
-  "tags": {
-    "allowUnkownTags": true,
-    "dictionaries": ["jsdoc", "closure"]
-  },
-  "plugins": []
-}

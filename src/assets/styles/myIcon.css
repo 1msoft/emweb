@@ -1,0 +1,33 @@
+/* 覆盖antd原本样式 */
+.anticon:before {
+  font-family: "anticon_user", "anticon" !important;
+}
+.ant-select-arrow:before {
+  font-family: "anticon_user", "anticon" !important;
+}
+.ant-select-selection--multiple .ant-select-selection__choice__remove:before {
+  font-family: "anticon_user", "anticon" !important;
+}
+.ant-collapse > .ant-collapse-item > .ant-collapse-header .arrow:before {
+  font-family: "anticon_user", "anticon" !important;
+}
+.ant-dropdown-menu-submenu-title:after {
+  font-family: "anticon_user", "anticon" !important;
+}
+.ant-input-number-handler-up-inner:before,
+.ant-input-number-handler-down-inner:before {
+  font-family: "anticon_user", "anticon" !important;
+}
+.ant-menu-submenu-vertical > .ant-menu-submenu-title:after {
+  font-family: "anticon_user", "anticon" !important;
+}
+.ant-menu-submenu-inline > .ant-menu-submenu-title:after {
+  font-family: "anticon_user", "anticon" !important;
+}
+.ant-modal-close-x:before {
+  font-family: "anticon_user", "anticon" !important;
+}
+.ant-tabs-tab-prev-icon:before,
+.ant-tabs-tab-next-icon:before {
+  font-family: "anticon_user", "anticon" !important;
+}

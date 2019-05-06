@@ -54,6 +54,7 @@ class PreviewPictures extends Component {
 						curImgIndex: index
 					})
 				}
+				return
 			})
 		}
 	}
@@ -123,8 +124,8 @@ class PreviewPictures extends Component {
 		return (
 			<div className='preview_pictures'
 						style={{display: `${this.props.previewVisible}`,
-										width:`${this.state.webWidth}`,
-										hieght:`${this.state.webHeight}`}}>
+										width:`${this.state.webWidth}px`,
+										hieght:`${this.state.webHeight}px`}}>
 				<div className='preview_pictures_main'>
 					<div className='preview_pictures_operation'>
 						<div>

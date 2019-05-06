@@ -56,8 +56,8 @@ class ConstomForm extends Component {
     const { costomData, dataSource } = this.props
     if (!costomData && !this.costomFields()) throw Error('填写字段')
     this.costomData = this.props.costomData
-    const costomFields = this.costomFields()
-    this.setState({fields: this.getFields(dataSource, costomFields), dataSource: dataSource})
+    // const costomFields = this.costomFields()
+    this.setState({fields: this.getFields(dataSource, this.costomData), dataSource: dataSource})
   }
 
   render() {
@@ -80,7 +80,7 @@ class ConstomForm extends Component {
 
               cacheArr.push(field)
               count += (field.grid || fieldsGrid)
-
+              
               if (count >= 24) {
 
                 count = 0
@@ -199,7 +199,7 @@ class ConstomForm extends Component {
   getFields(dataSource, costomData) {
     if (dataSource === undefined || costomData === undefined) return null
     const source = dataSource
-
+ 
     const UcostomData = costomData ? costomData : {}
     const {fields, show, hide } = UcostomData
     const sourceKey = Object.keys(source)

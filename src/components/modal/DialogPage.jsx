@@ -31,9 +31,9 @@ export default class DialogPage extends Component {
   onClickBtn(clickFunc) {
     return (e) => {
       clickFunc.bind(this)(e)
-      if (this.autoClose) {
-        this.onClose()
-      }
+    //   if (this.autoClose) {
+    //     this.onClose()
+    //   }
     }
   }
 

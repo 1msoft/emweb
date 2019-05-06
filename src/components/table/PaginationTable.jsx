@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { Table, Pagination, Button, Popconfirm, Input, Icon, Select, Checkbox, Switch } from 'antd'
+import { Table, Pagination, Button, Popconfirm, Input, Checkbox, Switch } from 'antd'
+import _ from 'lodash'
 import './PaginationTable.css'
 
 /* 配置参数
@@ -12,7 +13,6 @@ import './PaginationTable.css'
  *     -- isEditRow      是否显示编辑      Boolean  默认：false
  *     -- isAddRow       是否显示新增      Boolean  默认：false
  *     -- isDeleteRow    是否显示删除      Boolean  默认：false
- *     -- isSelectColumns 是否显示筛选字段  Boolean   默认: false   
  * 
  *  -- 继承
  *     -- configTable   配置表格
@@ -49,8 +49,8 @@ class PaginationTable extends Component {
     oldWidth: 0,
     dataSource: this.props.dataSource,
     editable: {},
+    update: false,
     filterFields: this.props_columns_keys,
-    saveStatus: {}
   }
 
   editCache = {}
@@ -63,30 +63,34 @@ class PaginationTable extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.dataSource !== this.props.dataSource) {
-      this.setState({
-        dataSource: nextProps.dataSource
-      })
+    if (!_.isEqual(this.props.dataSource, nextProps.dataSource)) {
+      this.setState({ dataSource: nextProps.dataSource })
+    }
+    if (!_.isEqual(this.props.currentPage, nextProps.currentPage)) {
+      this.setState({ jumper: `${nextProps.currentPage}` });
     }
   }
 
   getComponentColumns() {
     const { isEditRow, isDeleteRow } = this.props
     const self = this
+    if ((!isEditRow && !isDeleteRow)) return this.columns
     this.columns = this.columns.map((value, idx) => {
       const data = {
         ...value,
         render(text, record, idx) {
-          text = typeof value.formatter === 'function' ? value.formatter(text) : text
+          const cache = {}
+          cache.text = typeof value.formatter === 'function' ?
+            value.formatter(text, record, idx) : text
           return (
             <div>
               {
                 self.state.editable[idx] ?
                   <Input type="text"
-                    defaultValue={text}
+                    defaultValue={cache.text}
                     onChange={(e) => self.handleEdit(idx, value.key, e.target.value)} />
                   :
-                  <span>{text}</span>
+                  <span>{cache.text}</span>
               }
             </div>
           )
@@ -95,7 +99,6 @@ class PaginationTable extends Component {
       return data
     })
 
-    if ((!isEditRow && !isDeleteRow)) return this.columns
     this.columns = [
       ...this.columns,
       {
@@ -103,8 +106,6 @@ class PaginationTable extends Component {
         dataIndex: 'operations',
         key: 'operations',
         render(text, record, index) {
-          const frontEndCurPage = self.state.pagination ? (self.state.pagination.current - 1) : 0
-          const mergeIndex = frontEndCurPage * 10 + index
           return (
             <div className="operation-group">
               {
@@ -113,17 +114,11 @@ class PaginationTable extends Component {
                     <span>
                       <span style={{ marginLeft: 10 }}
                         onClick={() => self.changeEditState('save', index)}>
-                        <Button
-                          icon="save"
-                          disabled={!self.state.saveStatus[mergeIndex]}
-                        >保存</Button>
+                        <Button icon="save">保存</Button>
                       </span>
-                      <span style={{ marginLeft: 10 }}>
-                        <Button
-                          icon="close"
-                          type="danger"
-                          onClick={() => self.changeEditState('cancel', index)}
-                        >取消</Button>
+                      <span style={{ marginLeft: 10 }}
+                        onClick={() => self.changeEditState('cancel', index)}>
+                        <Button type="danger" icon="close">取消</Button>
                       </span>
                     </span>
                     :
@@ -135,15 +130,13 @@ class PaginationTable extends Component {
               }
               {
                 isDeleteRow ?
-                  !self.state.editable[index] ?
-                    <span style={{ marginLeft: 10 }}>
-                      <Popconfirm
-                        title="确定删除"
-                        onConfirm={() => self.changeEditState('delete', index)}>
-                        <Button type="danger" icon="delete">删除</Button>
-                      </Popconfirm>
-                    </span>
-                    : ''
+                  <span style={{ marginLeft: 10 }}>
+                    <Popconfirm
+                      title="确定删除"
+                      onConfirm={() => self.changeEditState('delete', index)}>
+                      <Button type="danger" icon="delete">删除</Button>
+                    </Popconfirm>
+                  </span>
                   : ''
               }
             </div>
@@ -151,29 +144,22 @@ class PaginationTable extends Component {
         },
       }
     ]
+
     return this.columns
   }
 
   changeEditState(type, index) {
-    const frontEndCurPage = this.state.pagination ? (this.state.pagination.current - 1) : 0
-    const mergeIndex = frontEndCurPage * 10 + index
     switch (type) {
-      case 'add':
+      case 'edit':
         this.setState({
           editable: { ...this.state.editable, [index]: true }
         })
         break
-      case 'edit':
-        this.setState({
-          editable: { ...this.state.editable, [index]: true },
-          saveStatus: { ...this.state.saveStatus, [mergeIndex]: false }
-        })
-        break
       case 'save':
-        if (this.editCache[mergeIndex]) {
+        if (this.editCache[index]) {
           let dataSource = [...this.state.dataSource]
-          const currentRow = dataSource[mergeIndex]
-          const cacheData = this.editCache[mergeIndex]
+          const currentRow = dataSource[index]
+          const cacheData = this.editCache[index]
           let changeFields = {}
           for (let key in cacheData) {
             if (currentRow[key] !== cacheData[key]) {
@@ -183,13 +169,13 @@ class PaginationTable extends Component {
               }
             }
           }
-          dataSource[mergeIndex] = this.editCache[mergeIndex]
+          const frontEndCurPage = this.state.pagination ? (this.state.pagination.current - 1) : 0
+          const mergeIndex = frontEndCurPage * 10 + index
+          dataSource[mergeIndex] = this.editCache[index]
           this.editDone(changeFields, currentRow, dataSource)
-
           this.setState({
             editable: { ...this.state.editable, [index]: false },
-            dataSource,
-            saveStatus: { ...this.state.saveStatus, [mergeIndex]: false }
+            dataSource
           })
         } else {
           this.setState({
@@ -198,18 +184,16 @@ class PaginationTable extends Component {
         }
         break
       case 'cancel':
-        this.editCache[mergeIndex] = undefined
-        const isIndexData = this.state.dataSource[mergeIndex]
-        const originDataSource = [...this.state.dataSource]
-        JSON.stringify(isIndexData) === "{}" && originDataSource.shift()
+        this.editCache[index] = undefined
         this.setState({
-          editable: { ...this.state.editable, [index]: false },
-          dataSource: originDataSource
+          editable: { ...this.state.editable, [index]: false }
         })
         break
       case 'delete':
         const dataSource = [...this.state.dataSource]
-        const currentRow = dataSource[mergeIndex]
+        const currentRow = dataSource[index]
+        const frontEndCurPage = this.state.pagination ? (this.state.pagination.current - 1) : 0
+        const mergeIndex = frontEndCurPage * 10 + index
         this.deleteRow(currentRow, dataSource, mergeIndex)
         this.setState({
           editable: { ...this.state.editable, [index]: false },
@@ -222,31 +206,29 @@ class PaginationTable extends Component {
   }
 
   handleEdit(index, key, value) {
-    const frontEndCurPage = this.state.pagination ? (this.state.pagination.current - 1) : 0
-    const mergeIndex = frontEndCurPage * 10 + index
-    if (!this.editCache[mergeIndex]) {
-      this.editCache[mergeIndex] = { ...this.state.dataSource[mergeIndex] }
+    if (!this.editCache[index]) {
+      this.editCache[index] = { ...this.state.dataSource[index] }
     }
-    this.editCache[mergeIndex][key] = value
-    this.saveSwitch(mergeIndex)
+    this.editCache[index][key] = value
   }
 
   render() {
     const { pageType = true } = this.props
     const { dataSource, filterFields } = this.state
-
+     
     //分页设置
     const pagination = Object.assign({
       showSizeChanger: true,
       showQuickJumper: !pageType,
       defaultCurrent: 1,
-      defaultPageSize: this.state.pageSize,
+      defaultPageSize: this.props.defaultPageSize || this.state.pageSize,
+      pageSizeOptions: ['10', '20', '30', '40'],
       showTotal: this.showTotal,
       total: (pageType ? this.props.dataLength : this.state.dataSource.length),
       onChange: this.onPageChange,
       onShowSizeChange: this.onPageChangeCb,
     }, (pageType ? { current: this.props.currentPage } : {}))
-
+  
     this.columns = this.columns.map((col, index) => {
       if (col.sorter) {
         col.title = typeof col.title === 'string'
@@ -278,38 +260,43 @@ class PaginationTable extends Component {
           prev.push(value)
         }
         return prev
-      }, [])
+      }, []) 
       : this.columns
+    const props = Object.assign({}, this.props, this.config, {
+      pagination: pageType ? false : pagination,
+      pagination: pageType ? false : pagination,
+      dataSource: dataSource,
+      columns: render_columns,
+      rowSelection: this.props.rowSelection || null,
+      onChange: this.fetchData.bind(this),
+      onRow: this.onRowClick,
+      loading: this.props.isLoading,
+    });
     return (
       <div className="antd-inline-table row-highLight clearfix">
+        {/* 列可配置 */}
         {!!this.props.isSelectColumns ?
           <SelectColumns
             columns={this.columns}
             getColumns={this.getColumns.bind(this)} /> : ''}
+
+        {/* 是否添加行 */}
         {
           this.props.isAddRow ?
             <Button
               className="editable-add-btn"
               style={{ marginBottom: '5px' }}
               icon="plus" type="primary"
-              disabled={this.addSwitch()}
               onClick={() => this.addRowBefore()}>
               添加
           </Button> : ""
         }
-        <Table
-          pagination={pageType ? false : pagination}
-          dataSource={dataSource}
-          columns={render_columns}
-          onChange={this.fetchData.bind(this)}
-          onRowClick={this.onRowClick}
-          loading={this.props.isLoading}
-          {...this.config} />
+        <Table {...props} />
         {
           pageType ?
-            <div>
+            <div className='clearfix'>
               <ul
-                style={{ clear: 'none', padding: '12px 0' }}
+                style={{ clear: 'none', padding: '12px 0', float: 'right' }}
                 className="ant-pagination">
                 <div className="ant-pagination-options">
                   <div className="ant-pagination-options-quick-jumper">
@@ -317,14 +304,13 @@ class PaginationTable extends Component {
                   </div>
                 </div>
               </ul>
-              <Pagination ref='pagination' style={{ clear: 'none', paddingRight: 0 }} {...pagination} />
+              <Pagination ref='pagination'
+                style={{ clear: 'none', padding: '12px 0', float: 'right' }}
+                {...pagination} />
             </div> : ''
         }
       </div>
     )
-  }
-  getColumns(keys) {
-    this.setState({ filterFields: keys })
   }
   //配置表格
   configTable() {
@@ -351,6 +337,10 @@ class PaginationTable extends Component {
   renderColumns() {
     return []
   }
+  //配置行
+  renderRowSelection() {
+    return null
+  }
   //显示条数
   showTotal(total, range) {
     return `当前 ${range[0]} - ${range[1]} 条  总共${total}条`
@@ -375,27 +365,24 @@ class PaginationTable extends Component {
   //跳转到对应页
   onJumpToPage = (e) => {
     if (e.keyCode === 13 && this.state.jumper) {
-      this.editCache = {}
       this.onChange({ current: this.state.jumper, pageSize: this.state.pageSize }, {}, {})
     }
   }
   //页码改变
   onPageChange = (page, pageSize) => {
-    this.setState({ pageSize, editable: {}, saveStatus: {} }, () => {
-      this.editCache = {}
+    this.setState({ pageSize, editable: {} }, () => {
       this.onChange({ current: page, pageSize }, {}, {})
     })
   }
   //PageSize变化回调
   onPageChangeCb = (current, pageSize) => {
-    this.setState({ pageSize, editable: {}, saveStatus: {} }, () => {
-      this.editCache = {}
+    this.setState({ pageSize, editable: {} }, () => {
       this.onChange({ current: current, pageSize }, {}, {})
     })
   }
   //表格分页、排序、筛选变化
   fetchData(pagination, filters, sorter) {
-    this.setState({ pagination, filters, sorter, editable: {}, saveStatus: {} }, () => {
+    this.setState({ pagination, filters, sorter, editable: {} }, () => {
       this.onChange(pagination, filters, !sorter.order ? {} : sorter)
     })
   }
@@ -442,38 +429,28 @@ class PaginationTable extends Component {
       }
     }
   }
-  // 保存按钮开关
-  saveSwitch(index) {
-    const saveStatus = JSON.stringify(this.editCache[index]) === '{}' ? false : true
-    this.setState({
-      saveStatus: { ...this.state.saveStatus, [index]: saveStatus }
-    })
-  }
   //保存编辑
   editDone(changeFields, currentRow, dataSource) {
   }
   // 删除行
   deleteRow(currentRow, dataSource, index) {
   }
-  // 添加按钮开关
-  addSwitch() {
-    const cache = { ...this.state.editable }
-    const cacheKeys = Object.values(cache)
-    const switchStatus = cacheKeys.some(item => item === true)
-    return switchStatus
-  }
   //添加行
   addRowBefore() {
     const dataSource = [...this.state.dataSource]
     const frontEndCurPage = this.state.pagination ? (this.state.pagination.current - 1) : 0
     const mergeIndex = frontEndCurPage * 10
-    this.changeEditState('add', mergeIndex)
     this.addRow(dataSource, mergeIndex)
-    this.setState({ dataSource, saveStatus: {} }, () => this.editCache = {})
+    this.setState({ dataSource }, () => this.editCache = {})
   }
 
   addRow(dataSource, curPageFirstRow) {
     dataSource.splice(curPageFirstRow, 0, {})
+  }
+
+  // 配置显示列的keys
+  getColumns(keys) {
+    this.setState({ filterFields: keys })
   }
 
   get props_columns_keys() {
@@ -484,6 +461,9 @@ class PaginationTable extends Component {
   }
 }
 
+export default PaginationTable
+
+// 表格列可选显示
 class SelectColumns extends Component {
   state = {
     checkedList: this.props_columns_keys,
@@ -557,7 +537,7 @@ class SelectColumns extends Component {
       const status = !!regex.test(title)
       return true === status
     })
-    console.log(selectResult, 'selectResult')
+
     const _columns = selectResult.reduce((prev, value, index) => {
       prev.push(value)
       return prev
@@ -598,5 +578,3 @@ class SelectColumns extends Component {
     }, [])
   }
 }
-
-export default PaginationTable

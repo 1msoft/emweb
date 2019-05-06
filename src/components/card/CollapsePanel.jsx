@@ -20,7 +20,7 @@ const customPanelStyle = {
 const Panel = Collapse.Panel
 
 export default class CollapsePanel extends Component {
-  
+
   render() {
     const { header, children } = this.props
     return (
