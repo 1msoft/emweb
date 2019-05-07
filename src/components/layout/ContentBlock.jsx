@@ -16,19 +16,19 @@ const ContentBlock = ({ ...props }) => {
   return (
     <div style={style} className={className}>
       <Switch>
-      {
-        routes.map( ({ path, exact, component }, idx)=>{
-          return(
-            <PrivateRoute
-              key={idx}
-              path={path}
-              exact={exact}
-              component={component}
-              current={current}
-              root={root} />
-          )
-        })
-      }
+        {
+          routes.map( ({ path, exact, component }, idx)=>{
+            return(
+              <PrivateRoute
+                key={idx}
+                path={path}
+                exact={exact}
+                component={component}
+                current={current}
+                root={root} />
+            )
+          })
+        }
       </Switch>
     </div>
   )
@@ -39,8 +39,8 @@ const PrivateRoute = ({ component: Component, current, root, ...rest }) => (
     // cookie.get("_id") !== undefined ? (
     //   <Component {...props}/>
     // ) : (
-      /*<Redirect to='/login' />*/
-      <Component {...props} current={current} root={root} />
+    /*<Redirect to='/login' />*/
+    <Component {...props} current={current} root={root} />
     // )
   )} />
 )

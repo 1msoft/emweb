@@ -6,7 +6,7 @@ import MenuItemText from './MenuItemText'
 
 /**
  * 对 path 进行处理
- * @param {String} path router path 
+ * @param {String} path router path
  */
 const handlerPath = (path) => {
   let defaultParams = '';
@@ -25,7 +25,18 @@ const handlerPath = (path) => {
 }
 
 // 导航菜单项
-const MenuItem = ({ defaultParams, key, routeName, path, state, icon, text, size, extra, textWidth }) => {
+const MenuItem = ({
+  key,
+  path,
+  icon,
+  text,
+  size,
+  extra,
+  state,
+  routeName,
+  textWidth,
+  defaultParams
+}) => {
   if (path) {
     path = handlerPath(path);
     return (

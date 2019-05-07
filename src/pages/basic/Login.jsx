@@ -13,8 +13,8 @@ class Login extends Component {
   }
 
   componentDidMount(){
-     this.setLoginBackgroundSize();
-     window.onresize = this.setLoginBackgroundSize;
+    this.setLoginBackgroundSize();
+    window.onresize = this.setLoginBackgroundSize;
   }
   render() {
     const { getFieldDecorator } = this.props.form;
@@ -61,15 +61,20 @@ class Login extends Component {
                         onKeyDown={(e) => { if (e.keyCode === 13) { this.handleLogin(e) } }} />)
                     }
                   </FormItem>
-                  <Button type="primary" style={{ width: '100%', height: '0.60rem', fontSize: '0.24rem'}}
-                      onClick={this.handleLogin.bind(this)}>登录</Button>
+                  <Button
+                    type="primary"
+                    style={{ width: '100%', height: '0.60rem', fontSize: '0.24rem'}}
+                    onClick={this.handleLogin.bind(this)}
+                  >
+                    登录
+                  </Button>
                 </Form>
               </div>
             </div>
           </div>
           <div style={{clear: 'both'}}></div>
         </div>
-        
+
         <div className="login-footer">
           <div style={{ marginBottom: '0.10rem', color: '#fff'}}>
             <Link style={{ color: '#fff', padding: '0 0.20rem' }} to="/">帮助</Link>|
@@ -82,7 +87,7 @@ class Login extends Component {
     );
   }
 
-  // 设置 html font-size字体大小 
+  // 设置 html font-size字体大小
   // relyOnW: 是否根据高度计算值  true || false
   setHtmlFontSize = (relyOnW) => {
     // 缩放比例：自己瞎加的
@@ -128,7 +133,7 @@ class Login extends Component {
       if (!err) {
         const body = getFieldsValue();
         console.log('------ 登录 ------');
-        this.props.history.push('/home');        
+        this.props.history.push('/home');
       }
     });
   }

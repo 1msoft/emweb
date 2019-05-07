@@ -31,17 +31,17 @@ class BreadcrumbBlock extends Component {
     return routeList;
   }
 
-  render() { 
+  render() {
     return (
-      <Breadcrumb 
+      <Breadcrumb
         style={{
           color: '#666',
-          height: '60px', 
-          background: '#fff', 
+          height: '60px',
+          background: '#fff',
           paddingLeft: '20px',
-          lineHeight: '60px', 
-        }} 
-        breadcrumbs={this.breadcrumbs}        
+          lineHeight: '60px',
+        }}
+        breadcrumbs={this.breadcrumbs}
       />
     );
   }
@@ -54,7 +54,10 @@ class BreadcrumbBlock extends Component {
     let rootRoute = this.props.routeHelper.findRouteByName('Index');
     let rootRouteName = rootRoute ? rootRoute.routeName : null;
     // 页面路由列表
-    const contentRoutes = this.props.routeHelper.getComponentRouteList(rootRouteName, { cascade: true });
+    const contentRoutes = this.props.routeHelper.getComponentRouteList(
+      rootRouteName,
+      { cascade: true }
+    );
     //扁平化所有路由
     const routeList = this.getRoutes(contentRoutes).filter(item => item.component);
     this.getBreadcrumbs(routeList, currRoute.parent, breadcrumbs);

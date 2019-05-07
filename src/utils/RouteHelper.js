@@ -89,7 +89,7 @@ export default class RouteHelper {
   /**
    * 筛选出导航菜单可见的路由
    */
-  _checkVisibleRoute(route) { 
+  _checkVisibleRoute(route) {
     return route.nav === true
   }
 
@@ -127,18 +127,18 @@ export default class RouteHelper {
   }
   /**
    * 获取可见路由
-   * @param {*} list 
+   * @param {*} list
    */
   _filterVisible(routes) {
     const navRoutes = routes.filter(item => item.nav);
     for (const item of navRoutes) {
       if (item.children) {
-       const branch = this._filterVisible(item.children);
-       item.visChildren = branch;
+        const branch = this._filterVisible(item.children);
+        item.visChildren = branch;
       }
     }
     return navRoutes;
-   }
+  }
   /**
    * 获取子级路由
    *
@@ -167,7 +167,11 @@ export default class RouteHelper {
         continue
       }
 
-      const branch = this._getSubRoutes(routeList, route.routeName, { flatten, cascade, parentType })
+      const branch = this._getSubRoutes(
+        routeList,
+        route.routeName,
+        { flatten, cascade, parentType }
+      );
       if (flatten) {
         routes = routes.concat(branch)
       } else {
@@ -219,8 +223,9 @@ export default class RouteHelper {
       if ( this._belongTo(currentRouteName, branch.routeName) ) {
         branch[options.markKey] = true
         if (currentRouteName === branch.routeName) {
-            branch.nav ? options.selectedKeys.push(branch.routeName) :
-            options.selectedKeys.push(branch.parent);
+          branch.nav
+            ? options.selectedKeys.push(branch.routeName)
+            : options.selectedKeys.push(branch.parent);
         } else {
           if (branch.children) {
             options.openKeys.push(branch.routeName)
@@ -255,7 +260,7 @@ export default class RouteHelper {
    * @param {any} routeName
    * @returns
    */
-   getBreadCrumb(routeName) {
+  getBreadCrumb(routeName) {
     let breadCrumbs = []
 
     let route = routeName ? this.routes[routeName] : null

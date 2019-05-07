@@ -35,7 +35,7 @@ const MenuItemText = ({ icon, text, textWidth, size, extra }) => {
     <div className="layout-sider-nav-link-content">
       { icon }
       {/* <Tooltip title={ fullText }> */}
-        <span className="layout-sider-nav-link-content-text">{ textContent }</span>
+      <span className="layout-sider-nav-link-content-text">{ textContent }</span>
       {/* </Tooltip> */}
       { extra ? extra : '' }
     </div>

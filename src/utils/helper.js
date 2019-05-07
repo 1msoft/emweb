@@ -38,24 +38,36 @@ export function dateFormat(time) {
 //排序
 export function sorter(a, b, type) {
   switch (true) {
-    case type === 'date':
-      const data_a = a ? isNaN(new Date(a)) ? new Date('0000').getTime() : new Date(a).getTime() : new Date('0000').getTime()
-      const data_b = b ? isNaN(new Date(b)) ? new Date('0000').getTime() : new Date(b).getTime() : new Date('0000').getTime()
-      return data_a - data_b
-    case type === 'number':
-      const number_a = isNaN(parseFloat(a, 10)) ? Number(Boolean(parseFloat(a, 10))) : parseFloat(a, 10)
-      const number_b = isNaN(parseFloat(b, 10)) ? Number(Boolean(parseFloat(b, 10))) : parseFloat(b, 10)
-      return number_a - number_b
-    case type === 'string':
-      if (a < b) {
-        return -1;
-      } else if (a > b) {
-        return 1;
-      } else {
-        return 0;
-      }
-    default:
-      break
+  case type === 'date':
+    const data_a = a
+      ? isNaN(new Date(a))
+        ? new Date('0000').getTime()
+        : new Date(a).getTime()
+      : new Date('0000').getTime()
+    const data_b = b
+      ? isNaN(new Date(b))
+        ? new Date('0000').getTime()
+        : new Date(b).getTime()
+      : new Date('0000').getTime()
+    return data_a - data_b
+  case type === 'number':
+    const number_a = isNaN(parseFloat(a, 10))
+      ? Number(Boolean(parseFloat(a, 10)))
+      : parseFloat(a, 10)
+    const number_b = isNaN(parseFloat(b, 10))
+      ? Number(Boolean(parseFloat(b, 10)))
+      : parseFloat(b, 10)
+    return number_a - number_b
+  case type === 'string':
+    if (a < b) {
+      return -1;
+    } else if (a > b) {
+      return 1;
+    } else {
+      return 0;
+    }
+  default:
+    break
   }
 }
 
@@ -182,7 +194,7 @@ export const genBizCode = prefix => {
 
 /**
  * 高阶组件：封装一个方法
- * @param {Component} Comp 组件 
+ * @param {Component} Comp 组件
  */
 export const jurisdiction = (Comp) => {
   @inject('appFrame')
@@ -200,16 +212,16 @@ export const jurisdiction = (Comp) => {
   return Jurisdiction;
 }
 
-  /**
-   * 手动取消焦点
-   * @param {Object} ref react ref
-   */
-  export const commonBlur = (ref) => {
-    const timer = setTimeout(() => {
-      ref.blur();
-      clearTimeout(timer);
-    }, 0);
-  }
+/**
+ * 手动取消焦点
+ * @param {Object} ref react ref
+ */
+export const commonBlur = (ref) => {
+  const timer = setTimeout(() => {
+    ref.blur();
+    clearTimeout(timer);
+  }, 0);
+}
 
 /**
  * 将 location.search 部分转换为对象

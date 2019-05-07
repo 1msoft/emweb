@@ -1,5 +1,5 @@
 import Test from './Test'
 
 export default {
-    Test: new Test()
+  Test: new Test()
 }

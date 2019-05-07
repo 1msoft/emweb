@@ -22,12 +22,12 @@ const LoadingSpin = ({tip = '', size = 'middle', spinning = false}) => {
     }
   };
   return (
-      <div style ={style.container}>
-        <div style={style.spin}>
-          <Spin tip={tip} size={size}/>
-        </div>
+    <div style ={style.container}>
+      <div style={style.spin}>
+        <Spin tip={tip} size={size}/>
       </div>
-    );
+    </div>
+  );
 };
 
 export default LoadingSpin;

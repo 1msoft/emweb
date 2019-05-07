@@ -8,10 +8,10 @@ import Test_1 from '../pages/TestPage/Test_1';
 import Test_2 from '../pages/TestPage/Test_2';
 
 export {
-    Login,
-    AppFrame,
-    HomePage,
-    NotFound,
-    Test_1,
-    Test_2,
+  Login,
+  AppFrame,
+  HomePage,
+  NotFound,
+  Test_1,
+  Test_2,
 }

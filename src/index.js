@@ -16,10 +16,10 @@ import App from './pages/App';
 import stores from './stores';
 
 ReactDOM.render(
-    <Provider {...stores}>
-      <LocaleProvider locale={zhCN}>
-        <App />
-      </LocaleProvider>
-    </Provider>,
-    document.getElementById('root')
+  <Provider {...stores}>
+    <LocaleProvider locale={zhCN}>
+      <App />
+    </LocaleProvider>
+  </Provider>,
+  document.getElementById('root')
 );

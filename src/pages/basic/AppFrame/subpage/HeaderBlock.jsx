@@ -1,9 +1,9 @@
 import _ from 'lodash';
 import React, { Component, useCallback } from 'react';
 import { withRouter } from 'react-router-dom';
-import { useModal } from '../../../../hooks'; 
-import { 
-  Layout, Icon, Input, Badge, Popover, Menu, 
+import { useModal } from '../../../../hooks';
+import {
+  Layout, Icon, Input, Badge, Popover, Menu,
   Dropdown, Tabs, List, Form, Modal
 } from 'antd';
 import boyImg from '../../../../assets/images/boy.png';
@@ -30,9 +30,9 @@ export default ({siderStore}) => {
         borderBottom: '1px solid #dedede',
         position: 'relative'
       }}>
-      <Icon 
-        className="trigger" 
-        onClick={onCollapse.bind(this)} 
+      <Icon
+        className="trigger"
+        onClick={onCollapse.bind(this)}
         type={ siderStore ? 'menu-unfold' : 'menu-fold'}
       />
       <div className="header-wrapper clearfix">
@@ -42,13 +42,13 @@ export default ({siderStore}) => {
         <MessageBlock />
         <SearchBlock />
       </div>
-    </Layout.Header> 
+    </Layout.Header>
   );
 };
 
 @withRouter
 class UserDropdown extends Component{
-  
+
   // 重置密码
   resetPassword = () => {
     this.props.changePwModalStore.openModal({
@@ -56,7 +56,7 @@ class UserDropdown extends Component{
     });
   }
 
-  // 退出登录 
+  // 退出登录
   logout = () => {
     this.props.history.push('/login')
   }
@@ -123,7 +123,7 @@ class MessageBlock extends Component{
         <TabPane tab="消息" key="1">
           <List style={{minWidth: '300px'}}>
             <List.Item>
-                <List.Item.Meta title={<div style={{textAlign: 'center'}}>暂无消息</div>}/>
+              <List.Item.Meta title={<div style={{textAlign: 'center'}}>暂无消息</div>}/>
             </List.Item>
           </List>
         </TabPane>
@@ -160,7 +160,7 @@ class SearchBlock extends Component{
 
   // 失去焦点事件
   onBlur = () => {
-    this.toggleShowInput();    
+    this.toggleShowInput();
   }
 
   // 搜索
@@ -173,18 +173,18 @@ class SearchBlock extends Component{
     return (
       <span className="auto-search-wrapper" >
         <span style={{paddingTop: '3px', display: 'inline-block'}}>
-          <Icon 
-            type="search" 
+          <Icon
+            type="search"
             className="global-icon"
             onClick={this.toggleShowInput}
-            style={{ marginRight: this.state.showInput ? '8px' : '0' }} 
+            style={{ marginRight: this.state.showInput ? '8px' : '0' }}
           />
         </span>
         <Input
           size="large"
           placeholder="搜索"
           ref={this.inputRef}
-          onBlur={this.onBlur} 
+          onBlur={this.onBlur}
           className="search-input"
           onChange={this.setValue}
           onPressEnter={this.onSearch}

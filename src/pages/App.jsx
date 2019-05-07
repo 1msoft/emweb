@@ -8,25 +8,25 @@ import '../assets/font/iconfont.css';
 import '../assets/styles/myIcon.css';
 
 class App extends React.Component {
-    componentWillMount() {
-      this.routeHelper = new RouteHelper({ routes });
-    }
-  
-    render() {
-      const routeList = this.routeHelper.getComponentRouteList('Root', { cascade: false });
-      return (
-        <Router>
-          <Switch>
-            {
-              routeList.map( ({ path, exact, component }, idx)=>{
-                return (
-                  <Route key={idx} path={path} exact={exact} component={components[component]} />
-                )
-              })
-            }
-          </Switch>
-        </Router>
-      );
-    }
+  componentWillMount() {
+    this.routeHelper = new RouteHelper({ routes });
   }
+
+  render() {
+    const routeList = this.routeHelper.getComponentRouteList('Root', { cascade: false });
+    return (
+      <Router>
+        <Switch>
+          {
+            routeList.map( ({ path, exact, component }, idx)=>{
+              return (
+                <Route key={idx} path={path} exact={exact} component={components[component]} />
+              )
+            })
+          }
+        </Switch>
+      </Router>
+    );
+  }
+}
 export default App;
