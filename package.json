@@ -1,6 +1,6 @@
 {
   "name": "emweb",
-  "version": "0.1.0",
+  "version": null,
   "private": true,
   "dependencies": {
     "@babel/polyfill": "^7.2.5",
@@ -21,7 +21,8 @@
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
     "test": "react-app-rewired test --env=jsdom",
-    "eject": "react-app-rewired eject"
+    "eject": "react-app-rewired eject",
+    "release": "standard-version"
   },
   "eslintConfig": {
     "extends": "emsoft",
@@ -32,17 +33,34 @@
       "no-unused-expressions": "off"
     }
   },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
   "devDependencies": {
     "@babel/plugin-proposal-decorators": "^7.2.3",
+    "@commitlint/cli": "^7.6.0",
+    "@commitlint/config-conventional": "^7.6.0",
+    "autoprefixer": "^9.5.1",
     "babel-plugin-import": "^1.11.0",
     "customize-cra": "^0.2.11",
+    "cz-conventional-changelog-emsoft": "^1.0.1",
     "eslint-config-emsoft": "^1.0.0",
+    "husky": "^2.2.0",
     "less": "^3.9.0",
     "less-loader": "^4.1.0",
     "mobx-react-devtools": "^6.0.3",
-    "react-app-rewired": "^2.1.0"
+    "postcss-px2rem": "^0.3.0",
+    "react-app-rewired": "^2.1.0",
+    "standard-version": "^6.0.1"
   },
   "browserslist": [
     ">0.1%"
-  ]
+  ],
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog-emsoft"
+    }
+  }
 }
