@@ -14,6 +14,7 @@ const px2rem = require('postcss-px2rem');
 // 路径别名配置
 const alias = {
   ["@pages"]: path.resolve(__dirname, "src/pages"),
+  ["@config"]: path.resolve(__dirname, "src/config"),
   ["@assets"]: path.resolve(__dirname, "src/assets"),
   ["@components"]: path.resolve(__dirname, "src/components"),
 };

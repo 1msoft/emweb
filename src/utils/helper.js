@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import {inject, observer} from 'mobx-react';
-import moment from 'moment'
-import _ from 'lodash'
-import CryptoJS from 'crypto-js'
+import { inject, observer } from 'mobx-react';
+import moment from 'moment';
+import _ from 'lodash';
+import CryptoJS from 'crypto-js';
 import JSEncrypt from 'jsencrypt';
 
 //金额格式化
@@ -31,74 +31,74 @@ export function bankCardNo(val = '') {
 
 //日期格式化
 export function dateFormat(time) {
-  const dateTime = time ? moment(time).format('YYYY-MM-DD') : ''
-  return dateTime
+  const dateTime = time ? moment(time).format('YYYY-MM-DD') : '';
+  return dateTime;
 }
 
 //排序
 export function sorter(a, b, type) {
   switch (true) {
-  case type === 'date':
-    const data_a = a
-      ? isNaN(new Date(a))
-        ? new Date('0000').getTime()
-        : new Date(a).getTime()
-      : new Date('0000').getTime()
-    const data_b = b
-      ? isNaN(new Date(b))
-        ? new Date('0000').getTime()
-        : new Date(b).getTime()
-      : new Date('0000').getTime()
-    return data_a - data_b
-  case type === 'number':
-    const number_a = isNaN(parseFloat(a, 10))
-      ? Number(Boolean(parseFloat(a, 10)))
-      : parseFloat(a, 10)
-    const number_b = isNaN(parseFloat(b, 10))
-      ? Number(Boolean(parseFloat(b, 10)))
-      : parseFloat(b, 10)
-    return number_a - number_b
-  case type === 'string':
-    if (a < b) {
-      return -1;
-    } else if (a > b) {
-      return 1;
-    } else {
-      return 0;
-    }
-  default:
-    break
+    case type === 'date':
+      const data_a = a
+        ? isNaN(new Date(a))
+          ? new Date('0000').getTime()
+          : new Date(a).getTime()
+        : new Date('0000').getTime();
+      const data_b = b
+        ? isNaN(new Date(b))
+          ? new Date('0000').getTime()
+          : new Date(b).getTime()
+        : new Date('0000').getTime();
+      return data_a - data_b;
+    case type === 'number':
+      const number_a = isNaN(parseFloat(a, 10))
+        ? Number(Boolean(parseFloat(a, 10)))
+        : parseFloat(a, 10);
+      const number_b = isNaN(parseFloat(b, 10))
+        ? Number(Boolean(parseFloat(b, 10)))
+        : parseFloat(b, 10);
+      return number_a - number_b;
+    case type === 'string':
+      if (a < b) {
+        return -1;
+      } else if (a > b) {
+        return 1;
+      } else {
+        return 0;
+      }
+    default:
+      break;
   }
 }
 
 //删除对象的空属性值
 export function filterAttr(o) {
-  if (o === "") return
-  if (typeof o !== 'object') return
+  if (o === "") return;
+  if (typeof o !== 'object') return;
   for (let i in o) {
     if (!o[i] && o[i] !== 0) {
-      delete o[i]
-      filterAttr(o[i])
-      filterAttr(o)
+      delete o[i];
+      filterAttr(o[i]);
+      filterAttr(o);
     } else if (JSON.stringify(o[i]) === '{}') {
-      delete o[i]
-      filterAttr(o[i])
-      filterAttr(o)
+      delete o[i];
+      filterAttr(o[i]);
+      filterAttr(o);
     } else {
-      filterAttr(o[i])
+      filterAttr(o[i]);
     }
   }
   return ((o) => {
-    if (JSON.stringify(o) === '{}') return null
+    if (JSON.stringify(o) === '{}') return null;
     for (let i in o) {
       if (o[i] === '') {
-        delete o[i]
+        delete o[i];
       } else if (JSON.stringify(o[i]) === '{}') {
-        delete o[i]
+        delete o[i];
       }
     }
-    return o
-  })(o)
+    return o;
+  })(o);
 }
 
 //省市区格式化
@@ -107,20 +107,20 @@ export function returnZoneString(zoneArr) {
     zoneArr[0] === "天津" ||
     zoneArr[0] === "上海" ||
     zoneArr[0] === "重庆") {
-    return `${zoneArr[0]}市${zoneArr[2]}`
+    return `${zoneArr[0]}市${zoneArr[2]}`;
   } else if (zoneArr[0] === "香港" || zoneArr[0] === "澳门") {
-    return `${zoneArr[0]}特别行政区${zoneArr[2]}`
+    return `${zoneArr[0]}特别行政区${zoneArr[2]}`;
   } else if (zoneArr[0] === "台湾") {
-    return `${zoneArr[0]}省${zoneArr[2]}`
+    return `${zoneArr[0]}省${zoneArr[2]}`;
   } else {
-    return `${zoneArr[0]}省${zoneArr[1]}市${zoneArr[2]}`
+    return `${zoneArr[0]}省${zoneArr[1]}市${zoneArr[2]}`;
   }
 }
 
 // 获取cookie
 export function getCookie(name) {
   var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
-  arr = document.cookie.match(reg)
+  arr = document.cookie.match(reg);
   if (arr)
     return unescape(arr[2]);
   else
@@ -134,9 +134,9 @@ export function setCookie(key, val, data, path) {
 }
 //删除cookie
 export function delCookie(key) { //删除cookie方法
-  var date = new Date() //获取当前时间
-  date.setTime(date.getTime() - 10000) //将date设置为过去的时间
-  document.cookie = `${key}=v;expires=${date.toGMTString()}`  //设置cookie
+  var date = new Date(); //获取当前时间
+  date.setTime(date.getTime() - 10000); //将date设置为过去的时间
+  document.cookie = `${key}=v;expires=${date.toGMTString()}`;  //设置cookie
 }
 
 // 加密算法
@@ -202,15 +202,15 @@ export const jurisdiction = (Comp) => {
   class Jurisdiction extends Comp{
     // 判断用户是否具有指定权限 传入 actionName 返回 true || false
     hasJurisdiction = (actionName) => {
-      const {appFrame} = this.props;
-      const {user} = appFrame;
-      const {operationUrl={}} = user;
+      const { appFrame } = this.props;
+      const { user } = appFrame;
+      const { operationUrl = {} } = user;
       // return false;
       return !!operationUrl[actionName];
     }
   }
   return Jurisdiction;
-}
+};
 
 /**
  * 手动取消焦点
@@ -221,7 +221,7 @@ export const commonBlur = (ref) => {
     ref.blur();
     clearTimeout(timer);
   }, 0);
-}
+};
 
 /**
  * 将 location.search 部分转换为对象
@@ -239,6 +239,6 @@ export const searchToObject = (search) => {
     if(newArr[0] && newArr[1]) {
       obj[newArr[0]] = unescape(newArr[1]);
     }
-  })
-  return obj
-}
+  });
+  return obj;
+};

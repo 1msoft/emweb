@@ -1,7 +1,10 @@
-import { observable, action, reaction } from 'mobx'
+import { observable, action, reaction } from 'mobx';
 
+/**
+ * 测试
+ */
 class Test {
-  @observable list = {name: 'qianyin'}
+  @observable list = { name: 'qianyin' }
 }
 
 export default Test;

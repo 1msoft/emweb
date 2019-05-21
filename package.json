@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@babel/polyfill": "^7.2.5",
-    "antd": "^3.12.3",
+    "antd": "^3.18.2",
     "bcryptjs": "^2.4.3",
     "crypto-js": "^3.1.9-1",
     "echarts": "^4.2.0-rc.2",
@@ -22,7 +22,8 @@
     "build": "react-app-rewired build",
     "test": "react-app-rewired test --env=jsdom",
     "eject": "react-app-rewired eject",
-    "release": "standard-version"
+    "release": "standard-version",
+    "eslint:fix": "eslint ./src/**/*.js --fix"
   },
   "eslintConfig": {
     "extends": "emsoft",

@@ -7,11 +7,11 @@ import React, { useState, useCallback } from 'react';
  * - openEvents   打开弹窗事件列表， 在打开弹窗时将会依次执行列表中的所有事件函数
  * - closeEvents  关闭弹窗事件列表， 在关闭弹窗时将会依次执行列表中的所有事件函数
  */
-export const useModal = (init = {}) => {
+export default (init = {}) => {
   const [data, setData] = useState(init);
   const [isOpen, setIsOpen] = useState(false);
   const [openEvents, setOpenEvents] = useState([]);
-  const [closeEvents, setCloseEvents ] = useState([]);
+  const [closeEvents, setCloseEvents] = useState([]);
 
   /**
    * 打开弹窗
@@ -19,8 +19,8 @@ export const useModal = (init = {}) => {
    */
   const openModal = useCallback((data) => {
     setIsOpen(true);
-    setData({...init, ...data});
-    openEvents.forEach(v => v({...init, ...data}));
+    setData({ ...init, ...data });
+    openEvents.forEach(v => v({ ...init, ...data }));
   }, []);
 
   /**
@@ -56,4 +56,4 @@ export const useModal = (init = {}) => {
     openModal,
     closeModal
   };
-}
+};
