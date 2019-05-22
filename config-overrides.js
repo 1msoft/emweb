@@ -30,8 +30,7 @@ const postcssPlugins = [
 
 module.exports = override(
   addLessLoader({
-    strictMath: true,
-    noIeCompat: true
+    javascriptEnabled: true
   }),
   useBabelRc(),
   useEslintRc(),

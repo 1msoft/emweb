@@ -3,6 +3,8 @@
     // 修饰器
     ["@babel/plugin-proposal-decorators", {"legacy": true}],
     // 按需加载
-    ["import", { "libraryName": "antd", "libraryDirectory": "es", "style": "css" }]
-  ]
+    ["import", { "libraryName": "antd", "libraryDirectory": "es", "style": true }, "antd"],
+    ["import", { "libraryName": "kant-ui", "libraryDirectory": "es", "style": true }, "kant"]
+  ],
+  "presets": ["@babel/preset-react", "@babel/preset-env"]
 }
