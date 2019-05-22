@@ -1,6 +1,6 @@
 {
   "name": "emweb",
-  "version": null,
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "antd": "3.18.2",
