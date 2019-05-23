@@ -45,18 +45,18 @@ const SystemItem = (props) => {
 };
 
 const SystemList = (props) => {
-  const layoutClassName = classNames(
+  const listLayoutClass = classNames(
     'system-list-layout',
-    props.show
-      ? 'system-list-layout-show'
-      : 'system-list-layout-hide'
+    // 'system-list-layout-shrink'
   );
   return (
-    <div className={ layoutClassName }>
+    <div className={listLayoutClass}>
       <div className="system-list-content">
         <div
           className="system-list-close"
-          onClick={ () => props.hideHandle(false) }>
+          onClick={ () => {
+            props.hideHandle(false);
+          } }>
           <span className="iconfont iconyingyongguanbi"></span>
         </div>
         <div className="system-list">
@@ -83,27 +83,37 @@ const SystemList = (props) => {
 };
 
 const SubSystem = (props) => {
-  const [iconName, setIconName] = useState('iconyingyongqiehuananniu');
-  const [showSubSystem, setShowShubSystem] = useState(false);
-  const iconClassName = classNames(
-    'iconfont',
-    iconName,
+  // TUDO:
+  const [showSubSystem, setShowShubSystem] = useState(true);
+  const buttonClassName = classNames(
+    'sub-system',
+    showSubSystem
+      ? 'sub-system-hide'
+      : 'sub-system-show'
   );
 
   return (
     <div className="sub-system-outer-layer">
-      <span
-        className="sub-system"
-        onClick={() => setShowShubSystem(true) }
-        onMouseOver={() => { setIconName('iconyingyongxuantingzhuangtai'); }}
-        onMouseLeave={() => { setIconName('iconyingyongqiehuananniu'); }}>
-        <div className="sub-system-inner-layer">
-          <span className={iconClassName}></span>
+      <div className={buttonClassName}>
+        <div
+          onClick={() => setShowShubSystem(true) }
+          className="sub-system-inner-layer">
+          <div>
+            <span></span>
+            <span className="level-margin"></span>
+            <span></span>
+            <span className="vertical-margin"></span>
+            <span className="level-margin vertical-margin"></span>
+            <span className="vertical-margin"></span>
+            <span></span>
+            <span className="level-margin"></span>
+            <span></span>
+          </div>
         </div>
-      </span>
-      <SystemList
-        show={showSubSystem}
-        hideHandle={setShowShubSystem} />
+        <SystemList
+          show={showSubSystem}
+          hideHandle={setShowShubSystem} />
+      </div>
     </div>
   );
 };
