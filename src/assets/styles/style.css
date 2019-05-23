@@ -1,0 +1,141 @@
+.sub-system-outer-layer {
+  width: 62px;
+  height: 62px;
+  position: relative;
+  display: inline-block;
+}
+
+.sub-system {
+  width: 46px;
+  height: 46px;
+  top: 50%;
+  left: 50%;
+  position: absolute;
+  margin: -23px 0 0 -23px;
+  cursor: pointer;
+  border-radius: 50%;
+  display: inline-block;
+  transition: all 0.35s;
+}
+
+.sub-system .sub-system-inner-layer {
+  top: 50%;
+  left: 50%;
+  z-index: 1;
+  width: 46px;
+  height: 46px;
+  position: absolute;
+  border-radius: 50%;
+  background: #4576FD;
+  margin: -23px 0 0 -23px;
+  box-shadow: 0px 2px 4px 0px rgba(69,118,253,0.3);
+}
+
+.sub-system:hover {
+  width: 62px;
+  height: 62px;
+  margin: -31px 0 0 -31px;
+  background: rgba(236,241,255,1);
+}
+
+.sub-system:hover .sub-system-inner-layer {
+  width: 40px;
+  height: 40px;
+  margin-top: -20px;
+  margin-left: -20px;
+  box-shadow: none;
+  background: #fff;
+}
+
+.sub-system .iconyingyongqiehuananniu,
+.sub-system .iconyingyongxuantingzhuangtai {
+  top: 50%;
+  left: 50%;
+  z-index: 2;
+  font-size: 36px;
+  margin-top: -26px;
+  margin-left: -18px;
+  position: absolute;
+}
+
+.sub-system .iconyingyongqiehuananniu {
+  color: #fff;
+}
+
+.sub-system .iconyingyongxuantingzhuangtai {
+  color: #4576FD;
+}
+
+.system-list-layout {
+  width: 1180px;
+  height: 1180px;
+  background:radial-gradient(circle,rgba(60,112,255,1),rgba(73,159,255,1));
+  opacity:0.92;
+  border-radius:50%;
+  position: fixed;
+  z-index: 101;
+  transition: all 0.8s;
+}
+
+.system-list-layout-show {
+  top: -590px;
+  left: -590px;
+}
+
+.system-list-layout-hide {
+  top: -100%;
+  left: -100%;
+}
+
+.system-list-content {
+  margin: 605px 0 0 614px;
+}
+
+.system-list-close {
+  display: flex;
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  background:rgba(236,241,255,1);
+  align-items: center;
+  justify-content: center;
+}
+
+.system-list-content .iconyingyongguanbi {
+  font-size: 30px;
+  color: #fff;
+}
+
+.system-list-content .iconyingyongguanbi::before {
+  width: 40px;
+  height: 40px;
+  padding: 5px;
+  cursor: pointer;
+  border-radius: 50%;
+  background: #4576FD;
+  box-shadow:0px 0px 12px 0px rgba(69,118,253, 0.35);
+}
+
+.system-list {
+  margin-top: 14px;
+  margin-left: 20px;
+}
+
+.system-item {
+  display: inline-block;
+  width: 60px;
+  text-align: center;
+  margin: 20px 30px;
+  cursor: pointer;
+}
+
+.system-item img {
+  display: block;
+}
+
+.system-item span {
+  display: block;
+  margin-top: 16px;
+  color: #fff;
+  font-size: 16px;
+}

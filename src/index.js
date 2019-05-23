@@ -11,6 +11,7 @@ import 'moment/locale/zh-cn';
 import zhCN from 'antd/lib/locale-provider/zh_CN';
 
 import '@assets/iconFont/iconfont.css';
+import '@assets/styles/style.css';
 
 ReactDOM.render(
   <Provider {...stores}>
