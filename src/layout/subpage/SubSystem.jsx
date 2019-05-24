@@ -44,10 +44,10 @@ const SystemItem = (props) => {
   );
 };
 
+// 子系统 - 遮罩层块
 const SystemList = (props) => {
   const listLayoutClass = classNames(
     'system-list-layout',
-    // 'system-list-layout-shrink'
   );
   return (
     <div className={listLayoutClass}>
@@ -82,9 +82,10 @@ const SystemList = (props) => {
   );
 };
 
+// 子系统 - 主体
 const SubSystem = (props) => {
   // TUDO:
-  const [showSubSystem, setShowShubSystem] = useState(true);
+  const [showSubSystem, setShowShubSystem] = useState(false);
   const buttonClassName = classNames(
     'sub-system',
     showSubSystem
