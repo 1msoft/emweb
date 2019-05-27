@@ -64,13 +64,13 @@ const useStateHook = (props) => {
 /**
  * 头部查询组件
  * @param {Object}   props
- * @param {Array}    props.searchList          搜索列表
+ * @param {Array}    [props.searchList]        搜索列表
  * @param {Array}    props.searchList.title    搜索列表 - 列表名称
  * @param {Array}    props.searchList.path     搜索列表 - 列表点击时需要跳转路由
- * @param {Array}    props.searchRecord        搜索记录（字符串数组），例: ['管理', '订单']
- * @param {Function} props.onChange            输入框内容改变触发该事件函数
- * @param {Function} props.onPressEnter        输入框回车触发该事件函数
- * @param {Function} props.onSearchClick       搜索列表点击触发该事件函数
+ * @param {Array}    [props.searchRecord]      搜索记录（字符串数组），例: ['管理', '订单']
+ * @param {Function} [props.onChange]          输入框内容改变触发该事件函数
+ * @param {Function} [props.onPressEnter]      输入框回车触发该事件函数
+ * @param {Function} [props.onSearchClick]     搜索列表点击触发该事件函数
  *
  */
 export default (props) => {
@@ -89,7 +89,7 @@ export default (props) => {
       <div className="emweb-search-modal">
         { props.searchList && props.searchList.length > 0 ?
           <div className="search-list">
-            { (props.searchList || []).map((v, index) => (
+            { props.searchList.map((v, index) => (
               <div
                 key={index}
                 className="search-item"
