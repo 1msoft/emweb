@@ -1,0 +1,117 @@
+.emweb-search {
+  @color: rgb(69, 118, 253);
+  position: relative;
+
+  .ant-input-affix-wrapper {
+    .iconsousuo {
+      font-size: 44px;
+    }
+
+    &:hover{
+      .iconsousuo{
+        color: @color;
+      }
+    }
+  }
+
+  .ant-input {
+    border-radius: 31px;
+    height: 52px;
+    font-size: 18px;
+    text-indent: 1.5em;
+    border: 1px solid #E6E6E6;
+    &:hover {
+      border-color: fade(@color, 25%) !important;
+
+    }
+    &:focus {
+      border-color: fade(@color, 25%) !important;
+      box-shadow: none !important;
+    }
+  }
+
+  &.emweb-search-show {
+    .ant-input {
+      border-color: fade(@color, 25%) !important;
+      box-shadow: none !important;
+    }
+
+    .emweb-search-modal{
+      transition: opacity 0.5s;
+      height: 300px;
+      opacity: 1;
+    }
+
+    .iconsousuo{
+      color: @color;
+    }
+  }
+
+  &.emweb-search-hidden {
+    .emweb-search-modal{
+      transition: opacity 0.5s;
+      opacity: 0;
+    }
+  }
+
+  .emweb-search-modal {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 62px;
+    height: 300px;
+    border-radius: 4px;
+    border: 1px solid fade(@color, 25%);
+    box-shadow:0px 2px 12px 0px rgba(26,26,26,0.1);
+    overflow: auto;
+  }
+
+  .search-record {
+    h2 {
+      font-size: 14px;
+      line-height: 1;
+      color: #282828;
+      padding: 17px 0 0 65px;
+      font-weight: 400;
+    }
+
+    .record-list {
+      padding: 0 60px;
+      font-size: 16px;
+      color: #999;
+    }
+
+    .record-item {
+      display: inline-block;
+      margin: 20px 20px 0 0;
+      padding: 8px 18px;
+      border: 1px solid #EEE;
+      border-radius: 16px;
+      line-height: 1;
+      cursor: pointer;
+      &-action {
+        background: fade(@color, 25%);
+        border-color: fade(@color, 25%);
+        color: @color;
+      }
+      &:hover {
+        background: fade(@color, 25%);
+        border-color: fade(@color, 25%);
+        color: @color;
+      }
+    }
+  }
+
+  .search-list {
+    .search-item {
+      line-height: 38px;
+      font-size: 18px;
+      text-indent: 65px;
+      color: #999;
+      cursor: pointer;
+      &:hover {
+        background: #F5F8FF;
+      }
+    }
+  }
+}
