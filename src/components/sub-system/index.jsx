@@ -6,6 +6,8 @@ import subSystemA from '@assets/images/subSystemA.png';
 import subSystemB from '@assets/images/subSystemB.png';
 import subSystemC from '@assets/images/subSystemC.png';
 
+import './index.less';
+
 const data = [{
   title: '子应用A',
   imgSrc: subSystemA,
@@ -46,14 +48,10 @@ const SystemItem = (props) => {
 
 // 子系统 - 遮罩层块
 const SystemList = (props) => {
-  const listLayoutClass = classNames(
-    'system-list-layout',
-  );
   return (
-    <div className={listLayoutClass}>
+    <div className="system-list-layout">
       <div className="system-list-content">
-        <div
-          className="system-list-close"
+        <div className="system-list-close"
           onClick={ () => {
             props.hideHandle(false);
           } }>

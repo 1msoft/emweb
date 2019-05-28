@@ -2,7 +2,7 @@ import React, {
   Fragment
 } from 'react';
 import Route from './subpage/Route';
-import SubSystem from './subpage/SubSystem';
+import SubSystem from '../components/sub-system/index';
 import { BrowserRouter as Router } from 'react-router-dom';
 export default () => {
   return (
