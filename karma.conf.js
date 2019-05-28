@@ -83,13 +83,15 @@ module.exports = function(config) {
 
     files: [
       './node_modules/@babel/polyfill/dist/polyfill.min.js',
-      `test/**/*.test.js`
+      `src/components/**/*.test.js`,
+      `test/**/*.test.js`,
     ],
 
     frameworks: ['mocha'],
 
     preprocessors: {
-      'test/**/*.test.js': ['webpack']
+      'test/**/*.test.js': ['webpack'],
+      'src/components/**/*.test.js': ['webpack'],
     },
 
     reporters: ['mocha', 'coverage-istanbul'],
