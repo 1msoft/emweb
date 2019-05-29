@@ -79,7 +79,7 @@ export default (props) => {
   return (
     <div
       ref={state.searchRef}
-      className={`emweb-search emweb-search-show${state.isAction ? 'show' : 'hidden'}`}
+      className={`emweb-search emweb-search-${state.isAction ? 'show' : 'hidden'}`}
     >
       <Input
         value={state.value}
