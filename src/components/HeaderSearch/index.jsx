@@ -18,8 +18,9 @@ const useStateHook = (props) => {
 
   // 输入框：change 事件
   const onChange = useCallback((e) => {
-    setValue(e.target.value);
-    props.onChange && props.onChange(e.target.value);
+    const value = e.target ? e.target.value : e;
+    setValue(value);
+    props.onChange && props.onChange(value);
   }, []);
 
   // 输入框: 回车事件
@@ -29,7 +30,7 @@ const useStateHook = (props) => {
 
   // 搜索记录点击事件：
   const onRecordItemClick = useCallback((value, e) => {
-    setValue(value);
+    onChange(value);
   }, []);
 
   // 搜索列表点击事件：
@@ -78,7 +79,7 @@ export default (props) => {
   return (
     <div
       ref={state.searchRef}
-      className={`emweb-search emweb-search-${state.isAction ? 'show' : 'hidden'}`}
+      className={`emweb-search emweb-search-show${state.isAction ? 'show' : 'hidden'}`}
     >
       <Input
         value={state.value}
