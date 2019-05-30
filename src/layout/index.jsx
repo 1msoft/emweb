@@ -2,7 +2,7 @@ import React, {
   Fragment
 } from 'react';
 import Route from './subpage/Route';
-import SubSystem from '../components/sub-system/index';
+import NavButton from '../components/nav-button/index';
 import { BrowserRouter as Router } from 'react-router-dom';
 export default () => {
   return (
@@ -10,7 +10,7 @@ export default () => {
       <Fragment>
         {/* 布局页 - 头 */}
         <div>
-          <SubSystem />
+          <NavButton />
         </div>
         <Route />
         布局页 - 尾

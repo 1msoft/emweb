@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import classNames from 'classnames';
-import { Row } from 'antd';
 
-import subSystemA from '@assets/images/subSystemA.png';
-import subSystemB from '@assets/images/subSystemB.png';
-import subSystemC from '@assets/images/subSystemC.png';
+import subSystemA from '../../assets/images/subSystemA.png';
+import subSystemB from '../../assets/images/subSystemB.png';
+import subSystemC from '../../assets/images/subSystemC.png';
 
 import './index.less';
 
@@ -37,13 +36,21 @@ const data = [{
   imgSrc: subSystemA,
 }];
 
-const SystemItem = (props) => {
-  return (
-    <div className="system-item">
-      <img src={props.imgSrc} alt={props.title} />
-      <span>{props.title}</span>
-    </div>
-  );
+const SystemItems = () => {
+  const systemItems = [];
+  for (let i = 0; i < data.length; i++) {
+    if (i === 4 || i === 7) {
+      systemItems.push(<br key={i} />);
+    }
+    const info = data[i];
+    systemItems.push(
+      <div className="system-item" key={`${info.title}-${i}`}>
+        <img src={info.imgSrc} alt={info.title} />
+        <span>{info.title}</span>
+      </div>
+    );
+  }
+  return systemItems;
 };
 
 // 子系统 - 遮罩层块
@@ -58,22 +65,7 @@ const SystemList = (props) => {
           <span className="iconfont iconyingyongguanbi"></span>
         </div>
         <div className="system-list">
-          <Row>
-            {SystemItem({ ...data[0] })}
-            {SystemItem({ ...data[1] })}
-            {SystemItem({ ...data[2] })}
-            {SystemItem({ ...data[3] })}
-          </Row>
-          <Row>
-            {SystemItem({ ...data[4] })}
-            {SystemItem({ ...data[5] })}
-            {SystemItem({ ...data[6] })}
-          </Row>
-          <Row>
-            {SystemItem({ ...data[7] })}
-            {SystemItem({ ...data[8] })}
-            {SystemItem({ ...data[9] })}
-          </Row>
+          {SystemItems()}
         </div>
       </div>
     </div>
@@ -81,10 +73,9 @@ const SystemList = (props) => {
 };
 
 // 子系统 - 主体
-const SubSystem = (props) => {
-  // TUDO:
+const NavButton = () => {
   const [showSubSystem, setShowShubSystem] = useState(false);
-  const buttonClassName = classNames(
+  let buttonClassName = classNames(
     'sub-system',
     showSubSystem
       ? 'sub-system-hide'
@@ -110,11 +101,10 @@ const SubSystem = (props) => {
           </div>
         </div>
         <SystemList
-          show={showSubSystem}
           hideHandle={setShowShubSystem} />
       </div>
     </div>
   );
 };
 
-export default SubSystem;
+export default NavButton;
