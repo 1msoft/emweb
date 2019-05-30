@@ -39,12 +39,17 @@ describe('HeaderSearch: 头部搜索栏', () => {
     );
 
     const wrapper = mount(
-      <HeaderSearch
-        onChange={onChange}
-        searchRecord={searchRecord}
-      />
+      <div className="wrapper">
+        <HeaderSearch
+          onChange={onChange}
+          searchRecord={searchRecord}
+        />
+      </div>
     );
-    wrapper.find('.ant-input').at(0).simulate('click');
+
+    const env = new Event('click', {});
+    document.dispatchEvent(env);
+
     wrapper.find('.ant-input').at(0).simulate('change', {
       target: { value:  searchRecord[0]}
     });
@@ -53,6 +58,9 @@ describe('HeaderSearch: 头部搜索栏', () => {
     assert.equal(wrapper.find('.record-item').length, 2);
     wrapper.find('.record-item').at(0).simulate('click');
     assert.isTrue(onChange.called);
+
+    wrapper.find('.wrapper').at(0).simulate('click');
+    assert.equal(wrapper.find('.show-modal').length, 0);
 
     empty.find('.ant-input').at(0).simulate('click');
     assert.equal(empty.find('.emweb-search').length, 1);
@@ -96,7 +104,6 @@ describe('HeaderSearch: 头部搜索栏', () => {
     wrapper.find('.emweb-search').at(0).simulate('click', {
       target: null
     })
-    // assert.isTrue(onChange.called);
 
     wrapper.find('.ant-input').at(0).simulate('change', {
       target: { value: '订单' }

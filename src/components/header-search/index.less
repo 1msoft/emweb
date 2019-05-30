@@ -1,5 +1,6 @@
 .emweb-search {
   @color: rgb(69, 118, 253);
+  height: 52px;
   position: relative;
 
   .ant-input-affix-wrapper {
@@ -66,6 +67,11 @@
     overflow: auto;
     z-index: 9999;
     background: #fff;
+    display: none;
+
+    &.show-modal{
+      display: block;
+    }
   }
 
   .search-record {

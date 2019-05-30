@@ -13,6 +13,7 @@ import './index.less';
 
 const useStateHook = (props) => {
   const [isAction, setIsAction] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [value, setValue] = useState(void 0);
   const searchRef = useRef();
 
@@ -40,9 +41,20 @@ const useStateHook = (props) => {
 
   // 点击事件
   const onClick = useCallback((e) => {
-    document.contains(e.target) &&
-    setIsAction(searchRef.current.contains(e.target));
-  }, []);
+    if (!document.contains(e.target)){return false;}
+    const value = searchRef.current.contains(e.target);
+    if (value){
+      setShowModal(value);
+      setTimeout(() => {
+        setIsAction(value);
+      }, 100);
+    } else {
+      setIsAction(value);
+      setTimeout(() => {
+        setShowModal(value);
+      }, 500);
+    }
+  }, [searchRef]);
 
   useEffect(() => {
     document.addEventListener('click', onClick);
@@ -56,6 +68,7 @@ const useStateHook = (props) => {
     isAction,
     onChange,
     searchRef,
+    showModal,
     onPressEnter,
     onSearchClick,
     onRecordItemClick,
@@ -87,7 +100,7 @@ export default (props) => {
         onPressEnter={state.onPressEnter}
         prefix={<i className={`iconfont iconsousuo`} />}
       />
-      <div className="emweb-search-modal">
+      <div className={`emweb-search-modal ${state.showModal ? 'show-modal' : ''}`}>
         { props.searchList && props.searchList.length > 0 ?
           <div className="search-list">
             { props.searchList.map((v, index) => (
