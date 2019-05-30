@@ -13,12 +13,12 @@ describe('nav-button', () => {
     const wrapper = mount(
       <NavButton />
     );
-    wrapper.find('.sub-system').simulate('mouseover');
-    wrapper.find('.sub-system').simulate('mouseleave');
-    wrapper.find('.sub-system-inner-layer').simulate('click');
-    assert.equal(wrapper.find('.sub-system-hide').length, 1);
-    wrapper.find('.system-list-close').simulate('mouseover');
-    wrapper.find('.system-list-close').simulate('click');
-    assert.equal(wrapper.find('.sub-system-show').length, 1);
+    wrapper.find('.nav-button').simulate('mouseover');
+    wrapper.find('.nav-button').simulate('mouseleave');
+    wrapper.find('.nav-button-inner-layer').simulate('click');
+    assert.equal(wrapper.find('.nav-button-hide').length, 1);
+    wrapper.find('.nav-shade-close').simulate('mouseover');
+    wrapper.find('.nav-shade-close').simulate('click');
+    assert.equal(wrapper.find('.nav-button-show').length, 1);
   });
 });
