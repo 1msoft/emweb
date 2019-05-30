@@ -1,1 +1,1 @@
-export { default as HeaderSearch } from './HeaderSearch/index';
+export { default as HeaderSearch } from './header-search/index';
