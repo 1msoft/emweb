@@ -1,39 +1,39 @@
 import React, { useState, useEffect } from 'react';
 import classNames from 'classnames';
 
-import subSystemA from '../../assets/images/subSystemA.png';
-import subSystemB from '../../assets/images/subSystemB.png';
-import subSystemC from '../../assets/images/subSystemC.png';
+import navImageA from '../../assets/images/navImageA.png';
+import navImageB from '../../assets/images/navImageB.png';
+import navImageC from '../../assets/images/navImageC.png';
 
 import './index.less';
 
 const data = [{
   title: '子应用A',
-  imgSrc: subSystemA,
+  imgSrc: navImageA,
 }, {
   title: '子应用B',
-  imgSrc: subSystemB,
+  imgSrc: navImageB,
 }, {
   title: '子应用C',
-  imgSrc: subSystemC,
+  imgSrc: navImageC,
 }, {
   title: '子应用D',
-  imgSrc: subSystemA,
+  imgSrc: navImageA,
 }, {
   title: '子应用E',
-  imgSrc: subSystemA,
+  imgSrc: navImageA,
 }, {
   title: '子应用F',
-  imgSrc: subSystemB,
+  imgSrc: navImageB,
 }, {
   title: '子应用G',
-  imgSrc: subSystemC,
+  imgSrc: navImageC,
 }, {
   title: '子应用H',
-  imgSrc: subSystemC,
+  imgSrc: navImageC,
 }, {
   title: '子应用I',
-  imgSrc: subSystemA,
+  imgSrc: navImageA,
 }];
 
 const SystemItems = () => {
@@ -53,18 +53,18 @@ const SystemItems = () => {
   return systemItems;
 };
 
-// 子系统 - 遮罩层块
-const SystemList = (props) => {
+// 子系统导航悬浮款 - 遮罩层块
+const NavShade = (props) => {
   return (
-    <div className="system-list-layout">
-      <div className="system-list-content">
-        <div className="system-list-close"
+    <div className="nav-shade-layout">
+      <div className="nav-shade-content">
+        <div className="nav-shade-close"
           onClick={ () => {
             props.hideHandle(false);
           } }>
           <span className="iconfont iconyingyongguanbi"></span>
         </div>
-        <div className="system-list">
+        <div className="nav-shade">
           {SystemItems()}
         </div>
       </div>
@@ -74,20 +74,20 @@ const SystemList = (props) => {
 
 // 子系统 - 主体
 const NavButton = () => {
-  const [showSubSystem, setShowShubSystem] = useState(false);
+  const [showNavShade, setShowNavShade] = useState(false);
   let buttonClassName = classNames(
-    'sub-system',
-    showSubSystem
-      ? 'sub-system-hide'
-      : 'sub-system-show'
+    'nav-button',
+    showNavShade
+      ? 'nav-button-hide'
+      : 'nav-button-show'
   );
 
   return (
-    <div className="sub-system-outer-layer">
+    <div className="nav-button-outer-layer">
       <div className={buttonClassName}>
         <div
-          onClick={() => setShowShubSystem(true) }
-          className="sub-system-inner-layer">
+          onClick={() => setShowNavShade(true) }
+          className="nav-button-inner-layer">
           <div>
             <span></span>
             <span className="level-margin"></span>
@@ -100,8 +100,8 @@ const NavButton = () => {
             <span></span>
           </div>
         </div>
-        <SystemList
-          hideHandle={setShowShubSystem} />
+        <NavShade
+          hideHandle={setShowNavShade} />
       </div>
     </div>
   );
