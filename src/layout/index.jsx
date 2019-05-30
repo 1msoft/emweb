@@ -4,6 +4,9 @@ import React, {
 import Route from './subpage/Route';
 import NavButton from '../components/nav-button/index';
 import { BrowserRouter as Router } from 'react-router-dom';
+
+import { HeaderSearch } from '@components';
+
 export default () => {
   return (
     <Router>
@@ -14,6 +17,7 @@ export default () => {
         </div>
         <Route />
         布局页 - 尾
+        <HeaderSearch />
       </Fragment>
     </Router>
   );
