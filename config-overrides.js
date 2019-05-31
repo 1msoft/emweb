@@ -7,6 +7,7 @@ const {
   addPostcssPlugins,
 } = require('customize-cra');
 
+const modifyVars = require('./src/config/modifyVars');
 const path = require('path');
 const autoprefixer = require('autoprefixer');
 const px2rem = require('postcss-px2rem');
@@ -26,13 +27,16 @@ const postcssPlugins = [
     remove: true,
   }),
   // px2rem({remUnit: 16}),
+  px2rem({ remUnit: 16 }),
 ];
 
 module.exports = override(
   addLessLoader({
+    modifyVars,
     javascriptEnabled: true
   }),
   useBabelRc(),
   useEslintRc(),
   addWebpackAlias(alias),
+  addPostcssPlugins(postcssPlugins),
 );
