@@ -1,0 +1,211 @@
+.nav-button-outer-layer {
+  width: 62px;
+  height: 62px;
+  position: relative;
+  display: inline-block;
+
+  .nav-button {
+    width: 46px;
+    height: 46px;
+    top: 50%;
+    left: 50%;
+    border-radius: 50%;
+    position: absolute;
+    margin: -23px 0 0 -23px;
+    transition: all 0.35s;
+
+    .nav-button-inner-layer {
+      top: 50%;
+      left: 50%;
+      z-index: 1;
+      width: 46px;
+      height: 46px;
+      cursor: pointer;
+      position: absolute;
+      border-radius: 50%;
+      transition: all .8s;
+      background: #4576FD;
+      margin: -23px 0 0 -23px;
+      box-shadow: 0px 2px 4px 0px rgba(69,118,253,0.3);
+
+      & > div {
+        width: 18px;
+        height: 18px;
+        transition: all .3s;
+      }
+
+      span {
+        width: 4px;
+        height: 4px;
+        float: left;
+        display: block;
+        background: #fff;
+        transition: all .3s;
+      }
+
+      .level-margin {
+        margin-left: 3px;
+        margin-right: 3px;
+      }
+
+      .vertical-margin {
+        margin-top: 3px;
+        margin-bottom: 3px;
+      }
+
+    }
+
+    &:hover {
+      width: 62px;
+      height: 62px;
+      margin: -31px 0 0 -31px;
+      background: rgba(236,241,255,1);
+
+      .nav-button-inner-layer {
+        width: 40px;
+        height: 40px;
+        margin-top: -20px;
+        margin-left: -20px;
+        background: #fff;
+        box-shadow:0px 0px 12px 0px rgba(69,118,253, 0.35);
+
+        & > div {
+          width: 17px;
+          height: 17px;
+        }
+
+        span {
+          width: 5px;
+          height: 5px;
+          background: #4576FD;
+        }
+
+        .level-margin {
+          margin-left: 1px;
+          margin-right: 1px;
+        }
+
+        .vertical-margin {
+          margin-top: 1px;
+          margin-bottom: 1px;
+        }
+      }
+    }
+
+    .nav-shade-layout {
+      opacity:0.92;
+      z-index: 101;
+      position: fixed;
+      overflow: hidden;
+      border-radius:50%;
+      transition: all 1s;
+      background:radial-gradient(circle,rgba(73,159,255,1),rgba(60,112,255,1));
+    }
+
+    .nav-shade-content {
+      top: 50%;
+      left: 50%;
+      position: relative;
+
+      .nav-shade-close {
+        top: -11px;
+        left: 11px;
+        width: 40px;
+        height: 40px;
+        z-index: 103;
+        display: flex;
+        transition: all 1s;
+        border-radius: 50%;
+        position: absolute;
+        align-items: center;
+        justify-content: center;
+
+        .iconyingyongguanbi {
+          top: 50%;
+          left: 50%;
+          z-index: 104;
+          color: #fff;
+          font-size: 30px;
+          position: absolute;
+          margin: -16px 0 0 -20px;
+
+          &::before {
+            width: 40px;
+            height: 40px;
+            padding: 5px;
+            cursor: pointer;
+            border-radius: 50%;
+          }
+        }
+
+        &:hover {
+          top: -22px;
+          left: 0px;
+          width: 62px;
+          height: 62px;
+          background:rgba(236,241,255,1);
+
+          .iconyingyongguanbi::before {
+            background: #4677ff;
+            box-shadow: 0px 0px 12px 0px rgba(69,118,253, 0.35);
+          }
+        }
+      }
+
+      .nav-shade {
+        top: 55px;
+        left: 20px;
+        text-align: left;
+        position: absolute;
+
+        .system-item {
+          width: 60px;
+          cursor: pointer;
+          margin: 25px 30px;
+          text-align: center;
+          display: inline-block;
+          vertical-align: top;
+
+          img {
+            display: block;
+          }
+
+          span {
+            color: #fff;
+            display: block;
+            font-size: 16px;
+            margin-top: 16px;
+          }
+        }
+      }
+    }
+  }
+
+  .nav-button-show {
+    .nav-button-inner-layer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .nav-shade-layout {
+      top: 42px;
+      left: 65px;
+      width: 0px;
+      height: 0px;
+    }
+  }
+
+  .nav-button-hide {
+    .nav-button-inner-layer {
+      display: none;
+    }
+
+    .nav-shade-layout {
+      top: -529px;
+      left: -529px;
+      width: 1120px;
+      height: 1120px;
+    }
+  }
+}

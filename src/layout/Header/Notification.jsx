@@ -143,12 +143,10 @@ export default () => {
         <span className="mail-container">
           <Badge
             dot={message}
+            offset={[-6]}
             className="icon-wrapper"
           >
-            <Icon
-              type="mail"
-              className="mail-icon"
-            />
+            <i className="mail-icon iconfont iconMail-xiaoxi" />
           </Badge>
         </span>
       </span>

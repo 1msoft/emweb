@@ -3,41 +3,6 @@
 .wrapper {
   height: @full-height;
 
-  & .header {
-    text-align: center;
-    box-sizing: border-box;
-    padding: 0 40px 0 32px;
-    .rectangular(100%, @header-height);
-    .background-color(#fff);
-
-    & .header-search-wrapper {
-      display: inline-block;
-      .rectangular(auto, @header-height, @header-height);
-      input {
-        height: 54px;
-      }
-    }
-
-    & .header-action {
-      display: inline-block;
-      .rectangular(auto, @header-height, @header-height);
-
-      & .divider-vertical {
-        margin: 0 30px;
-        height: 34px;
-        vertical-align: top;
-        margin-top: 29px;
-      }
-    }
-  }
-
-  & .header:after,
-  & .header:before {
-    content: '';
-    clear: both;
-    display: inline-block;
-  }
-
   .container {
     height: calc(100vh - @header-height);
     overflow: hidden;

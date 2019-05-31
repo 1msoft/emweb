@@ -7,6 +7,7 @@ const {
   addPostcssPlugins,
 } = require('customize-cra');
 
+const modifyVars = require('./src/config/modifyVars');
 const path = require('path');
 const autoprefixer = require('autoprefixer');
 const px2rem = require('postcss-px2rem');
@@ -30,6 +31,7 @@ const postcssPlugins = [
 
 module.exports = override(
   addLessLoader({
+    modifyVars,
     javascriptEnabled: true
   }),
   useBabelRc(),

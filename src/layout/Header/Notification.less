@@ -13,7 +13,7 @@
   cursor: pointer;
 
   & .overlay-notification  {
-    top: 82px !important;
+    top: calc(@header-height - 5px) !important;
     left: -10px !important;
     background: rgba(255,255,255,1);
     border: 1px solid rgba(69, 118, 253, 0.25);
@@ -23,6 +23,7 @@
 
   & .mail-container {
     display: inline-block;
+    position: relative;
     .circle(54px, 54px, 50%, 54px);
     .background-color(#fff);
     vertical-align: middle;
@@ -34,8 +35,8 @@
       vertical-align: middle;
 
       & .mail-icon {
-        .rectangular(auto, 20px);
-        font-size: 18px;
+        .rectangular(20px, 26px, 26px);
+        font-size: 32px;
       }
     }
 
