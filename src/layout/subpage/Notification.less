@@ -1,0 +1,145 @@
+@import "../../assets/styles/vars.less";
+
+.hover-color(@color: #4576FD) {
+  .color(@color);
+};
+
+.notification-container {
+  display: inline-block;
+  .rectangular(auto, @header-height, @header-height);
+  vertical-align: top;
+  position: relative;
+  font-family: PingFang-SC-Regular;
+  cursor: pointer;
+
+  & .overlay-notification  {
+    top: 82px !important;
+    left: -10px !important;
+    background: rgba(255,255,255,1);
+    border: 1px solid rgba(69, 118, 253, 0.25);
+    box-shadow: 0px 2px 12px 0px rgba(26,26,26,0.1);
+    border-radius: 4px;
+  }
+
+  & .mail-container {
+    display: inline-block;
+    .circle(54px, 54px, 50%, 54px);
+    .background-color(#fff);
+    vertical-align: middle;
+    margin: 0 auto;
+    text-align: center;
+    transition: all 0.2s;
+
+    & .icon-wrapper {
+      vertical-align: middle;
+
+      & .mail-icon {
+        .rectangular(auto, 20px);
+        font-size: 18px;
+      }
+    }
+
+  }
+
+  & .notification-wrapper {
+    .rectangular(320px, auto);
+
+    & .ant-tabs-bar {
+      margin-bottom: 0;
+    }
+
+    & .ant-tabs-nav-scroll {
+      padding: 0 34px;
+    }
+
+    & .ant-tabs-tab {
+      width: 100px;
+      box-sizing: border-box;
+      text-align: center;
+      margin-right: 52px;
+    }
+
+    & .notification-menu-item {
+      display: block;
+      .rectangular(100%, 50px, 50px);
+      padding: 0 21px;
+      text-align: left;
+
+      & .notification-description {
+        display: inline-block;
+        .rectangular(200px, 50px, 50px);
+        font-size: 16px;
+        font-weight: 400;
+        color: rgba(51,51,51,1);
+        padding: 0 33px 0 10px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-family: PingFang-SC-Regular;
+        vertical-align: top;
+      }
+
+      & .notification-time {
+        display: none;
+        font-size: 14px;
+        font-family: PingFang-SC-Regular;
+        font-weight: 400;
+        color: rgba(153,153,153,1);
+        vertical-align: top;
+      }
+    }
+
+    & .action-botton {
+      margin: 10px 0;
+      padding: 0 21px;
+      .rectangular(auto, 50px, 50px);
+
+      & i {
+        margin-right: 7px;
+      }
+
+      & .mark-read {
+        display: inline-block;
+        width: 50%;
+        text-align: left;
+        font-size: 18px;
+      }
+
+      & .mark-read:hover {
+        .hover-color();
+
+        & i {
+          .hover-color();
+        }
+      }
+
+      & .more-infomation {
+        display: inline-block;
+        font-size: 18px;
+        width: 50%;
+        text-align: right;
+      }
+
+      & .more-infomation:hover {
+        .hover-color();
+
+        & i {
+          .hover-color();
+        }
+      }
+    }
+
+    & .notification-menu-item:hover {
+      background-color: rgba(245,248,255,1);
+
+      & .notification-time {
+        display: inline-block;
+      }
+    }
+  }
+
+  .mail-container:hover {
+    background-color: #f5f7ff;
+    .hover-color();
+  }
+}

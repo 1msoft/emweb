@@ -1,0 +1,52 @@
+/*************** 设置通用 ********************/
+// 100%高度
+@full-height: 100%;
+
+// 圆形
+.circle(
+  @width: auto,
+  @height: auto,
+  @raduis,
+  @lineHeight: inherit
+) {
+  width: @width;
+  height: @width;
+  line-height: @lineHeight;
+  border-radius: @raduis;
+}
+
+// 方形
+.square(
+  @width: auto,
+  @lineHeight: inherit
+) {
+  width: @width;
+  height: @width;
+  line-height: @lineHeight
+}
+
+// 矩形
+.rectangular(
+  @width: auto,
+  @height: auto,
+  @lineHeight: inherit
+) {
+  width: @width;
+  height: @height;
+  line-height: @lineHeight
+}
+
+// 自定义背景色
+.background-color(@color: transparent) {
+  background-color: @color;
+}
+
+// 自定义颜色
+.color(@color: transparent) {
+  color: @color;
+}
+
+/************** 布局通用 *******************/
+
+// Header 头部高度
+@header-height: 92px;
