@@ -1,3 +1,5 @@
+@import '../../assets//styles/vars.less';
+
 .nav-button-outer-layer {
   width: 62px;
   height: 62px;
@@ -24,13 +26,13 @@
       position: absolute;
       border-radius: 50%;
       transition: all .8s;
-      background: #4576FD;
+      background: @nav-button-color;
       margin: -23px 0 0 -23px;
-      box-shadow: 0px 2px 4px 0px rgba(69,118,253,0.3);
+      box-shadow: 0px 2px 4px 0px @nav-button-inner-glow;
 
       & > div {
-        width: 18px;
-        height: 18px;
+        width: 20px;
+        height: 20px;
         transition: all .3s;
       }
 
@@ -39,18 +41,18 @@
         height: 4px;
         float: left;
         display: block;
-        background: #fff;
+        background: @nav-button-color-hover;
         transition: all .3s;
       }
 
       .level-margin {
-        margin-left: 3px;
-        margin-right: 3px;
+        margin-left: 4px;
+        margin-right: 4px;
       }
 
       .vertical-margin {
-        margin-top: 3px;
-        margin-bottom: 3px;
+        margin-top: 4px;
+        margin-bottom: 4px;
       }
 
     }
@@ -59,25 +61,25 @@
       width: 62px;
       height: 62px;
       margin: -31px 0 0 -31px;
-      background: rgba(236,241,255,1);
+      background: @nav-button-outer-bg;
 
       .nav-button-inner-layer {
         width: 40px;
         height: 40px;
         margin-top: -20px;
         margin-left: -20px;
-        background: #fff;
-        box-shadow:0px 0px 12px 0px rgba(69,118,253, 0.35);
+        background: @nav-button-color-hover;
+        box-shadow:0px 0px 12px 0px @nav-button-inner-glow;
 
         & > div {
-          width: 17px;
-          height: 17px;
+          width: 18px;
+          height: 18px;
         }
 
         span {
           width: 5px;
           height: 5px;
-          background: #4576FD;
+          background: @nav-button-color;
         }
 
         .level-margin {
@@ -93,28 +95,30 @@
     }
 
     .nav-shade-layout {
-      opacity:0.92;
+      opacity: 0.92;
       z-index: 101;
       position: fixed;
       overflow: hidden;
-      border-radius:50%;
-      transition: all 1s;
-      background:radial-gradient(circle,rgba(73,159,255,1),rgba(60,112,255,1));
+      border-radius: 50%;
+      transition: all .8s;
+      background: radial-gradient(circle, @nav-shade-start-bg, @nav-shade-last-bg);
     }
 
     .nav-shade-content {
       top: 50%;
       left: 50%;
+      margin-left: -30px;
+      margin-top: -8px;
       position: relative;
 
       .nav-shade-close {
-        top: -11px;
-        left: 11px;
+        top: -12px;
+        left: 8px;
         width: 40px;
         height: 40px;
         z-index: 103;
         display: flex;
-        transition: all 1s;
+        transition: all .35s;
         border-radius: 50%;
         position: absolute;
         align-items: center;
@@ -124,7 +128,7 @@
           top: 50%;
           left: 50%;
           z-index: 104;
-          color: #fff;
+          color: @nav-shade-close-color;
           font-size: 30px;
           position: absolute;
           margin: -16px 0 0 -20px;
@@ -139,15 +143,15 @@
         }
 
         &:hover {
-          top: -22px;
-          left: 0px;
+          top: -23px;
+          left: -3px;
           width: 62px;
           height: 62px;
-          background:rgba(236,241,255,1);
+          background: @nav-shade-close-outer-bg-hover;
 
           .iconyingyongguanbi::before {
-            background: #4677ff;
-            box-shadow: 0px 0px 12px 0px rgba(69,118,253, 0.35);
+            background: @nav-shade-close-inner-bg-hover;
+            box-shadow: 0px 0px 12px 0px @nav-button-inner-glow;
           }
         }
       }
@@ -168,10 +172,11 @@
 
           img {
             display: block;
+            width: 54px;
           }
 
           span {
-            color: #fff;
+            color: @nav-shade-system-titile-color;
             display: block;
             font-size: 16px;
             margin-top: 16px;
@@ -202,8 +207,8 @@
     }
 
     .nav-shade-layout {
-      top: -529px;
-      left: -529px;
+      top: -518px;
+      left: -495px;
       width: 1120px;
       height: 1120px;
     }
