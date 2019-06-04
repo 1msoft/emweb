@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "@1msoft/kant-ui": "0.0.6",
+    "@1msoft/kant-ui": "0.0.8",
     "antd": "3.18.2",
     "bcryptjs": "2.4.3",
     "crypto-js": "3.1.9-1",
@@ -40,7 +40,6 @@
     }
   },
   "devDependencies": {
-    "@1msoft/kant-ui": "0.0.4",
     "@babel/plugin-proposal-decorators": "7.2.3",
     "@babel/plugin-transform-runtime": "7.4.4",
     "@babel/polyfill": "7.2.5",

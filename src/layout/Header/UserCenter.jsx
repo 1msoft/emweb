@@ -7,6 +7,7 @@ import {
   Dropdown,
 } from 'antd';
 
+import avatar from '../../assets/images/avatar.png';
 import './UserCenter.less';
 
 const MenuItem = Menu.Item;
@@ -90,8 +91,8 @@ export default () => {
       <span className="user-drop-down">
         <Avatar
           icon="user"
+          src={avatar}
           className="user-img"
-          src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
         />
         <span className="user-name">Hi, Jeffery</span>
         <Icon

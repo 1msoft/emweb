@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+
 import { Icon } from 'antd';
 import { SideMenu } from '@1msoft/kant-ui';
+import classNames from 'classnames';
 
 import './index.less';
 
@@ -8,25 +10,77 @@ export default () => {
   const [collapsed, setCollapsed] = useState(false);
 
   const dataSource = [
-    { key: '123', title: '菜单1', url: '/abc', icon: 'delete', className: 'abccccc',
-      child: [{ key: '7895', title: '菜单63', url: '/abcdhds' }]
+    {
+      key: "homePage",
+      title: "首页",
+      url: "/home",
+      icon: "iconMail-xiaoxi",
+      className: "side-menu-module"
     },
-    { key: '798', title: '菜单4', url: '/abcde', icon: 'delete' },
-    { key: '678', title: '菜单3', url: '/abcde', icon: 'delete',
-      child: [{ key: '3456', title: '菜单62', url: '/abcdh' }]
+    {
+      key: "todo",
+      title: "待办通知",
+      url: "/home",
+      icon: "iconMail-xiaoxi",
+      className: "side-menu-module"
     },
-    { key: '789', title: '菜单5', url: '/abcde', icon: 'delete' },
-    { key: '978', title: '菜单6', url: '/abcde', icon: 'delete' }
+    {
+      key: "archiveManage",
+      title: "档案管理",
+      url: "/archiveManage",
+      icon: "iconMail-xiaoxi",
+      className: "side-menu-module",
+      child: [{ key: "location", title: "文件", url: "/home" }]
+    },
+    {
+      key: "billManage",
+      title: "票据管理",
+      url: "/billManage",
+      icon: "iconMail-xiaoxi",
+      className: "side-menu-module",
+      child: [
+        { key: "billUse", title: "票据使用", url: "/home" },
+        { key: "billQuery", title: "票据查询", url: "/home" },
+        { key: "billType", title: "票据类型", url: "/home" }
+      ]
+    },
+    {
+      key: "acctNoManage",
+      title: "账户管理",
+      url: "/acctNoManage",
+      icon: "iconMail-xiaoxi",
+      className: "side-menu-module",
+      child: [
+        { key: "acctNoQuery", title: "账户查询", url: "/home" },
+        { key: "acctNoDetailQuery", title: "明细查询", url: "/home" }
+      ]
+    },
+    {
+      key: "systenManage",
+      title: "系统管理",
+      url: "/systemManage",
+      icon: "iconMail-xiaoxi",
+      className: "side-menu-module",
+      child: [
+        { key: "userManage", title: "用户查询", url: "/home" },
+        { key: "roleManage", title: "权限查询", url: "/home" },
+        { key: "zoneManage", title: "地区查询", url: "/home" }
+      ]
+    }
   ];
 
+  const headClassNames = classNames(
+    'collapsed-switch',
+    { 'collapsed-switch-off': collapsed },
+  );
   const headDom = () => {
     return (
-      <div className="kant-menu-head">
-        <span className="kant-head-icon"
-          onClick={ () => { setCollapsed(!collapsed); } }
-        >
-          <Icon type="swap"></Icon>
-        </span>
+      <div className={headClassNames}>
+        <Icon
+          type="swap"
+          className="switch-icon"
+          onClick={() => setCollapsed(!collapsed)}
+        />
       </div>
     );
   };
@@ -35,9 +89,7 @@ export default () => {
     <SideMenu
       dataSource={dataSource}
       header={headDom()}
-      siderProps={{
-        theme: 'light',
-      }}
+      siderProps={{ theme: 'light' }}
       useCollapsed={true}
       isCollapsed={collapsed}
       inlineOpenStyle="normal"

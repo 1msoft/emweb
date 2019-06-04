@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import {
@@ -132,7 +132,15 @@ const Notification = () => {
 };
 
 export default () => {
-  const [message, useMessage] = useState(true);
+  const [message, useMessage] = useState(false);
+
+  useEffect(() => {
+    const tiemr = setTimeout(() => {
+      useMessage(true);
+    }, 2000);
+    return () => clearTimeout(tiemr);
+  });
+
   return (
     <Dropdown
       overlay={<Notification/>}
@@ -143,7 +151,7 @@ export default () => {
         <span className="mail-container">
           <Badge
             dot={message}
-            offset={[-6]}
+            offset={[-7, 5]}
             className="icon-wrapper"
           >
             <i className="mail-icon iconfont iconMail-xiaoxi" />
