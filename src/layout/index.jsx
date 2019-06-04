@@ -1,16 +1,20 @@
 import React, {
   Fragment
 } from 'react';
+import { Spin } from 'antd';
 import Route from './subpage/Route';
 import NavButton from '../components/nav-button/index';
 import { BrowserRouter as Router } from 'react-router-dom';
-
+import { useObserver } from "mobx-react-lite";
 import { HeaderSearch } from '@components';
 
-export default () => {
+import { useStore } from '../stores';
+
+export default () => useObserver(() => {
+  const store = useStore();
   return (
     <Router>
-      <Fragment>
+      <Spin size="large" spinning={store.spin.loading}>
         {/* 布局页 - 头 */}
         <div>
           <NavButton />
@@ -18,7 +22,7 @@ export default () => {
         <Route />
         布局页 - 尾
         <HeaderSearch />
-      </Fragment>
+      </Spin >
     </Router>
   );
-};
+});

@@ -1,0 +1,30 @@
+/* 通用 */
+@import './vars.less';
+/* 通用 - 连接 - 正常 */
+.link {
+  cursor: pointer;
+  color: @link-color;
+}
+
+/* 通用 - 连接 - 删除 */
+.link-delete {
+  cursor: pointer;
+  color: #eb4d4d;
+}
+
+/* 通过浮动 - 右 */
+.right {
+  float: right;
+}
+
+/* 通过浮动 - 左 */
+.left {
+  float: left;
+}
+
+/* 通过浮动 - 清除浮动 */
+.clearfix::after {
+  content: '';
+  display: block;
+  clear: both;
+}
