@@ -1,24 +1,43 @@
-import React, {
-  Fragment
-} from 'react';
-import Route from './subpage/Route';
-import NavButton from '../components/nav-button/index';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-import { HeaderSearch } from '@components';
+import { Layout } from 'antd';
+import Header from './Header';
+import SideMenu from './SideMenu';
+import Content from './Content';
+
+import './index.less';
 
 export default () => {
+  const changeRootFontSize = () => {
+    const curScrollWidth = document.body.scrollWidth;
+    let fontSize = curScrollWidth / 1920 * 16;
+    if (fontSize < 12) { fontSize = 12; }
+    document.querySelector('html').style.fontSize = `${fontSize}px`;
+  };
+
+  useEffect(() => {
+    changeRootFontSize();
+    window.onresize = changeRootFontSize;
+    return () => changeRootFontSize;
+  });
+
   return (
     <Router>
-      <Fragment>
-        {/* 布局页 - 头 */}
-        <div>
-          <NavButton />
-        </div>
-        <Route />
-        布局页 - 尾
-        <HeaderSearch />
-      </Fragment>
+      <Layout className="wrapper">
+
+        {/* 头部 */}
+        <Header />
+
+        <Layout className="container">
+          {/* 左侧边栏 */}
+          <SideMenu />
+
+          {/* 主内容 */}
+          <Content />
+        </Layout>
+
+      </Layout>
     </Router>
   );
 };
