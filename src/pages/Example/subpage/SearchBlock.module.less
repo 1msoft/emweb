@@ -1,3 +1,13 @@
+@import '../../../assets/styles/vars.less';
 .btn-search {
   margin-right: 20px;
+}
+
+.btn-icon-down {
+  cursor: pointer;
+}
+
+.btn-icon-up {
+  &:extend(.btn-icon-down);
+  color: @link-color;
 }

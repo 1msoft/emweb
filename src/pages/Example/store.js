@@ -1,13 +1,17 @@
 import _ from 'lodash';
 import React from 'react';
+import { message } from "antd";
 import { useLocalStore } from 'mobx-react';
 import { observable, action, autorun } from 'mobx';
 import { useStore as useGlobalStore } from '../../stores';
+import fetchHelper from '../../utils/fetchHelper';
 // 扩展 store
 import Modal from '../../stores/modal';
 
 // mock 数据
 import { data } from './mock';
+
+const URL = `${process.env.REACT_APP_API_SERVER_URL}/data-dict`;
 
 /**
  * 单页面 store
@@ -20,9 +24,41 @@ class Store {
 
   @observable modal = new Modal();
   @observable list = [];
+  @observable selectList = [];
   @observable actionData = {};
   @observable queryParams = {};
   @observable page = { pageSize: 10, current: 1, total: 0 };
+
+  @action
+  getData = () => {
+    const fetchParams = {
+      method: 'GET',
+      url: URL,
+      query: {},
+      callback(res) {
+        console.log('==============================');
+        console.log(res);
+      }
+    };
+    fetchHelper(fetchParams);
+  }
+
+  /**
+   * 设置选择列表： 设置当前表格选中数据
+   * @param {String[] | Object[]} selectList 选中列表数据（可以是 key, 也可以是对应数据）
+   */
+  @action
+  setSelectList = (selectList) => {
+    this.selectList = [...selectList];
+  }
+
+  /**
+   * 清除选择列表： 清除当前表格选中数据
+   */
+  @action
+  clearSelectList = () => {
+    this.selectList = [];
+  }
 
   /**
    * 修改查询参数
@@ -91,6 +127,7 @@ class Store {
       }, 500);
     }).then(res => {
       this.global && this.global.spin.remove();
+      message.success('编辑成功！');
       this.getList();
     });
   }
@@ -108,23 +145,26 @@ class Store {
       }, 500);
     }).then(res => {
       this.global && this.global.spin.remove();
+      message.success('添加成功！');
       this.getList();
     });
   }
 
   /**
    * 删除
+   * @param {String} ids 批量删除的单条数据 id
    */
   @action
-  delete = ({ id }) => {
+  deletes = ({ ids = [] }) => {
     new Promise((resolve, reject) => {
       this.global && this.global.spin.add();
       setTimeout(v => {
-        _.remove(data, v => (v.key === id));
+        _.remove(data, v => ids.includes(v.key));
         resolve(data);
       }, 500);
     }).then(res => {
       this.global && this.global.spin.remove();
+      message.success('删除成功！');
       this.getList();
     });
   }

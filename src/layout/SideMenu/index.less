@@ -1,0 +1,32 @@
+@import '../../assets/styles/vars.less';
+
+.collapsed-switch {
+  .rectangular(100%, 50px, 50px);
+  text-align: right;
+  padding: 0 20px;
+  box-sizing: border-box;
+  background: rgba(255,255,255,1);
+  border: 1px solid rgba(41, 41, 41, 0.1);
+
+  & .switch-icon {
+    .color(#5c8cfe);
+    .rectangular(18px, 14px);
+    cursor: pointer;
+  }
+}
+
+.collapsed-switch-off {
+  text-align: center;
+}
+
+.side-menu-module {
+  & .kant-sub-icon,
+  & .kant-menuitem-icon {
+    display: inline-block;
+    .rectangular(46px, 49px);
+    text-align: center;
+    vertical-align: top;
+    font-size: 36px;
+  }
+}
+

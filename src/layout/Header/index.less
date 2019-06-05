@@ -1,0 +1,72 @@
+@import '../../assets/styles/vars.less';
+
+.kant-header .ant-layout-header {
+  text-align: center;
+  box-sizing: border-box;
+  padding: 0 40px 0 32px;
+  .rectangular(100%, @header-height);
+  .background-color(#fff);
+  border-bottom: 1px solid #334576FD;
+
+  & .sub-nav {
+    float: left;
+    display: inline-flex;
+    align-items: center;
+    .rectangular(auto, @header-height, initial);
+  }
+
+  & .between-vertical {
+    float: left;
+    margin: 0 32px;
+    height: 34px;
+    vertical-align: top;
+    margin-top: 29px;
+    width: 2px;
+  }
+
+  & .logo {
+    display: block;
+    float: left;
+    .rectangular(152px, @header-height, @header-height);
+    text-align: left;
+
+    & img {
+      .rectangular(136px, 45px);
+    }
+  }
+
+  & .header-search-wrapper {
+    display: inline-flex;
+    align-items: center;
+    line-height: initial;
+    .rectangular(33.3%, @header-height);
+
+    .emweb-search {
+      width: 100%;
+    }
+
+    input {
+      height: 48px;
+    }
+  }
+
+  & .header-action {
+    // display: inline-block;
+    float: right;
+    .rectangular(auto, @header-height, @header-height);
+
+    & .divider-vertical {
+      margin: 0 30px;
+      height: 34px;
+      vertical-align: top;
+      margin-top: 29px;
+    }
+  }
+}
+
+.kant-header .ant-layout-header:after,
+.kant-header .ant-layout-header:before {
+  content: '';
+  clear: both;
+  display: inline-block;
+}

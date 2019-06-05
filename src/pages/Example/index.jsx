@@ -9,7 +9,7 @@ import ExampleStore from './store';
 let Example = (props) => {
   return (
     <ExampleStore>
-      <div className="container-block" style={{ margin: 50 }}>
+      <div className="container-block">
         <HeaderBlock />
         <SearchBlock />
         <OperationBlock />

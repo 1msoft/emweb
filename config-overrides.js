@@ -26,7 +26,6 @@ const postcssPlugins = [
     browsers: ['last 2 versions', 'not ie <= 8', 'iOS 7'],
     remove: true,
   }),
-  // px2rem({remUnit: 16}),
   px2rem({ remUnit: 16 }),
 ];
 

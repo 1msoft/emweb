@@ -62,7 +62,7 @@ let EditBlock = (props) => useObserver(() => {
         onOk={state.handleOk}
         onCancel={state.handleCancel}
       >
-        <FormLayout colon={true} inlineLabel={true}>
+        <FormLayout colon={true} >
           <FormItem row={1} span={getGrid(12)} label="类型">
             {props.form.getFieldDecorator("type", {
               rules: [{ required: true, message: "类型必填" }],

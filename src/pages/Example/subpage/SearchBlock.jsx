@@ -1,6 +1,11 @@
-import React from 'react';
+import React, {
+  Fragment,
+  useState,
+  useMemo,
+  useCallback,
+} from 'react';
 import { observer } from 'mobx-react';
-import { Divider, DatePicker, Button } from "antd";
+import { Divider, DatePicker, Button, Icon } from "antd";
 import { useStore } from '../store';
 import { roleType } from '../mock';
 import { Form, InputNumber, Input, Select } from "@1msoft/kant-ui";
@@ -10,7 +15,15 @@ const { FormLayout, FormItem } = Form;
 const TextArea = Input.TextArea;
 const getGrid = FormItem.getGrid;
 
+/**
+ * @constant
+ * 搜索栏总行数
+ */
+const SEARCH_ROW_NUM = 2;
+
 const useStateHook = (props, store) => {
+
+  const [isSingle, setIsSingle] = useState(true);
 
   // 查询事件处理函数
   const onSearch = (e) => {
@@ -28,7 +41,36 @@ const useStateHook = (props, store) => {
     props.form.resetFields();
   };
 
-  return { onSearch, onReset };
+  // 展开图标计算
+  const openIconType = useMemo(() => (isSingle ? 'down' : 'up'), [isSingle]);
+
+  // 切换（展开/收缩） 事件
+  const onToggle = useCallback(() => {
+    setIsSingle(!isSingle);
+  }, [isSingle]);
+
+  return { onSearch, onReset, isSingle, openIconType, onToggle };
+};
+
+// 获取更多查询块
+let getMoreQueryItems = (props) => {
+  return ([
+    <FormItem key={1} row={2} span={getGrid(6)} label="地址">
+      {props.form.getFieldDecorator("address")(
+        <Input placeholder="地址" />
+      )}
+    </FormItem>,
+    <FormItem key={2} row={2} span={getGrid(6)} label="创建人">
+      {props.form.getFieldDecorator("createAt")(
+        <Input placeholder="创建人" />
+      )}
+    </FormItem>,
+    <FormItem key={3} row={2} span={getGrid(6)} label="创建人">
+      {props.form.getFieldDecorator("createTime")(
+        <DatePicker style={{ width: '100%' }}/>
+      )}
+    </FormItem>
+  ]);
 };
 
 let SearchBlock = (props) => {
@@ -52,24 +94,13 @@ let SearchBlock = (props) => {
             <InputNumber style={{ width: '100%' }} placeholder="年龄" />
           )}
         </FormItem>
-
-        <FormItem row={2} span={getGrid(6)} label="地址">
-          {props.form.getFieldDecorator("address")(
-            <Input placeholder="地址" />
-          )}
-        </FormItem>
-        <FormItem row={2} span={getGrid(6)} label="创建人">
-          {props.form.getFieldDecorator("createAt")(
-            <Input placeholder="创建人" />
-          )}
-        </FormItem>
-        <FormItem row={2} span={getGrid(6)} label="创建人">
-          {props.form.getFieldDecorator("createTime")(
-            <DatePicker style={{ width: '100%' }}/>
-          )}
-        </FormItem>
-
-        <FormItem row={2} span={getGrid(6)} push={0} wrapperAlign="right">
+        {!state.isSingle && getMoreQueryItems(props)}
+        <FormItem
+          push={0}
+          span={getGrid(6)}
+          wrapperAlign="right"
+          row={state.isSingle ? 1 : SEARCH_ROW_NUM}
+        >
           <Button
             shape="round"
             type="primary"
@@ -78,7 +109,17 @@ let SearchBlock = (props) => {
           >
             查询
           </Button>
-          <Button shape="round" onClick={state.onReset}> 重置 </Button>
+          <Button
+            shape="round"
+            onClick={state.onReset}
+            className={less['btn-search']}
+          >
+            重置
+          </Button>
+          <Icon
+            type={state.openIconType}
+            onClick={state.onToggle}
+            className={less[`btn-icon-${state.openIconType}`]}/>
         </FormItem>
       </FormLayout>
     </div>

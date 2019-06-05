@@ -1,4 +1,5 @@
 import * as pages from '@pages';
+
 // 路由配置
 export default [
   {
@@ -9,5 +10,10 @@ export default [
     path: '/example',
     exact: false,
     component: pages.Example
-  }
+  },
+  {
+    path: '/404',
+    exact: true,
+    component: pages.NotFound
+  },
 ];

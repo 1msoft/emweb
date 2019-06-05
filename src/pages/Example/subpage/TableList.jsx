@@ -1,11 +1,15 @@
+import React, {
+  useMemo,
+  Fragment,
+  useCallback,
+  useEffect,
+} from 'react';
 import _ from 'lodash';
 import moment from 'moment';
-import React, {
-  useMemo, Fragment, useCallback, useEffect
-} from 'react';
 import { Table, Popconfirm } from 'antd';
 import { useObserver } from "mobx-react-lite";
 import { observer, inject } from 'mobx-react';
+
 import { useStore } from '../store';
 import { roleType } from '../mock';
 
@@ -35,36 +39,32 @@ const useStateHook = (props, store) => {
 
   useEffect(() => {
     store.getList();
+    store.getData();
   }, []);
 
   // 表格分页 change 事件
   const onChange = (page, pageSize) => {
+    store.clearSelectList();
     store.setPage({ current: page });
     store.getList();
   };
 
   // 取消事件处理函数
   const onDelete = (record) => {
-    const id = record.key;
-    store.delete({ id });
+    const ids = [record.key];
+    store.deletes({ ids });
   };
 
-  /**
-   * 编辑处理函数： 打开编辑弹窗
-   * @param {Object} record 当前编辑的数据
-   */
+  // 编辑处理函数： 打开编辑弹窗（record 当前编辑的数据）
   const onEdit = (record) => {
     store.modal.open({
       code: MODAL_CODE,
       title: '编辑数据',
       data: record,
     });
-    console.log('编辑', record);
   };
 
-  /**
-   * 表格操作字段 render 函数
-   */
+  // 表格操作字段 render 函数
   const operation = useCallback((text, record) => {
     return (
       <Fragment>
@@ -81,7 +81,26 @@ const useStateHook = (props, store) => {
     );
   });
 
-  return { operation, onChange };
+  // 可选表格配置
+  const rowSelection = {
+    onChange: (keys, records) => {
+      store.setSelectList(keys);
+    },
+    getCheckboxProps: record => ({
+      // 设置选择框 props 属性
+      disabled: record.name === '胡彦斌',
+    }),
+  };
+
+  // 表格分页配置
+  const pagination = {
+    showQuickJumper: true,
+    onChange: onChange,
+    total: store.page.total,
+    defaultCurrent: store.page.current,
+  };
+
+  return { operation, onChange, rowSelection, pagination };
 };
 
 let TableList = (props) => useObserver(() => {
@@ -90,13 +109,9 @@ let TableList = (props) => useObserver(() => {
   return (
     <div>
       <Table
+        pagination={state.pagination}
         dataSource={store.list.toJS()}
-        pagination={{
-          showQuickJumper: true,
-          total: store.page.total,
-          onChange: state.onChange,
-          defaultCurrent: store.page.current,
-        }}
+        rowSelection={state.rowSelection}
       >
         <Column
           key="type"
@@ -107,7 +122,6 @@ let TableList = (props) => useObserver(() => {
         <Column key="name" title="姓名" dataIndex="name"/>
         <Column title="年龄" dataIndex="age" key="age" />
         <Column title="住址" dataIndex="address" key="address" />
-
         <Column
           title="创建时间"
           key="createTime"
@@ -122,7 +136,6 @@ let TableList = (props) => useObserver(() => {
           render={tableRender.bind(null, 'time')}
         />
         <Column title="更新人" dataIndex="updateAt" key="updateAt" />
-
         <Column title="操作" key="operation" render={ state.operation } />
       </Table>
     </div>

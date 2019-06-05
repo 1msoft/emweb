@@ -112,18 +112,18 @@ export default function fetchHelper(queryParams, commonStore = {}) {
     throw new Error('url not specified: 需要指定请求api');
   }
   //全局加载中开始
-  (commonStore.loading === false) && commonStore.loadingStart();
+  // (commonStore.loading === false) && commonStore.loadingStart();
   fetchRequest(method, url, query, param, body, headers).then(
     (res) => {
       callback && callback(res);
       //全局加载中结束
-      isStop && commonStore.loading && commonStore.loadingStop();
+      // isStop && commonStore.loading && commonStore.loadingStop();
       return res;
     }
   ).catch((error) => {
-    commonStore.showMsg && commonStore.showMsg('error', `${error.message || 'request failed'}`);
+    // commonStore.showMsg && commonStore.showMsg('error', `${error.message || 'request failed'}`);
     //全局加载中结束
-    commonStore.loading && setTimeout(() => { commonStore.loadingStop(); }, 500);
+    // commonStore.loading && setTimeout(() => { commonStore.loadingStop(); }, 500);
     // throw error;
   });
 }
