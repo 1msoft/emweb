@@ -1,10 +1,15 @@
 import moment from 'moment';
+import { message } from "antd";
 import { getCookie, setCookie } from './helper';
 import { createHashHistory } from 'history';
 import { setTimeout } from 'core-js/library/web/timers';
 
 const history = createHashHistory();
 
+/**
+ * 拼接 query 请求参数
+ * @param {Object} params 请求参数
+ */
 function queryParams(params) {
   let queryString = '';
   let arr = [];
@@ -19,6 +24,15 @@ function queryParams(params) {
   return queryString;
 }
 
+/**
+ * fetch 请求方法封装
+ * @param {String} method  请求模式： GET POST ...
+ * @param {String} url     请求路由
+ * @param {Object} query   请求参数
+ * @param {String} param   请求路由参数
+ * @param {Object} body    请求 body 参数
+ * @param {Object} headers 请求头追加
+ */
 function fetchRequest(method, url, query, param, body, headers) {
   const token = getCookie('token');
   let request;
@@ -59,7 +73,7 @@ function fetchRequest(method, url, query, param, body, headers) {
     if (res.headers.get('Content-Type') ===
 			'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ||
 			(res.headers.get('Content-Type') ===
-				'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8')) {
+			'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8')) {
       res.blob().then(blob => {
         let a = document.createElement('a');
         let url = window.URL.createObjectURL(blob);
@@ -103,7 +117,12 @@ function fetchRequest(method, url, query, param, body, headers) {
   });
 }
 
-export default function fetchHelper(queryParams, commonStore = {}) {
+/**
+ * 导出 fetch 封装方法
+ * @param {Object} queryParams  请求设置，参考上面的方法 fetchRequest
+ * @param {Object} globalStore  全局 store
+ */
+export default function fetchHelper(queryParams, globalStore = {}) {
   const { method, url, query, param, body, headers, callback, isStop = true } = queryParams;
   if (typeof method !== 'string') {
     throw new Error('requestType not specified: 需要指定请求类型');
@@ -112,18 +131,22 @@ export default function fetchHelper(queryParams, commonStore = {}) {
     throw new Error('url not specified: 需要指定请求api');
   }
   //全局加载中开始
-  // (commonStore.loading === false) && commonStore.loadingStart();
+  globalStore.spin && globalStore.spin.add();
   fetchRequest(method, url, query, param, body, headers).then(
     (res) => {
       callback && callback(res);
       //全局加载中结束
-      // isStop && commonStore.loading && commonStore.loadingStop();
+      globalStore.spin && globalStore.spin.remove();
       return res;
     }
   ).catch((error) => {
-    // commonStore.showMsg && commonStore.showMsg('error', `${error.message || 'request failed'}`);
+    globalStore.spin && globalStore.spin.remove();
+
+    // 全局抛错
+    message.error(`${error.message || 'request failed'}`);
+
     //全局加载中结束
-    // commonStore.loading && setTimeout(() => { commonStore.loadingStop(); }, 500);
+    globalStore.spin && setTimeout(() => { globalStore.spin.remove(); }, 500);
     // throw error;
   });
 }

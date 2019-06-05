@@ -83,6 +83,7 @@ const useStateHook = (props, store) => {
 
   // 可选表格配置
   const rowSelection = {
+    selectedRowKeys: store.selectList,
     onChange: (keys, records) => {
       store.setSelectList(keys);
     },

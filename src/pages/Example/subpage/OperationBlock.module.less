@@ -1,0 +1,64 @@
+@import '../../../assets/styles/vars.less';
+.btn-batch {
+  color: #B3B3B3;
+}
+
+.operation {
+  padding-top: 30px;
+
+  > :global(.ant-btn) {
+    margin-right: 20px;
+  }
+
+  .dropdown {
+    &:extend(.btn-batch);
+    &:hover {
+      border-color: @primary-color;
+      color: @primary-color;
+      box-shadow: 0px 2px 6px 0px fade(@primary-color, 20%);
+    }
+  }
+
+  :global(.ant-dropdown-open).dropdown {
+    border-color: @primary-color;
+    color: @primary-color;
+  }
+}
+
+.dropdown-menu {
+  :global(.ant-dropdown-menu) {
+    box-shadow: 0px 2px 6px 0px fade(@primary-color, 20%);
+  }
+}
+
+.statistics {
+  margin: 20px 0;
+  padding: 10px;
+  border-radius: @border-radius-base;
+  border: 1px solid fade(@primary-color, 20%);
+  background: fade(@primary-color, 10%);
+
+  font-size: 16px;
+
+  .bangzhu {
+    padding: 0 10px;
+    color: @primary-color;
+  }
+
+  .close-wrapper {
+    margin-left: 30px;
+    padding: 10px;
+    cursor: pointer;
+    .close {
+      color: #fff;
+      background: #999;
+      border-radius: 50%;
+    }
+  }
+
+  .select-num {
+    padding: 0 10px;
+    color: @primary-color;
+  }
+
+}

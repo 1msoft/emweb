@@ -5,13 +5,14 @@ import { useLocalStore } from 'mobx-react';
 import { observable, action, autorun } from 'mobx';
 import { useStore as useGlobalStore } from '../../stores';
 import fetchHelper from '../../utils/fetchHelper';
+
 // 扩展 store
 import Modal from '../../stores/modal';
 
 // mock 数据
 import { data } from './mock';
 
-const URL = `${process.env.REACT_APP_API_SERVER_URL}/data-dict`;
+const URL = `${process.env.REACT_APP_API_SERVER_URL}/counter/timestamp/1111111`;
 
 /**
  * 单页面 store
@@ -40,7 +41,7 @@ class Store {
         console.log(res);
       }
     };
-    fetchHelper(fetchParams);
+    fetchHelper(fetchParams, this.global);
   }
 
   /**
@@ -82,7 +83,6 @@ class Store {
   @action
   getList = () => {
     new Promise((resolve, reject) => {
-      this.global && this.global.spin.add();
       setTimeout(item => {
         let mockData = [...data];
         const { name } = this.queryParams;
@@ -98,7 +98,6 @@ class Store {
         });
       }, 500);
     }).then(res => {
-      this.global && this.global.spin.remove();
       this.list = [...res.data];
       this.setPage({
         current: 1,
@@ -113,7 +112,6 @@ class Store {
   @action
   edit = ({ id, values }) => {
     new Promise((resolve, reject) => {
-      this.global && this.global.spin.add();
       setTimeout(item => {
         data.forEach( v => {
           if (v.key === id){
@@ -126,7 +124,6 @@ class Store {
         resolve(data);
       }, 500);
     }).then(res => {
-      this.global && this.global.spin.remove();
       message.success('编辑成功！');
       this.getList();
     });
@@ -138,13 +135,11 @@ class Store {
   @action
   add = ({ values }) => {
     new Promise((resolve, reject) => {
-      this.global && this.global.spin.add();
       setTimeout(v => {
         data.push({ ...values, key: new Date().toString() });
         resolve(data);
       }, 500);
     }).then(res => {
-      this.global && this.global.spin.remove();
       message.success('添加成功！');
       this.getList();
     });
@@ -157,13 +152,11 @@ class Store {
   @action
   deletes = ({ ids = [] }) => {
     new Promise((resolve, reject) => {
-      this.global && this.global.spin.add();
       setTimeout(v => {
         _.remove(data, v => ids.includes(v.key));
         resolve(data);
       }, 500);
     }).then(res => {
-      this.global && this.global.spin.remove();
       message.success('删除成功！');
       this.getList();
     });
