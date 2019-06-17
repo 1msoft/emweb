@@ -6,6 +6,7 @@ import { Header } from '@1msoft/kant-ui';
 
 import Notification from './Notification';
 import UserCenter from './UserCenter';
+import LoadingBar from './LoadingBar';
 import HeaderSearch from '@components/header-search';
 
 import './index.less';
@@ -50,6 +51,7 @@ export default () => {
         <Divider type="vertical" className="divider-vertical" />
         <UserCenter />
       </div>
+      <LoadingBar />
     </Header>
   );
 };

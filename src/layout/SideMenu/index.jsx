@@ -7,8 +7,6 @@ import classNames from 'classnames';
 import './index.less';
 
 export default () => {
-  const [collapsed, setCollapsed] = useState(false);
-
   const dataSource = [
     {
       key: "homePage",
@@ -68,31 +66,23 @@ export default () => {
       ]
     }
   ];
-
-  const headClassNames = classNames(
-    'collapsed-switch',
-    { 'collapsed-switch-off': collapsed },
-  );
-  const headDom = () => {
+  const headDom = (retractMenu) => {
     return (
-      <div className={headClassNames}>
-        <Icon
-          type="swap"
-          className="switch-icon"
-          onClick={() => setCollapsed(!collapsed)}
-        />
+      <div className="kant-menu-head">
+        <span className="kant-head-icon-wrapper" onClick={retractMenu}>
+          <Icon type="swap" className="kant-head-icon" />
+        </span>
       </div>
     );
   };
 
   return (
     <SideMenu
-      dataSource={dataSource}
-      header={headDom()}
-      siderProps={{ theme: 'light' }}
+      header={headDom}
       useCollapsed={true}
-      isCollapsed={collapsed}
       inlineOpenStyle="normal"
+      dataSource={dataSource}
+      siderProps={{ theme: 'light' }}
     />
   );
 };
