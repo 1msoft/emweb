@@ -42,7 +42,7 @@ export default () => {
       </div>
       <div className="header-search-wrapper">
         <HeaderSearch
-          searchList={[]}
+          searchList={searchList}
           searchRecord={searchRecord}
         />
       </div>
