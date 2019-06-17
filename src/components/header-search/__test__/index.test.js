@@ -70,7 +70,7 @@ describe('HeaderSearch: 头部搜索栏', () => {
   it('搜索列表是否正确渲染，点击时是否正确执行', () => {
     const searchList = [{ title: '订单记录页面' }, { title: '销售记录页面' }];
     const searchRecord = ['订单记录', '销售记录'];
-    const onSearchClick = sinon.spy();
+    const onClick = sinon.spy();
 
     const empty = mount(
       <HeaderSearch
@@ -82,14 +82,14 @@ describe('HeaderSearch: 头部搜索栏', () => {
       <HeaderSearch
         searchList={searchList}
         searchRecord={searchRecord}
-        onSearchClick={onSearchClick}
+        onClick={onClick}
       />
     );
     wrapper.find('.ant-input').at(0).simulate('click');
     assert.equal(wrapper.find('.emweb-search').length, 1);
     assert.equal(wrapper.find('.search-item').length, 2);
     wrapper.find('.search-item').at(0).simulate('click');
-    assert.isTrue(onSearchClick.called);
+    assert.isTrue(onClick.called);
 
     assert.equal(empty.find('.search-item').length, 0);
   });
