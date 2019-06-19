@@ -10,7 +10,7 @@ import * as pages from '@pages';
 const renderRoute = (route) => {
   const props = {
     key: route.key,
-    exact: route.key,
+    exact: route.exact,
     path: route.path,
   };
   if (route.redirect) {
