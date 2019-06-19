@@ -8,23 +8,17 @@ import {
 import * as pages from '@pages';
 
 const renderRoute = (route) => {
+  const props = {
+    key: route.key,
+    exact: route.key,
+    path: route.path,
+  };
   if (route.redirect) {
-    return (
-      <Route
-        key={route.key}
-        exact={route.exact}
-        path={route.path}
-        render={() => <Redirect to={route.redirect} />} />
-    );
+    props.render = () => <Redirect to={route.redirect} />;
+  } else {
+    props.component = pages[route.component];
   }
-  return (
-    <Route
-      key={route.key}
-      key={route.path}
-      path={route.path}
-      exact={route.exact}
-      component={pages[route.component]} />
-  );
+  return <Route {...props} />;
 };
 
 export default (props) => {
