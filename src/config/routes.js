@@ -2,7 +2,7 @@
 export default {
   Index: {
     text: '根目录', path: '/', parent: 'Root',
-    component: 'NotFound',
+    component: 'HomePage', redirect: '/home',
     nav: false, exact: true,
   },
 

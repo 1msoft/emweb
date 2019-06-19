@@ -12,13 +12,13 @@ export default (props) => {
   return (
     <Layout className="main-content">
       {/* 面包屑 */}
-      <Breadcrumb
-        className="emweb-breadcrumb"
-        breadcrumbProps={{ separator: "/" }}
-        targetItemClass ="kant-link"
-        itemRender={({ path, text }) => <Link to={path}>{text}</Link>}
-        breadcrumbs={props.breadcrumbs} />
-
+      <div className="emweb-breadcrumb">
+        <Breadcrumb
+          breadcrumbProps={{ separator: "/" }}
+          targetItemClass ="kant-link"
+          itemRender={({ path, text }) => <Link to={path}>{text}</Link>}
+          breadcrumbs={props.breadcrumbs} />
+      </div>
       {/* 内容主题 */}
       <Content className="content">
         <Route routerList={props.routerList} />

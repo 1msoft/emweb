@@ -19,6 +19,7 @@ const getRouters = (routers) => {
       key: router,
       path: routers[router].path,
       exact: routers[router].exact,
+      redirect: routers[router].redirect,
       component: routers[router].component,
     });
   }
@@ -84,8 +85,6 @@ let SideMenuContent = (props) => useObserver(() => {
   const routerTree = getRouteTree(leftNavInfo.routeTree);
 
   const routerList = getRouters(routeHelper._routes);
-
-  console.log('currRoute', currRoute);
 
   const breadcrumbs = getRouterChain(currRoute, routeHelper._routes);
   return (
