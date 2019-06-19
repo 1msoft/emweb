@@ -30,64 +30,33 @@
   }
 }
 
-
-.kant-menu-head {
-  width: 280px;
-  height: 50px;
-  box-shadow:1px 1px 20px 0px rgba(40,40,40,0.1);
-  text-align: right;
-  margin-bottom: 2px;
+.kant-submenu-title .iconfont, .ant-menu-item .iconfont {
+  font-size: 36px;
+  margin-top: 2px;
 }
 
-.kant-head-icon-wrapper {
-  display: inline-block;
-  width: 28px;
-  height: 24px;
-  margin-top: 14px;
-  margin-right: 20px;
-  cursor: pointer;
-
-  .kant-head-icon {
-    color: @primary-color;
-    width: 28px;
-    height: 28px;
-    margin: auto;
-  }
+.kant-menuitemgroup-content .iconfont {
+  font-size: 32px;
+  float: left;
+  position: relative;
+  left: 5px;
 }
 
-.ant-layout-sider-collapsed .kant-menu-head {
-  height: 50px;
-  box-shadow:1px 1px 20px 0px rgba(40,40,40,0.1);
-  text-align: right;
-  margin-bottom: 2px;
-  animation: moveHead 1s ease forwards;
+.ant-menu-inline-collapsed-tooltip .iconfont{
+  font-size: 32px;
+  float: left;
+  position: relative;
+  left: 5px;
 }
 
-.ant-layout-sider-collapsed .kant-head-icon {
-  display: inline-block;
-  margin-right: 41px;
-  width: 28px;
-  height: 24px;
-  cursor: pointer;
+.ant-menu-inline-collapsed-tooltip
+.kant-menuitem-title span {
+  margin-left: 12px;
 }
 
-.kant-sider-free .kant-menu-head {
-  width: 100% !important;
+.kant-menuitemgroup-content
+.ant-menu-item-group-title
+.kant-itemgroup-text {
+  margin-left: 0;
 }
 
-@keyframes moveHead{
-  from {
-  width: 280px;
-  } to {
-  width: 110px;
-  }
-}
-
-@keyframes moveHeadRevese{
-  from {
-    width: 110px;
-  }
-  to {
-    width: 280px;
-  }
-}

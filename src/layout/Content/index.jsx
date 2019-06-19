@@ -8,26 +8,20 @@ import './index.less';
 
 const { Content, Footer } = Layout;
 
-export default () => {
+export default (props) => {
   return (
     <Layout className="main-content">
       {/* 面包屑 */}
-      <Breadcrumb
-        className="emweb-breadcrumb"
-        breadcrumbProps={{ separator: "/" }}
-        targetItemClass ="kant-link"
-        itemRender={({ path, text }) => <Link to={path}>{text}</Link>}
-        breadcrumbs={
-          [
-            { path: '/home', text: 'Home', icon: 'home' },
-            { path: '/404', text: '404', icon: 'delete' }
-          ]
-        }
-      />
-
+      <div className="emweb-breadcrumb">
+        <Breadcrumb
+          breadcrumbProps={{ separator: "/" }}
+          targetItemClass ="kant-link"
+          itemRender={({ path, text }) => <Link to={path}>{text}</Link>}
+          breadcrumbs={props.breadcrumbs} />
+      </div>
       {/* 内容主题 */}
       <Content className="content">
-        <Route />
+        <Route routerList={props.routerList} />
       </Content>
 
       {/* 尾部 */}
