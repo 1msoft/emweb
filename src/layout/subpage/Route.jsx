@@ -5,18 +5,18 @@ import {
   Redirect,
   Switch
 } from 'react-router-dom';
-import settings from '@config/routes';
+import * as pages from '@pages';
 
-export default () => {
+export default (props) => {
   return (
     <Switch>
       {
-        settings ? settings.map(setting => (
+        props.routerList ? props.routerList.map(route => (
           <Route
-            key={setting.path}
-            path={setting.path}
-            exact={setting.exact}
-            component={setting.component}
+            key={route.path}
+            path={route.path}
+            exact={route.exact}
+            component={pages[route.component]}
           />
         )) : null
       }

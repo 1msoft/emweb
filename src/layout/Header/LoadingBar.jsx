@@ -7,7 +7,7 @@ import { ProgressBar } from '@1msoft/kant-ui';
 
 const INIT_PERCENT = 80;
 const FINAL_PERCENT = 100;
-const LOAD_TIME = 5000;
+const LOAD_TIME = 2500;
 
 const useStateHook = (props) => {
   const [percent, setPercent] = useState(INIT_PERCENT);
