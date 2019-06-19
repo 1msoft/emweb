@@ -6,6 +6,7 @@ import { Layout } from 'antd';
 import Header from './Header';
 import SideMenu from './SideMenu';
 import Content from './Content';
+import FixedMenu from './FixedMenu';
 
 import Store, { useStore } from '../stores/AppFrame';
 import './index.less';
@@ -129,7 +130,9 @@ export default () => {
 
           <SideMenuContent />
 
+          <FixedMenu />
         </Layout>
+
       </Router>
     </Store>
   );
