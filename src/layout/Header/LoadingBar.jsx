@@ -4,30 +4,37 @@ import React, {
 } from 'react';
 import { withRouter } from 'react-router-dom';
 import { ProgressBar } from '@1msoft/kant-ui';
+import { useStore } from '@stores';
+import { useObserver } from "mobx-react-lite";
 
 const INIT_PERCENT = 80;
 const FINAL_PERCENT = 100;
-const LOAD_TIME = 2500;
 
-const useStateHook = (props) => {
+const useStateHook = (props, store) => useObserver(() => {
   const [percent, setPercent] = useState(INIT_PERCENT);
 
-  // 加载中
-  const onLoading = () => setPercent(INIT_PERCENT);
-
-  // 加载完成
-  const onSuccess = () => setTimeout(() => setPercent(FINAL_PERCENT), LOAD_TIME);
+  // 是否切换页面
+  const [isSwitchPage, setIsSwitchPage] = useState(true);
 
   useEffect(() => {
-    onLoading();
-    onSuccess();
+    setPercent(INIT_PERCENT);
+    setIsSwitchPage(true);
   }, [props.match]);
 
+  useEffect(() => {
+    // 切换页面中 && 当前请求数为0
+    if (isSwitchPage && store.request.inTransitRequests === 0) {
+      setPercent(FINAL_PERCENT);
+      setIsSwitchPage(false);
+    }
+  }, [store.request.inTransitRequests, isSwitchPage]);
+
   return { percent };
-};
+});
 
 let LoadingBar = (props) => {
-  const state = useStateHook(props);
+  const store = useStore();
+  const state = useStateHook(props, store);
   return (
     <ProgressBar
       animation={true}
