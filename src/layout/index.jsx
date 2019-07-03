@@ -7,6 +7,7 @@ import Header from './Header';
 import SideMenu from './SideMenu';
 import Content from './Content';
 import FixedMenu from './FixedMenu';
+import LoginLoading from './LoginLoading';
 
 import Store, { useStore } from '../stores/AppFrame';
 import './index.less';
@@ -123,16 +124,19 @@ export default () => {
   return (
     <Store>
       <Router>
-        <Layout className="wrapper">
+        {
+          false ?
+            <Layout className="wrapper">
+              {/* 头部 */}
+              <Header />
 
-          {/* 头部 */}
-          <Header />
+              <SideMenuContent />
 
-          <SideMenuContent />
-
-          <FixedMenu />
-        </Layout>
-
+              <FixedMenu />
+            </Layout>
+            :
+            <LoginLoading />
+        }
       </Router>
     </Store>
   );
