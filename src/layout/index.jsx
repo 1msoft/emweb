@@ -124,7 +124,10 @@ let SideMenuContent = (props) => useObserver(() => {
     query: { maxWidth: 767, minWidth: 575 }
   })[0];
   useEffect(() => {
-    if (isValidScreenSm) {
+    if (
+      isValidScreenSm &&
+      !(document.querySelectorAll('.ant-layout-sider-collapsed') || []).length
+    ) {
       document.querySelectorAll('.kant-head-icon')[0].click();
     }
   }, [isValidScreenSm]);
