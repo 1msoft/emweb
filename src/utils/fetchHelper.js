@@ -5,11 +5,15 @@ import { setTimeout } from 'core-js/library/web/timers';
 
 const history = createHashHistory();
 
+/**
+ * 拼接 query 请求参数
+ * @param {Object} params 请求参数
+ */
 function queryParams(params) {
   let queryString = '';
   let arr = [];
   for (let key in params) {
-    if (params[key]) {
+    if (params[key] || [false, 0].some(item => item === params[key])) {
       const value = typeof params[key] === 'string' ?
         params[key] : JSON.stringify(params[key]);
       arr.push(`${key}=${encodeURIComponent(value)}`);
@@ -111,19 +115,32 @@ export default function fetchHelper(queryParams, commonStore = {}) {
   if (typeof url !== 'string') {
     throw new Error('url not specified: 需要指定请求api');
   }
-  //全局加载中开始
+  const timeStamp = new Date().getTime();
+  // 请求开始: 调用全局 store request 模块的 startRequest 方法
+  globalStore.request.startRequest();
   (commonStore.loading === false) && commonStore.loadingStart();
   fetchRequest(method, url, query, param, body, headers).then(
     (res) => {
       callback && callback(res);
-      //全局加载中结束
-      isStop && commonStore.loading && commonStore.loadingStop();
+      //终止请求: 调用全局 store request 模块的 endRequest 方法
+      globalStore.request.endRequest({
+        res,
+        apiCode,
+        key: timeStamp,
+        status: 'success',
+        req: { method, url, queryRequest: reQuery, pathRequest: param, body, headers }
+      });
       return res;
     }
   ).catch((error) => {
-    commonStore.showMsg && commonStore.showMsg('error', `${error.message || 'request failed'}`);
-    //全局加载中结束
-    commonStore.loading && setTimeout(() => { commonStore.loadingStop(); }, 500);
+    //终止请求: 调用全局 store request 模块的 endRequest 方法
+    globalStore.request.endRequest({
+      res,
+      apiCode,
+      key: timeStamp,
+      status: 'error',
+      req: { method, url, queryRequest: reQuery, pathRequest: param, body, headers }
+    });
     // throw error;
   });
 }
