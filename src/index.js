@@ -3,21 +3,21 @@ import ReactDOM from 'react-dom';
 import '@babel/polyfill';
 
 import Layout from './layout/index';
-import { Provider } from 'mobx-react';
 import { LocaleProvider } from 'antd';
 
-import stores from './stores';
 import 'moment/locale/zh-cn';
 import zhCN from 'antd/lib/locale-provider/zh_CN';
 
 import '@assets/iconFont/iconfont.css';
 import '@assets/styles/style.css';
 
+import GlobalStore from './stores';
+
 ReactDOM.render(
-  <Provider {...stores}>
-    <LocaleProvider locale={zhCN}>
+  <LocaleProvider locale={zhCN}>
+    <GlobalStore>
       <Layout />
-    </LocaleProvider>
-  </Provider>,
+    </GlobalStore>
+  </LocaleProvider>,
   document.getElementById('root')
 );
