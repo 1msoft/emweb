@@ -29,9 +29,45 @@
   }
 }
 
-.emweb-breadcrumb .iconfont {
-  font-size: 28px;
+.emweb-breadcrumb {
   position: relative;
-  top: 5px;
-  left: 3px;
+  overflow: hidden;
+  .toggle-menu-button {
+    position: absolute;
+    .rectangular(60px, 50px, 50px);
+    display: inline-block;
+    top: 0;
+    left: 0;
+    box-shadow: 2px 0 15px 2px rgba(40, 40, 40, 0.1);
+  }
+
+  .toggle-menu-button:hover {
+    color: #4576fd;
+  }
+
+  & .ant-breadcrumb {
+    & > span {
+      display: inline-block;
+      vertical-align: middle;
+      font-size: 0;
+      .rectangular(auto, 50px, 50px);
+
+      & span {
+        font-size: 12px;
+      }
+
+      & .iconfont {
+        position: relative;
+        top: -2px;
+        vertical-align: middle;
+        font-size: 32px;
+      }
+    }
+  }
+}
+
+.screen-xs {
+  .ant-breadcrumb {
+    padding-left: 80px;
+  }
 }

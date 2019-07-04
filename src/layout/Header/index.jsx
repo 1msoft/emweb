@@ -8,11 +8,12 @@ import Notification from './Notification';
 import UserCenter from './UserCenter';
 import LoadingBar from './LoadingBar';
 import HeaderSearch from '@components/header-search';
+import MiniSearch from './MiniSearch';
 
 import './index.less';
 import logo from '@assets/images/logo.png';
 
-export default () => {
+export default (props) => {
   const searchList = [
     {
       title: '订单',
@@ -27,7 +28,6 @@ export default () => {
       path: '/',
     }
   ];
-  const searchRecord = ['订单', '订单查询', '管理', '管理系统查询', '小区', '楼栋', '房屋', '演唱会'];
 
   return (
     <Header className="header">
@@ -41,12 +41,16 @@ export default () => {
         <img src={logo} alt="" />
       </div>
       <div className="header-search-wrapper">
-        <HeaderSearch
-          searchList={searchList}
-          searchRecord={searchRecord}
-        />
+        {
+          !props.isMobile ?
+            <HeaderSearch
+              searchList={searchList}
+              searchRecord={[]}
+            /> : null
+        }
       </div>
       <div className="header-action">
+        <MiniSearch />
         <Notification/>
         <Divider type="vertical" className="divider-vertical" />
         <UserCenter />

@@ -1,0 +1,31 @@
+@import "../../assets/styles/vars.less";
+
+.hover-color(@color: #4576FD) {
+  .color(@color);
+};
+
+.mini-search-container {
+  display: none;
+  .rectangular(auto, @header-height, @header-height);
+  vertical-align: top;
+  position: relative;
+  font-family: PingFang-SC-Regular;
+  cursor: pointer;
+  margin-right: 20px;
+
+  & .inner-box {
+    display: inline-block;
+    position: relative;
+    .circle(54px, 54px, 50%, 54px);
+    .background-color(#fff);
+    vertical-align: middle;
+    margin: 0 auto;
+    text-align: center;
+    transition: all 0.2s;
+  }
+
+  & .inner-box:hover {
+    background-color: #f5f7ff;
+    .hover-color();
+  }
+}

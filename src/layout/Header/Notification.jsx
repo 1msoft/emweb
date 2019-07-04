@@ -144,6 +144,7 @@ export default () => {
   return (
     <Dropdown
       overlay={<Notification/>}
+      // placement="bottomRight"
       overlayClassName="overlay-notification"
       getPopupContainer={() => document.querySelector('.notification-container')}
     >

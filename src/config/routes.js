@@ -12,6 +12,12 @@ export default {
     nav: true, exact: false,
   },
 
+  Demo: {
+    text: '演示', path: '/demo', parent: 'Index',
+    component: 'Demo', icon: "iconMail-xiaoxi",
+    nav: true, exact: false,
+  },
+
   NotFound: {
     text: '404', path: '/404', parent: 'Index',
     component: 'NotFound',

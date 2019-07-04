@@ -1,5 +1,22 @@
 @import '../../assets/styles/vars.less';
 
+.custom-drawer-wrapper {
+  padding: 0;
+  height: 100vh;
+
+  .ant-drawer-body {
+    padding: 0;
+
+    .kant-menu-head {
+      display: none;
+    }
+
+    .kant-scroll {
+      height: 100vh !important;
+    }
+  }
+}
+
 .collapsed-switch {
   .rectangular(100%, 50px, 50px);
   text-align: right;

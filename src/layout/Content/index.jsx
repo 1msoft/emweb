@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Route from '../subpage/Route';
 
-import { Layout } from 'antd';
+import { Layout, Icon } from 'antd';
 import { Breadcrumb } from '@1msoft/kant-ui';
 import './index.less';
 
@@ -13,6 +13,15 @@ export default (props) => {
     <Layout className="main-content">
       {/* 面包屑 */}
       <div className="emweb-breadcrumb">
+        {
+          props.isMobile && (
+            <Icon
+              type="swap"
+              className="toggle-menu-button"
+              onClick={() => props.useCollapse(bool => !bool)}
+            />
+          )
+        }
         <Breadcrumb
           breadcrumbProps={{ separator: "/" }}
           targetItemClass ="kant-link"
