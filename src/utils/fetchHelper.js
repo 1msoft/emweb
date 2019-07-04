@@ -115,7 +115,7 @@ export default function fetchHelper(queryParams, commonStore = {}) {
   if (typeof url !== 'string') {
     throw new Error('url not specified: 需要指定请求api');
   }
-  const timeStamp = new Date().getTime();
+  const timestamp = new Date().getTime();
   // 请求开始: 调用全局 store request 模块的 startRequest 方法
   globalStore.request.startRequest();
   (commonStore.loading === false) && commonStore.loadingStart();
@@ -126,7 +126,7 @@ export default function fetchHelper(queryParams, commonStore = {}) {
       globalStore.request.endRequest({
         res,
         apiCode,
-        key: timeStamp,
+        key: timestamp,
         status: 'success',
         req: { method, url, queryRequest: reQuery, pathRequest: param, body, headers }
       });
@@ -137,7 +137,7 @@ export default function fetchHelper(queryParams, commonStore = {}) {
     globalStore.request.endRequest({
       res,
       apiCode,
-      key: timeStamp,
+      key: timestamp,
       status: 'error',
       req: { method, url, queryRequest: reQuery, pathRequest: param, body, headers }
     });
