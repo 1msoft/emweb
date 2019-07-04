@@ -125,7 +125,7 @@ export default () => {
     <Store>
       <Router>
         {
-          false ?
+          true ?
             <Layout className="wrapper">
               {/* 头部 */}
               <Header />
