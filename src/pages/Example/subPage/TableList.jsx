@@ -12,7 +12,10 @@ const MODAL_CODE_ADD = 'addExample';
 const columns = [
   { title: '成员姓名', dataIndex: 'name' },
   { title: '相关描述', dataIndex: 'desc' },
-  { title: '浏览次数', dataIndex: 'count' },
+  {
+    title: '浏览次数', dataIndex: 'count',
+    sorter: (a, b) => b.count - a.count
+  },
   {
     title: '状态', dataIndex: 'status',
     render: (text) => {
@@ -43,7 +46,14 @@ const columns = [
           { val }
         </div>
       );
-    }
+    },
+    filters: [
+      { text: '关闭', value: 1 },
+      { text: '运行中', value: 2 },
+      { text: '异常', value: 3 },
+      { text: '已上线', value: 4 },
+    ],
+    onFilter: (value, record) => record.status === value,
   },
   {
     title: '浏览时间', dataIndex: 'time',
