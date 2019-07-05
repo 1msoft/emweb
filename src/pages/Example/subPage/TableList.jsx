@@ -7,6 +7,8 @@ import moment from 'moment';
 import { useStore } from '../store';
 import './TableList.less';
 
+const MODAL_CODE_ADD = 'addExample';
+
 const columns = [
   { title: '成员姓名', dataIndex: 'name' },
   { title: '相关描述', dataIndex: 'desc' },
@@ -86,7 +88,14 @@ const useStateHook = (props, store) => {
     store.selectList = [];
   };
 
-  return { menu, rowSelection, onClear };
+  const add = () => {
+    store.modal.open({
+      code: MODAL_CODE_ADD,
+      title: '新增数据',
+    });
+  };
+
+  return { menu, rowSelection, onClear, add };
 };
 
 const TableList = (props) => useObserver(() => {
@@ -99,7 +108,8 @@ const TableList = (props) => useObserver(() => {
         <Button
           shape="round"
           type="primary"
-          className='btn-search'>
+          className='btn-search'
+          onClick={state.add}>
           新建
         </Button>
         <Button

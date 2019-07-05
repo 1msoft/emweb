@@ -5,6 +5,7 @@ import { observable, action, autorun } from 'mobx';
 import { useStore as useGlobalStore } from '@stores';
 
 import { data } from './mock';
+import Modal from '@stores/modal';
 
 /**
  * 演示 store
@@ -16,6 +17,7 @@ class Store {
     this.list = data;
   }
 
+  @observable modal = new Modal();
   @observable list = [];
   @observable queryParams = {};
   @observable selectList = [];
@@ -65,6 +67,22 @@ class Store {
         current: 1,
         total: res.total,
       });
+    });
+  }
+
+  /**
+   * 添加
+   */
+  @action
+  add = ({ values }) => {
+    new Promise((resolve, reject) => {
+      setTimeout(v => {
+        data.push({ ...values, key: new Date().toString() });
+        resolve(data);
+      }, 500);
+    }).then(res => {
+      message.success('添加成功！');
+      this.getList();
     });
   }
 
