@@ -3,9 +3,7 @@
   height: 38px !important;
   background:rgba(255,255,255,1) !important;
   font-size: 16px;
-  border: 1px solid rgba(235, 235, 235, 1) !important;
   margin: 0 20px;
-  color: #B3B3B3;
 }
 
 .btn-more-operation, .btn-more-operation:hover, .btn-more-operation:focus {
@@ -13,6 +11,59 @@
   height: 38px !important;
   background:rgba(255,255,255,1) !important;
   font-size: 16px;
+}
+
+.btn-disabled {
+  color: #B3B3B3 !important;
   border: 1px solid rgba(235, 235, 235, 1) !important;
-  color: #B3B3B3;
+}
+
+.btn-start {
+  color: #333;
+  border: 1px solid #EBEBEB !important;
+}
+
+.btn-start:hover, .btn-start:focus {
+  color: @primary-color;
+  border: 1px solid @primary-color !important;
+}
+
+.operation {
+  color: @primary-color;
+  cursor: pointer;
+}
+
+.compartment {
+  color: rgba(0, 0, 0, 0.08);
+}
+
+.table-warning {
+  color: @primary-color;
+  font-size: 30px !important;
+  float: left;
+  margin-top: -10px;
+}
+
+.point-layout {
+  display: flex;
+  align-items: center;
+}
+
+.point {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-right: 8px;
+  border-radius: 50%;
+}
+
+.close-wrapper {
+  margin-left: 20px;
+  padding: 10px;
+  cursor: pointer;
+  .close {
+    color: #fff;
+    background: #999;
+    border-radius: 50%;
+  }
 }

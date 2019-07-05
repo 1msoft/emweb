@@ -4,10 +4,16 @@ import { useLocalStore } from 'mobx-react';
 import { observable, action, autorun } from 'mobx';
 import { useStore as useGlobalStore } from '@stores';
 
+import { data } from './mock';
+
+/**
+ * 演示 store
+ */
 class Store {
   constructor(global){
     global && (this.global = global);
     autorun(this.print);
+    this.list = data;
   }
 
   @observable list = [];
@@ -29,6 +35,37 @@ class Store {
   @action
   setPage = (page) => {
     this.page = { ...this.page, ...page };
+  }
+
+  @action
+  setSelectList = (selectList) => {
+    this.selectList = [...selectList];
+  }
+
+  @action
+  getList = () => {
+    new Promise((resolve, reject) => {
+      setTimeout(item => {
+        let mockData = [...data];
+        const { name } = this.queryParams;
+        // 处理查询条件
+        if (name){
+          const reg = new RegExp(name);
+          mockData = mockData.filter( v => (reg.test(v.name)));
+        }
+        let total = mockData.length;
+        resolve({
+          total,
+          data: mockData
+        });
+      }, 500);
+    }).then(res => {
+      this.list = [...res.data];
+      this.setPage({
+        current: 1,
+        total: res.total,
+      });
+    });
   }
 
   // 打印状态
