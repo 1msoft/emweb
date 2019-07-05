@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Table, Button } from "@1msoft/kant-ui";
-import { Alert, Dropdown, Menu, Icon } from 'antd';
+import { Alert, Dropdown, Menu, Icon, message } from 'antd';
 import { useObserver } from "mobx-react-lite";
 import moment from 'moment';
 
@@ -76,9 +76,12 @@ const columns = [
   },
 ];
 
-const onDelete = () => {};
-
 const useStateHook = (props, store) => {
+
+  const onDelete = () => {
+    store.delete();
+  };
+
   const menu = (
     <Menu>
       <Menu.Item key="1" onClick={onDelete}>
@@ -105,7 +108,12 @@ const useStateHook = (props, store) => {
     });
   };
 
-  return { menu, rowSelection, onClear, add };
+  const onOperation = () => {
+    store.selectList = [];
+    message.success('操作成功');
+  };
+
+  return { menu, rowSelection, onClear, add, onOperation };
 };
 
 const TableList = (props) => useObserver(() => {
@@ -126,6 +134,7 @@ const TableList = (props) => useObserver(() => {
           disabled={!selectList.length}
           shape="round"
           type="primary"
+          onClick={state.onOperation}
           className={`btn-batch-operation ${!selectList.length ? 'btn-disabled' : 'btn-start'}`}>
           批量操作
         </Button>

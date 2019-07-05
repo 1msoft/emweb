@@ -1,4 +1,5 @@
 import React from 'react';
+import _ from 'lodash';
 import { message } from "antd";
 import { useLocalStore } from 'mobx-react';
 import { observable, action, autorun } from 'mobx';
@@ -82,6 +83,29 @@ class Store {
       }, 500);
     }).then(res => {
       message.success('添加成功！');
+      this.getList();
+    });
+  }
+
+  /**
+   * 删除
+   */
+  delete = () => {
+    new Promise((resolve, reject) => {
+      setTimeout(() => {
+        const keys = [];
+        this.selectList.forEach(item => {
+          const key = this.list[item].key;
+          keys.push(key);
+        });
+        _.remove(data, (val) => {
+          return _.indexOf(keys, val.key) !== -1;
+        });
+        resolve();
+      }, 500);
+    }).then(res => {
+      this.selectList = [];
+      message.success('删除成功！');
       this.getList();
     });
   }
