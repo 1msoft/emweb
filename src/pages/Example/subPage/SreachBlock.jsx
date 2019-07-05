@@ -26,9 +26,9 @@ const useStateHook = (props, store) => {
       },
     },
     { title: '相关描述', name: 'desc', type: 'input' },
-    { title: '浏览时间', name: 'time', type: 'ant-date-picker' },
+    { title: '浏览时间', name: 'time', type: 'date-picker' },
+    { title: '浏览次数', name: 'count', type: 'input-number' },
     { title: '创建人员', name: 'createAt', type: 'input' },
-    { title: '更新人员', name: 'updateAt', type: 'input' },
   ];
 
   const openIconType = useMemo(() => (isSingle ? 'up' : 'down'), [isSingle]);

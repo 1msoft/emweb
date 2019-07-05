@@ -3,7 +3,7 @@
  * @author kjx
  */
 import React from 'react';
-import { Form, Select, Input, DatePicker } from "@1msoft/kant-ui";
+import { Form, Select, Input, DatePicker, InputNumber } from "@1msoft/kant-ui";
 import { DatePicker as AntDatePicker } from 'antd';
 
 const ROW_LENGTH = 3;
@@ -21,6 +21,8 @@ export const inputBox = (type, props) => {
       return <DatePicker {...props} />;
     case 'ant-date-picker':
       return <AntDatePicker style={{ width: '100%' }} {...props} />;
+    case 'input-number':
+      return <InputNumber {...props} />;
     default:
       return;
   }
