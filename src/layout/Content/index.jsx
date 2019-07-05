@@ -7,6 +7,7 @@ import { Breadcrumb } from '@1msoft/kant-ui';
 import './index.less';
 
 const { Content, Footer } = Layout;
+import LoadingBlock from '../GlobalLoading';
 
 export default (props) => {
   return (
@@ -26,6 +27,8 @@ export default (props) => {
 
       {/* 尾部 */}
       <Footer className="footer">Copyright  2019 英迈软件技术部出品</Footer>
+
+      <LoadingBlock isLocal={true}/>
     </Layout>
   );
 };
