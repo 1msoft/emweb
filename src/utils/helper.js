@@ -5,7 +5,13 @@ import _ from 'lodash';
 import CryptoJS from 'crypto-js';
 import JSEncrypt from 'jsencrypt';
 
-//金额格式化
+/**
+ * 金额格式化
+ *
+ * @export
+ * @param {*} amount
+ * @returns
+ */
 export function fmoney(amount) {
   amount = `${parseFloat(_.round(amount, 2)).toFixed(2)}`;
   let t = '';
@@ -23,19 +29,39 @@ export function fmoney(amount) {
   return `${m}${t.split('').reverse().join('')}.${r}`;
 }
 
-// 银行卡数字格式化 - 四个数字补一个空格
+/**
+ * 银行卡数字格式化 - 四个数字补一个空格
+ *
+ * @export
+ * @param {string} [val='']
+ * @returns
+ */
 export function bankCardNo(val = '') {
   const mainAcctNo = val.replace(/(\d{4})/g, '$1 ');
   return mainAcctNo;
 }
 
-//日期格式化
+/**
+ * 日期格式化
+ *
+ * @export
+ * @param {*} time
+ * @returns
+ */
 export function dateFormat(time) {
   const dateTime = time ? moment(time).format('YYYY-MM-DD') : '';
   return dateTime;
 }
 
-//排序
+/**
+ * 排序
+ *
+ * @export
+ * @param {*} a
+ * @param {*} b
+ * @param {*} type
+ * @returns
+ */
 export function sorter(a, b, type) {
   switch (true) {
     case type === 'date':
@@ -71,7 +97,13 @@ export function sorter(a, b, type) {
   }
 }
 
-//删除对象的空属性值
+/**
+ * 删除对象的空属性值
+ *
+ * @export
+ * @param {*} o
+ * @returns
+ */
 export function filterAttr(o) {
   if (o === "") return;
   if (typeof o !== 'object') return;
@@ -101,7 +133,13 @@ export function filterAttr(o) {
   })(o);
 }
 
-//省市区格式化
+/**
+ * 省市区格式化
+ *
+ * @export
+ * @param {*} zoneArr
+ * @returns
+ */
 export function returnZoneString(zoneArr) {
   if (zoneArr[0] === "北京" ||
     zoneArr[0] === "天津" ||
@@ -117,7 +155,13 @@ export function returnZoneString(zoneArr) {
   }
 }
 
-// 获取cookie
+/**
+ * 获取cookie
+ *
+ * @export
+ * @param {*} name
+ * @returns
+ */
 export function getCookie(name) {
   var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
   arr = document.cookie.match(reg);
@@ -126,20 +170,41 @@ export function getCookie(name) {
   else
     return null;
 }
-// 设置cookie
+
+/**
+ * 设置cookie
+ *
+ * @export
+ * @param {*} key
+ * @param {*} val
+ * @param {*} data
+ * @param {*} path
+ */
 export function setCookie(key, val, data, path) {
   const dataStr = data ? `;expires=${data}` : ' ';
   const pathStr = path ? `;path=${path}` : ' ';
   document.cookie = `${key}=${val}${dataStr}${pathStr}`;
 }
-//删除cookie
+
+/**
+ * 删除cookie
+ *
+ * @export
+ * @param {*} key
+ */
 export function delCookie(key) { //删除cookie方法
   var date = new Date(); //获取当前时间
   date.setTime(date.getTime() - 10000); //将date设置为过去的时间
   document.cookie = `${key}=v;expires=${date.toGMTString()}`;  //设置cookie
 }
 
-// 加密算法
+/**
+ * 加密算法
+ *
+ * @export
+ * @param {*} data
+ * @returns
+ */
 export function encrypt(data) {
   var key = CryptoJS.enc.Latin1.parse('sd7JD8sKzc8MHdf8');
   var iv = CryptoJS.enc.Latin1.parse('29JlOd8SCdk82CFd');
@@ -152,7 +217,10 @@ export function encrypt(data) {
   return `${encrypted}`;
 }
 
-// RSA加密
+/**
+ * RSA加密
+ * @param {*} data
+ */
 export function rsaEncrypt(data){
   const encrypt = new JSEncrypt();
   const pubkey = `
@@ -167,7 +235,10 @@ export function rsaEncrypt(data){
   return encrypted;
 }
 
-// 计算字符串长度(中英文)
+/**
+ * 计算字符串长度(中英文)
+ * @param {*} str
+ */
 export function getStrLenth(str) {
   var len = 0;
   for (var i = 0; i < str.length; i++) {
@@ -197,6 +268,12 @@ export const genBizCode = prefix => {
  * @param {Component} Comp 组件
  */
 export const jurisdiction = (Comp) => {
+  /**
+   * Jurisdiction
+   *
+   * @class Jurisdiction
+   * @extends {Comp}
+   */
   @inject('appFrame')
   @observer
   class Jurisdiction extends Comp{
