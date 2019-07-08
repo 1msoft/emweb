@@ -127,7 +127,7 @@ export default () => {
       <Header />
 
       <SideMenuContent />
-      {/* <LoadingBlock /> */}
+      <LoadingBlock />
       <FixedMenu />
     </Layout>
   );

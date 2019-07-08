@@ -8,7 +8,6 @@ const App = () => {
   const store = useStore();
   const routeHelper = store.appFrame.routeHelper;
   const routeList = routeHelper.getComponentRouteList('Root', { cascade: false });
-  console.log('routeList', routeList);
   return (
     <Router>
       <Switch>
