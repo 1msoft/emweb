@@ -124,19 +124,16 @@ export default () => {
   return (
     <Store>
       <Router>
-        {
-          true ?
-            <Layout className="wrapper">
-              {/* 头部 */}
-              <Header />
+        <Layout className="wrapper">
 
-              <SideMenuContent />
+          {/* 头部 */}
+          <Header />
 
-              <FixedMenu />
-            </Layout>
-            :
-            <LoginLoading />
-        }
+          <SideMenuContent />
+          <LoginLoading />
+          <FixedMenu />
+        </Layout>
+
       </Router>
     </Store>
   );

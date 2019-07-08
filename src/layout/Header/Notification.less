@@ -33,10 +33,12 @@
 
     & .icon-wrapper {
       vertical-align: middle;
+      margin-top: 6px;
 
       & .mail-icon {
         .rectangular(20px, 26px, 26px);
-        font-size: 32px;
+        color: #999999FF;
+        font-size: 40px;
       }
     }
 
@@ -47,6 +49,26 @@
 
     & .ant-tabs-bar {
       margin-bottom: 0;
+      .ant-tabs-nav-container {
+        .ant-tabs-nav-wrap {
+          .ant-tabs-nav {
+            height: 60px;
+            .ant-tabs-tab {
+              padding-top: 16px;
+              padding-bottom: 16px;
+              color: #999999FF;
+
+              .ant-badge {
+                font-size: 20px;
+              }
+            }
+
+            .ant-tabs-tab-active {
+              color: #333333FF;
+            }
+          }
+        }
+      }
     }
 
     & .ant-tabs-nav-scroll {
@@ -80,8 +102,13 @@
         vertical-align: top;
       }
 
+      & .notification-read {
+        color: #999999FF;
+      }
+
       & .notification-time {
         display: none;
+        float: right;
         font-size: 14px;
         font-family: PingFang-SC-Regular;
         font-weight: 400;
@@ -97,6 +124,7 @@
 
       & i {
         margin-right: 7px;
+        color: #B3B3B3;
       }
 
       & .mark-read {
@@ -142,5 +170,9 @@
   .mail-container:hover {
     background-color: #f5f7ff;
     .hover-color();
+
+    & .mail-icon {
+      color: #4576FDFF;
+    }
   }
 }

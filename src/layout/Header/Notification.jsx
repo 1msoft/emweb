@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
+import classNames from 'classnames';
+
 import {
   Tabs,
   Icon,
@@ -22,31 +24,31 @@ const Notification = () => {
   const notifications = [
     {
       toPath: '/',
-      status: 'error',
+      status: 'unread',
       description: '您有新的消息，请注意查收',
       date: '05/07',
     },
     {
       toPath: '/home',
-      status: 'error',
+      status: 'unread',
       description: '您有新的消息注意查收 ...',
       date: '05/07',
     },
     {
       toPath: '/404',
-      status: 'default',
+      status: 'read',
       description: '新的消息收到请回复',
       date: '05/07',
     },
     {
       toPath: '/home',
-      status: 'default',
+      status: 'read',
       description: '您有新的消息，请注意查收',
       date: '05/07',
     },
     {
       toPath: '/',
-      status: 'default',
+      status: 'read',
       description: '您有新的消息，请注意查收',
       date: '05/07',
     },
@@ -54,6 +56,10 @@ const Notification = () => {
 
   const setMarkRead = () => {};
   const getMoreInfomation = () => {};
+  const STATUS_BADGE = {
+    unread: 'error',
+    read: 'default',
+  };
   return (
     <Menu
       className="notification-wrapper">
@@ -67,10 +73,15 @@ const Notification = () => {
               <Link
                 key={index}
                 to={notification.toPath}
-                className="notification-menu-item"
+                className="notification-menu-item clearfix"
               >
-                <Badge status={notification.status || 'error'} />
-                <span className="notification-description">{notification.description}</span>
+                <Badge status={STATUS_BADGE[notification.status]} />
+                <span className={
+                  classNames(
+                    'notification-description',
+                    { 'notification-read': notification.status === 'read' }
+                  )
+                }>{notification.description}</span>
                 <span className="notification-time">{notification.date}</span>
               </Link>
             ))
@@ -101,10 +112,15 @@ const Notification = () => {
               <Link
                 key={index}
                 to={notification.toPath}
-                className="notification-menu-item"
+                className="notification-menu-item clearfix"
               >
-                <Badge status={notification.status || 'error'} />
-                <span className="notification-description">{notification.description}</span>
+                <Badge status={STATUS_BADGE[notification.status]} />
+                <span className={
+                  classNames(
+                    'notification-description',
+                    { 'notification-read': notification.status === 'read' }
+                  )
+                }>{notification.description}</span>
                 <span className="notification-time">{notification.date}</span>
               </Link>
             ))
@@ -151,7 +167,7 @@ export default () => {
         <span className="mail-container">
           <Badge
             dot={message}
-            offset={[-7, 5]}
+            offset={[-8, 4]}
             className="icon-wrapper"
           >
             <i className="mail-icon iconfont iconMail-xiaoxi" />

@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import './index.less';
 import { Progress } from 'antd';
+import { useStore } from '../../stores/index';
 
 const LoginLoading = () => {
-  const loginLoading = require('@assets/images/loading.gif');
+  const store = useStore();
+  const loginLoading = require('@assets/images/loginloading.gif');
   const loginImg = require('@assets/images/lodingImg.png');
   const [progressMark, setProgress] = useState(0);
 
@@ -16,14 +18,20 @@ const LoginLoading = () => {
     }
   }, [progressMark]);
   return (
-    <div className={'content'} >
-      <img src={loginImg} className={'LoginImg'} alt=""/>
-      <img src={loginLoading} className={'spin'} alt="" />
-      <div className={'progress-num'}>{`${progressMark}%`}</div>
-      <div className={'progress'}>
-        <Progress strokeColor={"#3C70FF"} percent={progressMark} size="small" showInfo={false}/>
-      </div>
-    </div>
+    <Fragment>
+      {
+        store.inTransitRequests ?
+          <div className={'login-content'} >
+            <img src={loginImg} className={'LoginImg'} alt=""/>
+            <img src={loginLoading} className={'spin'} alt="" />
+            <div className={'progress-num'}>{`${progressMark}%`}</div>
+            <div className={'progress'}>
+              <Progress strokeColor={"#3C70FF"}
+                percent={progressMark} size="small" showInfo={false}/>
+            </div>
+          </div> : ''
+      }
+    </Fragment>
   );
 };
 
