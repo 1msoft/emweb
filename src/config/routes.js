@@ -1,9 +1,16 @@
 // 路由配置
 export default {
+
+  LoginRegister: {
+    text: '登陆-注册', path: '/login-register', parent: 'Root',
+    component: 'LoginRegister',
+    nav: false, exact: true,
+  },
+
   Index: {
     text: '根目录', path: '/', parent: 'Root',
-    component: 'HomePage', redirect: '/home',
-    nav: false, exact: true,
+    component: 'AppFrame', redirect: '/home',
+    nav: false, exact: false,
   },
 
   Home: {
@@ -22,6 +29,19 @@ export default {
     text: '404', path: '/404', parent: 'Index',
     component: 'NotFound',
     nav: false, exact: true,
+  },
+
+
+  Table: {
+    text: '列表页', parent: 'Index',
+    icon: "iconMail-xiaoxi",
+    nav: true, exact: true,
+  },
+
+  QueryTable: {
+    text: '查询表格', path: '/tables/query-table', parent: 'Table',
+    component: 'QueryTable',
+    nav: true, exact: true,
   },
 
   ArchiveManage: {
