@@ -7,7 +7,7 @@ import Header from './Header';
 import SideMenu from './SideMenu';
 import Content from './Content';
 import FixedMenu from './FixedMenu';
-import LoadingBlock from './GlobalLoading';
+import LoginLoading from './LoginLoading';
 
 import { useStore } from '@stores/';
 import './index.less';
@@ -122,10 +122,8 @@ export default () => {
 
   return (
     <Layout className="wrapper">
-
       {/* 头部 */}
       <Header />
-
       <SideMenuContent />
       <LoadingBlock />
       <FixedMenu />
