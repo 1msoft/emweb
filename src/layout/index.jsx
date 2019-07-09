@@ -125,7 +125,7 @@ export default () => {
       {/* 头部 */}
       <Header />
       <SideMenuContent />
-      <LoadingBlock />
+      <LoginLoading />
       <FixedMenu />
     </Layout>
   );
