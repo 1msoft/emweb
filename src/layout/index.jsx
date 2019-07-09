@@ -9,6 +9,7 @@ import Content from './Content';
 import FixedMenu from './FixedMenu';
 import LoginLoading from './LoginLoading';
 
+import Store from '../stores';
 import { useStore } from '@stores/';
 import './index.less';
 
@@ -121,12 +122,19 @@ export default () => {
   });
 
   return (
-    <Layout className="wrapper">
-      {/* 头部 */}
-      <Header />
-      <SideMenuContent />
-      <LoginLoading />
-      <FixedMenu />
-    </Layout>
+    <Store>
+      <Router>
+        <Layout className="wrapper">
+
+          {/* 头部 */}
+          <Header />
+
+          <SideMenuContent />
+          <LoginLoading />
+          <FixedMenu />
+        </Layout>
+
+      </Router>
+    </Store>
   );
 };
