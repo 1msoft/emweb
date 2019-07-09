@@ -23,7 +23,7 @@ const LoginLoading = () => {
   return (
     <Fragment>
       {
-        store.inTransitRequests ?
+        !store.request.inTransitRequests ?
           <div className={'login-content'} >
             <img src={loginImg} className={'login-img'} alt=""/>
             <img src={loginLoading} className={'spin'} alt="" />
