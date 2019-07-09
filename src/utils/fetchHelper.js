@@ -23,6 +23,17 @@ function queryParams(params) {
   return queryString;
 }
 
+/**
+ * fetch
+ *
+ * @param {*} method  方法
+ * @param {*} url     请求地址
+ * @param {*} query   查询条件
+ * @param {*} param   参数
+ * @param {*} body    body
+ * @param {*} headers 请求头
+ * @returns
+ */
 function fetchRequest(method, url, query, param, body, headers) {
   const token = getCookie('token');
   let request;
@@ -60,10 +71,11 @@ function fetchRequest(method, url, query, param, body, headers) {
     // 判断token是否过期
     const resToken = res.headers.get('Authorization');
     if (resToken && resToken !== token) { setCookie('token', resToken); }
-    if (res.headers.get('Content-Type') ===
-			'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ||
-			(res.headers.get('Content-Type') ===
-				'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8')) {
+    if (
+      res.headers.get('Content-Type') ===
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ||
+      res.headers.get('Content-Type') ===
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8') {
       res.blob().then(blob => {
         let a = document.createElement('a');
         let url = window.URL.createObjectURL(blob);
@@ -105,8 +117,15 @@ function fetchRequest(method, url, query, param, body, headers) {
       });
     }
   });
-}
+};
 
+/**
+ * fetchHelper
+ *
+ * @export
+ * @param {*} queryParams        查询参数
+ * @param {*} [commonStore={}]   全局store
+ */
 export default function fetchHelper(queryParams, commonStore = {}) {
   const { method, url, query, param, body, headers, callback, isStop = true } = queryParams;
   if (typeof method !== 'string') {
