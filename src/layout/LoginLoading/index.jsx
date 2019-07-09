@@ -22,7 +22,7 @@ const LoginLoading = () => {
       {
         store.inTransitRequests ?
           <div className={'login-content'} >
-            <img src={loginImg} className={'LoginImg'} alt=""/>
+            <img src={loginImg} className={'Login-img'} alt=""/>
             <img src={loginLoading} className={'spin'} alt="" />
             <div className={'progress-num'}>{`${progressMark}%`}</div>
             <div className={'progress'}>
