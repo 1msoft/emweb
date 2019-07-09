@@ -46,7 +46,8 @@
   }
 
   & .icon-allow {
-    font-size: 14px !important;
+    font-size: 16px !important;
+    color: #B3B3B3;
     transform: rotate(0);
     transition: all 0.3s;
   }
@@ -83,6 +84,7 @@
       & .menu-item-icon {
         .rectangular(21px, 23px);
         margin-right: 18px;
+        color: #B3B3B3;
       }
 
       & .menu-item-text {
@@ -95,12 +97,15 @@
 
     & .menu-item:hover {
       color: #4576FD;
-      background-color: rgba(245,248,255,1);
+      background-color: rgba(245, 248, 255, 1);
+      & .anticon {
+        color: #4576FD;
+      }
     }
 
     & .menu-divider {
       margin: 10px 0;
-      box-shadow: 0px -1px 0px 1px rgba(41,41,41,0.08);
+      box-shadow: 0px -0.5px 0px 0.5px rgba(41, 41, 41, 0.08);
       .background-color(transparent);
     }
   }

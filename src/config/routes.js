@@ -15,6 +15,11 @@ export default {
   Demo: {
     text: '演示', path: '/demo', parent: 'Index',
     component: 'Demo', icon: "iconMail-xiaoxi",
+  },
+
+  Example: {
+    text: '演示', path: '/example', parent: 'Index',
+    component: 'Example', icon: "iconMail-xiaoxi",
     nav: true, exact: false,
   },
 

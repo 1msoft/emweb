@@ -1,0 +1,9 @@
+
+.font-size-16 {
+  font-size: 16px !important;
+}
+
+/* 表头居中 */
+.table-thead-center .ant-table-thead th {
+  text-align: center;
+}
