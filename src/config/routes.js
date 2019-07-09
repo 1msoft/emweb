@@ -36,6 +36,19 @@ export default {
     nav: false, exact: true,
   },
 
+
+  Table: {
+    text: '列表页', parent: 'Index',
+    icon: "iconMail-xiaoxi",
+    nav: true, exact: true,
+  },
+
+  QueryTable: {
+    text: '查询表格', path: '/tables/query-table', parent: 'Table',
+    component: 'QueryTable',
+    nav: true, exact: true,
+  },
+
   ArchiveManage: {
     text: '档案管理', parent: 'Index',
     icon: "iconMail-xiaoxi",
