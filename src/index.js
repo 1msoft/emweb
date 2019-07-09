@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import '@babel/polyfill';
 
-import Layout from './layout/index';
+import App from '@pages/App';
 import { LocaleProvider } from 'antd';
 
 import 'moment/locale/zh-cn';
@@ -16,7 +16,7 @@ import GlobalStore from './stores';
 ReactDOM.render(
   <LocaleProvider locale={zhCN}>
     <GlobalStore>
-      <Layout />
+      <App />
     </GlobalStore>
   </LocaleProvider>,
   document.getElementById('root')

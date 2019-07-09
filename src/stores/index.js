@@ -5,12 +5,14 @@ import { observable } from 'mobx';
 
 // 扩展
 import Request from './request';
+import AppFrame from './AppFrame';
 
 /**
  * 全局 store
  */
 class Store {
   @observable request = new Request();
+  @observable appFrame = new AppFrame();
 }
 
 const storeContext = React.createContext(null);

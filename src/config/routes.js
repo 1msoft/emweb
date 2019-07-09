@@ -1,9 +1,16 @@
 // 路由配置
 export default {
+
+  LoginRegister: {
+    text: '登陆-注册', path: '/login-register', parent: 'Root',
+    component: 'LoginRegister',
+    nav: false, exact: true,
+  },
+
   Index: {
     text: '根目录', path: '/', parent: 'Root',
-    component: 'HomePage', redirect: '/home',
-    nav: false, exact: true,
+    component: 'AppFrame', redirect: '/home',
+    nav: false, exact: false,
   },
 
   Home: {

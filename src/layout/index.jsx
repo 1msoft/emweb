@@ -9,14 +9,14 @@ import Content from './Content';
 import FixedMenu from './FixedMenu';
 import LoadingBlock from './GlobalLoading';
 
-import Store, { useStore } from '../stores/AppFrame';
+import { useStore } from '@stores/';
 import './index.less';
 
 // 获取有效路由列表
 const getRouters = (routers) => {
   const routerList = [];
   for (let router of Object.keys(routers)) {
-    routers[router].path &&
+    routers[router].parent !== 'Root' && routers[router].path &&
     routerList.push({
       key: router,
       path: routers[router].path,
@@ -37,7 +37,7 @@ const getRouterChain = (currRoute, routers) => {
   }];
   const parent = (parentName) => {
     const val = routers[parentName];
-    if (parentName !== 'Index' && val) {
+    if (parentName !== 'Index' && val && val.parent !== 'Root') {
       routerList.unshift({
         path: val.path,
         text: val.text,
@@ -72,10 +72,9 @@ const getRouteTree = (routeTree = []) => {
 
 let SideMenuContent = (props) => useObserver(() => {
   const store = useStore();
-  const routeHelper = store.routeHelper;
-
+  const routeHelper = store.appFrame.routeHelper;
   // 当前路由
-  const currRoute = routeHelper.matchRoute(location.pathname);
+  const currRoute = routeHelper.matchRoute(props.location.pathname);
   const currRouteName = currRoute ? currRoute.routeName : null;
 
   // 根目录路由
@@ -122,19 +121,14 @@ export default () => {
   });
 
   return (
-    <Store>
-      <Router>
-        <Layout className="wrapper">
+    <Layout className="wrapper">
 
-          {/* 头部 */}
-          <Header />
+      {/* 头部 */}
+      <Header />
 
-          <SideMenuContent />
-          <LoadingBlock />
-          <FixedMenu />
-        </Layout>
-
-      </Router>
-    </Store>
+      <SideMenuContent />
+      <LoadingBlock />
+      <FixedMenu />
+    </Layout>
   );
 };
