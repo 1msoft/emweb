@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { FixedMenu } from '@1msoft/kant-ui';
 import './index.less';
 import { Icon } from 'antd';
+import { useStore } from '../../stores';
 
 const FinalyFixedMenu = () => {
+  const store = useStore();
   const [isChange, setIsChange] = useState(false);
   const [isRetract, setIsRetract] = useState(false);
 
@@ -22,18 +24,23 @@ const FinalyFixedMenu = () => {
     }
   };
 
-  const onClickHead = () => {
-    let headDom = document.getElementsByClassName('kant-head-icon')[0];
-    headDom.click();
+  const onClickHead = (store) => {
+    !isChange ? store.menuStatus.setCollege() : store.menuStatus.clearCollege();
     setIsRetract(!isRetract);
+  };
+
+  const changeCollege = (store) => {
+    setIsChange(!isChange);
+    onClickHead(store);
   };
 
   const FixedMenuDom = (props) => {
     return (
       <div className={`kant-side-block-list`}>
         <div
-          onClick={() => {
-            setIsChange(!isChange);
+          onClick={(e) => {
+            e.stopPropagation();
+            isChange ? props.scrollToTop() : changeCollege(store);
           }}
           className={
             `${'kant-side-block-list-weixin'}
@@ -41,9 +48,9 @@ const FinalyFixedMenu = () => {
           {iconDom(isChange, 'top')}
         </div>
         <div
-          onClick={() => {
-            !isChange ? props.scrollToTop() :
-              onClickHead();
+          onClick={(e) => {
+            e.stopPropagation();
+            !isChange ? props.scrollToTop() : changeCollege(store);
           }}
           className={
             `${'kant-side-block-list-arrow'}
