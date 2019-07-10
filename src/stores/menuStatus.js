@@ -8,26 +8,26 @@ class menuStatus {
     autorun(this.print);
   }
 
-  @observable college = 'half';
-  @observable collegeStatus = { isOpen: false };
+  @observable retract = 'half';
+  @observable collapsed = { isOpen: false };
 
   @action
-  setCollege = () => {
-    this.college = 'all';
-    this.collegeStatus = { isOpen: true };
+  setCollapsed = () => {
+    this.retract = 'all';
+    this.collapsed = { isOpen: true };
   }
 
   @action
-  clearCollege = () => {
-    this.college = 'half';
-    this.collegeStatus = { isOpen: false };
+  clearCollapsed = () => {
+    this.retract = 'half';
+    this.collapsed = { isOpen: false };
   }
 
   // 打印状态
   print = () => {
-    console.group('%c[store][menuStatus]: 弹窗', 'color: green');
-    console.log('收缩模式college:', this.college);
-    console.log('收缩状态collegeStatus:', this.collegeStatus);
+    console.group('%c[store][menuStatus]: 左侧菜单收缩状态', 'color: green');
+    console.log('收缩模式retract:', this.retract);
+    console.log('收缩状态collapsed:', this.collapsed);
     console.groupEnd();
   }
 }

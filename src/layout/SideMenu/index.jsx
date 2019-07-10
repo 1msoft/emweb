@@ -16,8 +16,8 @@ export default (props) => useObserver(() => {
       inlineOpenStyle="normal"
       onJumpway={(url) => { props.history.push(url); }}
       siderProps={{ theme: 'light' }}
-      retractMode={useStore().menuStatus.college}
-      isCollapsed={useStore().menuStatus.collegeStatus}
+      retractMode={useStore().menuStatus.retract}
+      isCollapsed={useStore().menuStatus.collapsed}
     >
     </SideMenu>
   );

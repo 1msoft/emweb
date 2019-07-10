@@ -25,7 +25,7 @@ const FinalyFixedMenu = () => {
   };
 
   const onClickHead = (store) => {
-    !isChange ? store.menuStatus.setCollege() : store.menuStatus.clearCollege();
+    !isChange ? store.menuStatus.setCollapsed() : store.menuStatus.clearCollapsed();
     setIsRetract(!isRetract);
   };
 
