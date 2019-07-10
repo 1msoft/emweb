@@ -6,6 +6,7 @@ import { observable } from 'mobx';
 // 扩展
 import Request from './request';
 import AppFrame from './AppFrame';
+import MenuStatus from './menuStatus';
 
 /**
  * 全局 store
@@ -13,6 +14,7 @@ import AppFrame from './AppFrame';
 class Store {
   @observable request = new Request();
   @observable appFrame = new AppFrame();
+  @observable menuStatus = new MenuStatus();
 }
 
 const storeContext = React.createContext(null);

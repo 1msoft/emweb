@@ -1,10 +1,12 @@
 import React from 'react';
 
 import { SideMenu } from '@1msoft/kant-ui';
+import { useStore } from '../../stores';
+import { useObserver } from "mobx-react-lite";
 
 import './index.less';
 
-export default (props) => {
+export default (props) => useObserver(() => {
   return (
     <SideMenu
       useCollapsed={true}
@@ -14,6 +16,9 @@ export default (props) => {
       inlineOpenStyle="normal"
       onJumpway={(url) => { props.history.push(url); }}
       siderProps={{ theme: 'light' }}
-    />
+      retractMode={useStore().menuStatus.retract}
+      isCollapsed={useStore().menuStatus.collapsed}
+    >
+    </SideMenu>
   );
-};
+});
