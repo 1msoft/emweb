@@ -9,6 +9,7 @@ const LoginLoading = () => {
   const loginImg = require('@assets/images/lodingImg.png');
   const [progressMark, setProgress] = useState(0);
   const [progressBar, setProgressBar] = useState(80);
+  const [isShow, setShow] = useState(true);
 
   useEffect(() => {
     if (progressMark < 100) {
@@ -18,12 +19,15 @@ const LoginLoading = () => {
       }, 20);
     } else {
       setProgressBar(100);
+      setTimeout(() => {
+        setShow(false);
+      }, 500);
     }
   }, [progressMark]);
   return (
     <Fragment>
       {
-        store.request.inTransitRequests ?
+        isShow ?
           <div className={'login-content'} >
             <img src={loginImg} className={'login-img'} alt=""/>
             <img src={loginLoading} className={'spin'} alt="" />
