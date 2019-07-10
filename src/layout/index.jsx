@@ -13,6 +13,7 @@ import Content from './Content';
 import FixedMenu from './FixedMenu';
 import LoginLoading from './LoginLoading';
 
+import Store from '../stores';
 import { useStore } from '@stores/';
 import './index.less';
 
@@ -180,7 +181,7 @@ export default () => {
 
             <SideMenuContent isMobile={isMobile} />
 
-            <LoadingBlock />
+            <LoginLoading />
 
             <FixedMenu />
 
