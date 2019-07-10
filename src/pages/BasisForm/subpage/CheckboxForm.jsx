@@ -20,7 +20,8 @@ const CheckboxForm = (props) => {
         <FormItem
           row={1}
           span={getGrid(24)}
-          label="单选">
+          label="单选"
+          labelClassName="font-size-16">
           <div>
             <Radio.Group defaultValue={3}>
               <Radio value={1}>公开</Radio>
@@ -36,7 +37,8 @@ const CheckboxForm = (props) => {
         <FormItem
           row={2}
           span={getGrid(24)}
-          label="多选">
+          label="多选"
+          labelClassName="font-size-16">
           <Checkbox.Group
             options={options}
             defaultValue={["2", "4"]} />

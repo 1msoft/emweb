@@ -30,16 +30,9 @@ const useHookState = (props) => {
 
 const InputNumberForm = (props) => {
   const state = useHookState(props);
-  const config = {
-    rowLength: 1,
-    span: 24,
-  };
   return (
     <div className="input-number-form" style={{ width: '50%', margin: '0 auto' }}>
-      <FormLayout
-        colon={true}>
-        {renderFormItems(state.dataSource, props, config)}
-      </FormLayout>
+      {renderFormItems(state.dataSource, props, props.config)}
     </div>
   );
 };

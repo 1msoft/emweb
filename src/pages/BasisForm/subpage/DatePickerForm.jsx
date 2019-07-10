@@ -16,6 +16,11 @@ const useHookState = (props) => {
         validateStatus: 'error',
         hasFeedback: true,
       },
+      options: {
+        rules: [
+          { required: true, message: '请选择起止日期' }
+        ]
+      }
     },
     {
       title: '日期', name: 'date4', type: 'ant-date-picker',
@@ -60,16 +65,9 @@ const useHookState = (props) => {
 
 const DatePickerForm = (props) => {
   const state = useHookState(props);
-  const config = {
-    rowLength: 1,
-    span: 24,
-  };
   return (
     <div style={{ width: '50%', margin: '0 auto' }}>
-      <FormLayout
-        colon={true}>
-        {renderFormItems(state.dataSource, props, config)}
-      </FormLayout>
+      {renderFormItems(state.dataSource, props, props.config)}
     </div>
   );
 };

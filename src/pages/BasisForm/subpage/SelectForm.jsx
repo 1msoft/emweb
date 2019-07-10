@@ -20,10 +20,12 @@ const useHookState = (props) => {
       title: '标题', name: 'client2', type: 'select',
       inputProps: {
         placeholder: '请描述你的服务客户',
-        data: options
+        data: options,
+        allowClear: true,
       },
       options: {
         initialValue: 'form1',
+        rules: [{ required: true, message: '请输入标题内容' }]
       },
       formItemProps: {
         required: true
@@ -33,7 +35,8 @@ const useHookState = (props) => {
       title: '标题', name: 'client3', type: 'select',
       inputProps: {
         placeholder: '请描述你的服务客户',
-        data: options
+        data: options,
+        allowClear: true,
       },
       options: {
         initialValue: 'form1',
@@ -57,10 +60,7 @@ const SelectForm = (props) => {
   };
   return (
     <div style={{ width: '50%', margin: '0 auto' }}>
-      <FormLayout
-        colon={true}>
-        {renderFormItems(state.dataSource, props, config)}
-      </FormLayout>
+      {renderFormItems(state.dataSource, props, props.config)}
     </div>
   );
 };

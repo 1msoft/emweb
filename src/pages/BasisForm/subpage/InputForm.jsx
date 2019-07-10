@@ -14,6 +14,11 @@ const useHookState = (props) => {
       formItemProps: {
         required: true
       },
+      options: {
+        rules: [
+          { required: true, message: '请输入标题内容' }
+        ]
+      }
     },
     {
       title: '标题', name: 'title2', type: 'input',
@@ -31,7 +36,7 @@ const useHookState = (props) => {
       options: {
         initialValue: '我在菜市场买菜',
         rules: [{ required: true, message: '请输入标题内容' }]
-      }
+      },
     },
     {
       title: '标题', name: 'title4', type: 'input',
@@ -55,6 +60,11 @@ const useHookState = (props) => {
         hasFeedback: true,
         required: true
       },
+      options: {
+        rules: [
+          { required: true, message: '请输入标题内容' }
+        ]
+      }
     },
     {
       title: '标题', name: 'title6', type: 'input',
@@ -78,6 +88,11 @@ const useHookState = (props) => {
         hasFeedback: true,
         required: true
       },
+      options: {
+        rules: [
+          { required: true, message: '请输入标题内容' }
+        ]
+      }
     },
     {
       title: '标题', name: 'title8', type: 'input',
@@ -98,16 +113,9 @@ const useHookState = (props) => {
 
 const InputForm = (props) => {
   const state = useHookState(props);
-  const config = {
-    rowLength: 1,
-    span: 24,
-  };
   return (
     <div style={{ width: '50%', margin: '0 auto' }}>
-      <FormLayout
-        colon={true}>
-        {renderFormItems(state.dataSource, props, config)}
-      </FormLayout>
+      {renderFormItems(state.dataSource, props, props.config)}
     </div>
   );
 };

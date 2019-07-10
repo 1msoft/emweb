@@ -27,8 +27,14 @@ const useHookState = (props) => {
       formItemProps: {
         validateStatus: 'warning',
         hasFeedback: true,
-        required: true
+        required: true,
+        wrapperClassName: 'text-area-warning'
       },
+      options: {
+        rules: [
+          { required: true, message: '请输入目标描述' }
+        ]
+      }
     },
     {
       title: '目标描述', name: 'desc3', type: 'text-area',
@@ -66,16 +72,9 @@ const useHookState = (props) => {
 
 const TextAreaForm = (props) => {
   const state = useHookState(props);
-  const config = {
-    rowLength: 1,
-    span: 24,
-  };
   return (
     <div style={{ width: '50%', margin: '0 auto' }}>
-      <FormLayout
-        colon={true}>
-        {renderFormItems(state.dataSource, props, config)}
-      </FormLayout>
+      {renderFormItems(state.dataSource, props, props.config)}
     </div>
   );
 };
