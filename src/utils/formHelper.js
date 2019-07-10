@@ -4,12 +4,14 @@
  */
 import React from 'react';
 import { Form, Select, Input, DatePicker, InputNumber } from "@1msoft/kant-ui";
-import { DatePicker as AntDatePicker } from 'antd';
+import { DatePicker as AntDatePicker, TimePicker as AntTimePicker } from 'antd';
 
 const ROW_LENGTH = 3;
 const SPAN_LENGTH = 6;
 const { FormItem } = Form;
 const getGrid = FormItem.getGrid;
+const TextArea = Input.TextArea;
+const AntMonthPicker = AntDatePicker.MonthPicker;
 
 export const inputBox = (type, props) => {
   switch (type) {
@@ -21,8 +23,14 @@ export const inputBox = (type, props) => {
       return <DatePicker {...props} />;
     case 'ant-date-picker':
       return <AntDatePicker style={{ width: '100%' }} {...props} />;
+    case 'ant-month-picker':
+      return <AntMonthPicker style={{ width: '100%' }} {...props} />;
+    case 'ant-time-picker':
+      return <AntTimePicker style={{ width: '100%' }} {...props} />;
     case 'input-number':
       return <InputNumber {...props} />;
+    case 'text-area':
+      return <TextArea {...props} />;
     default:
       return;
   }
