@@ -29,7 +29,7 @@ const FinalyFixedMenu = () => {
     setIsRetract(!isRetract);
   };
 
-  const changeCollege = (store) => {
+  const changeCollapsed = (store) => {
     setIsChange(!isChange);
     onClickHead(store);
   };
@@ -40,7 +40,7 @@ const FinalyFixedMenu = () => {
         <div
           onClick={(e) => {
             e.stopPropagation();
-            isChange ? props.scrollToTop() : changeCollege(store);
+            isChange ? props.scrollToTop() : changeCollapsed(store);
           }}
           className={
             `${'kant-side-block-list-weixin'}
@@ -50,7 +50,7 @@ const FinalyFixedMenu = () => {
         <div
           onClick={(e) => {
             e.stopPropagation();
-            !isChange ? props.scrollToTop() : changeCollege(store);
+            !isChange ? props.scrollToTop() : changeCollapsed(store);
           }}
           className={
             `${'kant-side-block-list-arrow'}
