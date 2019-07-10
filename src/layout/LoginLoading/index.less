@@ -8,10 +8,10 @@
   background: white;
   & .spin {
     position: absolute;
-    width: 460px;
-    height: 303px;
+    width: 660px;
+    height: 372px;
     top: calc(~'60% - 151px');
-    left: calc(~'50% - 230px');
+    left: calc(~'50% - 330px');
     transform: 'translate(-50%, -50%)';
   }
 
@@ -27,7 +27,7 @@
   & .progress {
     position: absolute;
     width: 160px;
-    top: calc(~'74% - 2px');
+    top: calc(~'74% + 1px');
     left: calc(~'50% - 80px');
     transform: 'translate(-50%, -50%)';
     & .ant-progress-bg {
@@ -36,13 +36,18 @@
     & .ant-progress-bg {
       height: 4px !important;
     }
+    & .kant-progress-bar-outer {
+      box-shadow: rgba(69,118,255,0.6) 1px 3px 10px;
+    }
   }
   & .progress-num {
     position: absolute;
+    color: #4576FD;
+    text-align: center;
     width: 48px;
     height: 15px;
     top: calc(~'72% - 7px');
-    left: calc(~'50% - 10px');
+    left: calc(~'50% - 24px');
     transform: 'translate(-50%, -50%)';
   }
 }
