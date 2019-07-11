@@ -31,11 +31,28 @@
   }
 }
 
-.emweb-breadcrumb .iconfont {
-  font-size: 28px;
+.emweb-breadcrumb {
   position: relative;
-  top: 5px;
-  left: 3px;
+
+  & .ant-breadcrumb {
+    & > span {
+      display: inline-block;
+      vertical-align: middle;
+      font-size: 0;
+      .rectangular(auto, 50px, 50px);
+
+      & span {
+        font-size: 12px;
+      }
+
+      & .iconfont {
+        position: relative;
+        top: -2px;
+        vertical-align: middle;
+        font-size: 32px;
+      }
+    }
+  }
 }
 
 .btn-search {

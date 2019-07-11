@@ -24,19 +24,19 @@ const MenuComponent = (props) => {
   const menus = [
     {
       key: 'personalData',
-      icon: 'user',
+      icon: 'iconyonghu-geren',
       text: '个人资料',
       className: 'personal-data',
     },
     {
       key: 'changePassword',
-      icon: 'user',
+      icon: 'iconyonghu-xiugaimima',
       text: '修改密码',
       className: 'change-password',
     },
     {
       key: 'setting',
-      icon: 'setting',
+      icon: 'iconyonghu-shezhi',
       text: '设置',
       className: 'setting',
     },
@@ -45,13 +45,13 @@ const MenuComponent = (props) => {
     },
     {
       key: 'helpCenter',
-      icon: 'user',
+      icon: 'iconyonghu-bangzhu',
       text: '帮助中心',
       className: 'help-center',
     },
     {
       key: 'feedBack',
-      icon: 'user',
+      icon: 'iconyonghu-yijian',
       text: '意见反馈',
       className: 'feed-back',
     },
@@ -60,7 +60,7 @@ const MenuComponent = (props) => {
     },
     {
       key: 'logout',
-      icon: 'logout',
+      icon: 'iconyonghu-tuichu',
       text: '退出登录',
       className: 'logout',
       onChange: () => { props.history.push('/login-register'); }
@@ -88,6 +88,7 @@ const MenuComponent = (props) => {
 let DropDown =  (props) => {
   return (
     <Dropdown
+      visible={true}
       className="dropdown"
       overlay={<MenuComponent {...props} />}
       overlayClassName="overlay-container"

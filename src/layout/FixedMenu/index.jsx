@@ -64,7 +64,7 @@ const FinalyFixedMenu = () => {
     <FixedMenu
       className="kant-fixedmenu-position"
       visibilityHeight={300}
-      display={'always'}
+      display="always"
       speed={20}
     >
       {FixedMenuDom}
