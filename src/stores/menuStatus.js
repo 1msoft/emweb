@@ -1,4 +1,5 @@
 import { observable, action, autorun, computed } from 'mobx';
+import { getCookie } from '@utils/helper.js';
 
 /**
  * modal 扩展 store
@@ -10,7 +11,9 @@ class menuStatus {
 
   @observable retract = 'half';
   @observable _drawer = false;
-  @observable collapsed = { isOpen: false };
+  @observable collapsed = {
+    isOpen: JSON.parse(getCookie('menu_status')) || false
+  };
 
   @action
   setProperty = (property, value) => this[`_${property}`] = value

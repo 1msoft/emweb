@@ -4,6 +4,7 @@ import { Drawer } from 'antd';
 import { SideMenu } from '@1msoft/kant-ui';
 import { useStore } from '../../stores';
 import { useObserver } from "mobx-react-lite";
+import { setCookie } from '@utils/helper.js';
 
 import './index.less';
 
@@ -28,6 +29,7 @@ export default (props) => useObserver(() => {
         siderProps={{ theme: "light" }}
         retractMode={store.menuStatus.retract}
         isCollapsed={store.menuStatus.collapsed}
+        onSiderCollapse={(val) => { setCookie('menu_status', val); }}
       />
     </Drawer>
   ) : (
@@ -41,6 +43,7 @@ export default (props) => useObserver(() => {
       siderProps={{ theme: "light" }}
       retractMode={store.menuStatus.retract}
       isCollapsed={store.menuStatus.collapsed}
+      onSiderCollapse={(val) => { setCookie('menu_status', val); }}
     />
   );
 });

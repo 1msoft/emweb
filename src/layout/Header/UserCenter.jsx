@@ -76,7 +76,7 @@ const MenuComponent = (props) => {
           <MenuItem className={`${menu.className} menu-item`} key={menu.key}
             onClick={() => { menu.onChange ? menu.onChange() : null; } }
           >
-            <Icon className="menu-item-icon" type={menu.icon} />
+            <i className={`menu-item-icon iconfont ${menu.icon}`} />
             {menu.text}
           </MenuItem>
         );
@@ -88,7 +88,6 @@ const MenuComponent = (props) => {
 let DropDown =  (props) => {
   return (
     <Dropdown
-      visible={true}
       className="dropdown"
       overlay={<MenuComponent {...props} />}
       overlayClassName="overlay-container"
