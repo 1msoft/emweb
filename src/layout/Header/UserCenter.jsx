@@ -63,7 +63,6 @@ const MenuComponent = (props) => {
       icon: 'logout',
       text: '退出登录',
       className: 'logout',
-      // onChange: () => { location.href = '/login-register'; }
       onChange: () => { props.history.push('/login-register'); }
     },
   ];
