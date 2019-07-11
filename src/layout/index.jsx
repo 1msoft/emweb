@@ -123,18 +123,15 @@ export default () => {
 
   return (
     <Store>
-      <Router>
-        <Layout className="wrapper">
+      <Layout className="wrapper">
 
-          {/* 头部 */}
-          <Header />
+        {/* 头部 */}
+        <Header />
 
-          <SideMenuContent />
-          <LoginLoading />
-          <FixedMenu />
-        </Layout>
-
-      </Router>
+        <SideMenuContent />
+        <LoginLoading />
+        <FixedMenu />
+      </Layout>
     </Store>
   );
 };

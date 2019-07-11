@@ -7,6 +7,8 @@ import {
   Dropdown,
 } from 'antd';
 
+import { withRouter } from 'react-router-dom';
+
 import avatar from '../../assets/images/avatar.png';
 import './UserCenter.less';
 
@@ -16,7 +18,7 @@ const MenuDivider = Menu.Divider;
 /**
  * 个人资料
  */
-const MenuComponent = () => {
+const MenuComponent = (props) => {
   const onClick = ({ key }) => {};
 
   const menus = [
@@ -61,6 +63,7 @@ const MenuComponent = () => {
       icon: 'logout',
       text: '退出登录',
       className: 'logout',
+      onChange: () => { props.history.push('/login-register'); }
     },
   ];
   return (
@@ -70,7 +73,9 @@ const MenuComponent = () => {
           return <MenuDivider className="menu-divider" key={index}/>;
         }
         return (
-          <MenuItem className={`${menu.className} menu-item`} key={menu.key}>
+          <MenuItem className={`${menu.className} menu-item`} key={menu.key}
+            onClick={() => { menu.onChange ? menu.onChange() : null; } }
+          >
             <Icon className="menu-item-icon" type={menu.icon} />
             {menu.text}
           </MenuItem>
@@ -80,11 +85,11 @@ const MenuComponent = () => {
   );
 };
 
-export default () => {
+let DropDown =  (props) => {
   return (
     <Dropdown
       className="dropdown"
-      overlay={<MenuComponent/>}
+      overlay={<MenuComponent {...props} />}
       overlayClassName="overlay-container"
       getPopupContainer={() => document.querySelector('.user-drop-down')}
     >
@@ -103,3 +108,7 @@ export default () => {
     </Dropdown>
   );
 };
+
+DropDown = withRouter(DropDown);
+
+export default DropDown;
