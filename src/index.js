@@ -10,6 +10,7 @@ import zhCN from 'antd/lib/locale-provider/zh_CN';
 
 import '@assets/iconFont/iconfont.css';
 import '@assets/styles/style.less';
+import '@assets/styles/style.css';
 
 import GlobalStore from './stores';
 

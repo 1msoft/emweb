@@ -30,6 +30,12 @@ export default {
     nav: true, exact: false,
   },
 
+  BasisForm: {
+    text: '基础表单', path: '/basis-form', parent: 'Index',
+    component: 'BasisForm', icon: "iconMail-xiaoxi",
+    nav: true, exact: false,
+  },
+
   NotFound: {
     text: '404', path: '/404', parent: 'Index',
     component: 'NotFound',
