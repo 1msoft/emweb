@@ -82,9 +82,11 @@
       margin: 0;
 
       & .menu-item-icon {
-        .rectangular(21px, 23px);
-        margin-right: 18px;
+        margin-right: 14px;
+        display: inline-block;
         color: #B3B3B3;
+        font-size: 22px;
+        margin-top: 0;
       }
 
       & .menu-item-text {
@@ -98,7 +100,7 @@
     & .menu-item:hover {
       color: #4576FD;
       background-color: rgba(245, 248, 255, 1);
-      & .anticon {
+      & .menu-item-icon {
         color: #4576FD;
       }
     }
@@ -111,7 +113,8 @@
   }
 }
 
-.screen-xs {
+.screen-xs,
+.screen-sm {
   .user-drop-down {
     .overlay-container {
       left: -180px !important;

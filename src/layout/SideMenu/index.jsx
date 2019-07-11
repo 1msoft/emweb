@@ -8,14 +8,15 @@ import { useObserver } from "mobx-react-lite";
 import './index.less';
 
 export default (props) => useObserver(() => {
+  const store = useStore();
   return props.isMobile ? (
     <Drawer
-      visible={props.collapse}
+      visible={store.menuStatus.drawer}
       placement="left"
       closable={false}
       width="auto"
       className="custom-drawer-wrapper"
-      onClose={() => props.useCollapse(false)}
+      onClose={() => store.menuStatus.setProperty('drawer', false)}
     >
       <SideMenu
         useCollapsed={false}
@@ -25,6 +26,8 @@ export default (props) => useObserver(() => {
         inlineOpenStyle="normal"
         onJumpway={url => props.history.push(url)}
         siderProps={{ theme: "light" }}
+        retractMode={store.menuStatus.retract}
+        isCollapsed={store.menuStatus.collapsed}
       />
     </Drawer>
   ) : (
@@ -36,8 +39,8 @@ export default (props) => useObserver(() => {
       inlineOpenStyle="normal"
       onJumpway={url => props.history.push(url)}
       siderProps={{ theme: "light" }}
-      retractMode={useStore().menuStatus.retract}
-      isCollapsed={useStore().menuStatus.collapsed}
+      retractMode={store.menuStatus.retract}
+      isCollapsed={store.menuStatus.collapsed}
     />
   );
 });

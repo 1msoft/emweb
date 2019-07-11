@@ -1,4 +1,9 @@
 @import '../../assets/styles/vars.less';
+
+.hover-color(@color: #4576FD) {
+  .color(@color);
+};
+
 .kant-header {
   position: relative;
   box-shadow: 0 1px 2px 0 #4576FD33;
@@ -42,6 +47,31 @@
 
     & img {
       .rectangular(136px, 45px);
+    }
+  }
+
+  .drawer-switch-wrapper {
+    .rectangular(auto, @header-height, @header-height);
+    vertical-align: top;
+    float: left;
+    position: relative;
+    font-family: PingFang-SC-Regular;
+    cursor: pointer;
+
+    & .inner-box {
+      display: inline-block;
+      position: relative;
+      .circle(54px, 54px, 50%, 54px);
+      .background-color(#fff);
+      vertical-align: middle;
+      margin: 0 auto;
+      text-align: center;
+      transition: all 0.2s;
+    }
+
+    & .inner-box:hover {
+      background-color: #f5f7ff;
+      .hover-color();
     }
   }
 

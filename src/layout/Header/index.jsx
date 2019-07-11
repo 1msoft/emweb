@@ -1,7 +1,7 @@
 import React from 'react';
 import NavButton from '@components/nav-button/index';
 
-import { Divider } from 'antd';
+import { Divider, Icon } from 'antd';
 import { Header } from '@1msoft/kant-ui';
 
 import Notification from './Notification';
@@ -10,10 +10,12 @@ import LoadingBar from './LoadingBar';
 import HeaderSearch from '@components/header-search';
 import MiniSearch from './MiniSearch';
 
+import { useStore } from '@stores';
 import './index.less';
 import logo from '@assets/images/logo.png';
 
 export default (props) => {
+  const store = useStore();
   const searchList = [
     {
       title: '订单',
@@ -40,6 +42,17 @@ export default (props) => {
       <div className="logo">
         <img src={logo} alt="" />
       </div>
+      {
+        props.isMobile ?
+          <span
+            className="drawer-switch-wrapper"
+            onClick={() => store.menuStatus.setProperty('drawer', true)}
+          >
+            <span className="inner-box">
+              <Icon type="swap" />
+            </span>
+          </span> : null
+      }
       <div className="header-search-wrapper">
         {
           !props.isMobile ?

@@ -29,3 +29,52 @@
     .hover-color();
   }
 }
+
+
+.full-search {
+  .ant-modal {
+    margin: 0;
+    width: 100%;
+    padding: 0;
+    height: 100%;
+    text-align: center;
+    top: 0;
+    left: 0%;
+
+    & .ant-modal-content {
+      height: 100%;
+      background-color: rgba(255, 255, 255, 0.5);
+    }
+  }
+}
+
+.full-search-modal {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  background-color: rgba(255, 255, 255, 0.5);
+
+  & .valid-operation-area {
+    height: @header-height;
+    padding: 0 75px;
+
+    & .emweb-search {
+      height: @header-height;
+
+      & .emweb-search-modal {
+        background: #ffffff6b;
+        border-style: none;
+        box-shadow: none;
+        top: calc(@header-height - 7px);
+      }
+    }
+  }
+
+  & .valid-close-area {
+    height: 100%;
+    width: 100%;
+  }
+}

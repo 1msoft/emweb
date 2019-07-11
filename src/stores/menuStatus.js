@@ -1,4 +1,4 @@
-import { observable, action, autorun } from 'mobx';
+import { observable, action, autorun, computed } from 'mobx';
 
 /**
  * modal 扩展 store
@@ -9,7 +9,16 @@ class menuStatus {
   }
 
   @observable retract = 'half';
+  @observable _drawer = false;
   @observable collapsed = { isOpen: false };
+
+  @action
+  setProperty = (property, value) => this[`_${property}`] = value
+
+  @computed
+  get drawer() {
+    return this._drawer;
+  }
 
   @action
   setCollapsed = () => {

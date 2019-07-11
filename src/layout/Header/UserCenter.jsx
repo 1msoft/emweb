@@ -22,19 +22,19 @@ const MenuComponent = () => {
   const menus = [
     {
       key: 'personalData',
-      icon: 'user',
+      icon: 'iconyonghu-geren',
       text: '个人资料',
       className: 'personal-data',
     },
     {
       key: 'changePassword',
-      icon: 'user',
+      icon: 'iconyonghu-xiugaimima',
       text: '修改密码',
       className: 'change-password',
     },
     {
       key: 'setting',
-      icon: 'setting',
+      icon: 'iconyonghu-shezhi',
       text: '设置',
       className: 'setting',
     },
@@ -43,13 +43,13 @@ const MenuComponent = () => {
     },
     {
       key: 'helpCenter',
-      icon: 'user',
+      icon: 'iconyonghu-bangzhu',
       text: '帮助中心',
       className: 'help-center',
     },
     {
       key: 'feedBack',
-      icon: 'user',
+      icon: 'iconyonghu-yijian',
       text: '意见反馈',
       className: 'feed-back',
     },
@@ -58,7 +58,7 @@ const MenuComponent = () => {
     },
     {
       key: 'logout',
-      icon: 'logout',
+      icon: 'iconyonghu-tuichu',
       text: '退出登录',
       className: 'logout',
     },
@@ -71,7 +71,7 @@ const MenuComponent = () => {
         }
         return (
           <MenuItem className={`${menu.className} menu-item`} key={menu.key}>
-            <Icon className="menu-item-icon" type={menu.icon} />
+            <i className={`iconfont ${menu.icon} menu-item-icon`}></i>
             {menu.text}
           </MenuItem>
         );
@@ -83,6 +83,7 @@ const MenuComponent = () => {
 export default () => {
   return (
     <Dropdown
+      visible={true}
       className="dropdown"
       overlay={<MenuComponent/>}
       overlayClassName="overlay-container"
