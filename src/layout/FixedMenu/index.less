@@ -75,12 +75,6 @@ div .kant-test {
   z-index: -1;
 }
 
-.kant-bottomIcon {
-  display: inline-block;
-  width: 54px;
-  height: 54px;
-}
-
 .kant-topIcon {
   display: inline-block;
   width: 22px;
@@ -101,4 +95,107 @@ div .kant-test {
 }
 .kant-bottom-icon {
   font-size: 35px !important;
+}
+
+.em-fixed-menu {
+  width: 68px;
+  height: 300px;
+  z-index: 999;
+  top: 700px;
+  left: auto;
+  right: 35px;
+
+  & .em-content {
+    width: 100%;
+    height: 100%;
+
+    & .em-content-ul {
+      position: relative;
+      top: 145px;
+      height: 0px;
+      z-index: 10;
+      transition:top 0.6s, height 0.6s;
+    }
+
+    & li {
+      display: relative;
+      background: #fff;
+      list-style: none;
+      margin: auto;
+      text-align: center;
+      color: #999999;
+      box-shadow:0px 4px 14px 0px rgba(26,26,26,0.15);
+      display: flex;
+      justify-content: center;
+    }
+
+    & li:hover {
+      color: #4576FD;
+    }
+
+    & .em-green {
+      display: inline-block;
+      margin: auto;
+      position: absolute;
+      left: 9px;
+      width: 38px;
+      height: 1.5px;
+    }
+
+    & .em-bottm {
+      color: #999999;
+      width: 54px;
+      height: 54px;
+      margin: auto;
+      border-radius: 50%;
+      position: relative;
+      top: 240px;
+      z-index: 888;
+      text-align: center;
+      font-size: 35px;
+      box-shadow:0px 4px 14px 0px rgba(26,26,26,0.15);
+      background: #fff;
+
+      & .em-overhide-ul {
+        position: relative;
+        top: -196px;
+        height: 175px;
+        overflow: hidden;
+      }
+    }
+    & .em-middle {
+      width: 46px;
+      height: 49px;
+      border-radius: 23px 23px 0px 0px;
+    }
+
+    & .em-top {
+      width: 46px;
+      height: 80px;
+    }
+
+  }
+}
+
+.em-bottm-content {
+  color: #999999;
+  width: 54px;
+  height: 54px;
+  margin: auto;
+  border-radius: 50%;
+  position: relative;
+  z-index: 888;
+  text-align: center;
+  font-size: 35px;
+  box-shadow:0px 4px 14px 0px rgba(26,26,26,0.15);
+  background: #fff;
+}
+
+.em-bottm-content:hover {
+  color: #4576FD;
+}
+
+.em-bottm:hover .em-content-ul {
+  top: 45px;
+  height: 175px;
 }

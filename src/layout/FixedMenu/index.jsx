@@ -5,65 +5,131 @@ import { Icon } from 'antd';
 import { useStore } from '../../stores';
 
 const FinalyFixedMenu = () => {
+
   const store = useStore();
-  const [isChange, setIsChange] = useState(false);
-  const [isRetract, setIsRetract] = useState(false);
 
-  const iconDom = (isChange ,mark) => {
-    //点击后变化iconanniu-zhanshi  //初始iconanniu-quanping //箭头iconjiantou
-    if (mark === 'bottom') {
-      let icon = !isChange ? 'iconxiangshang'
-        : (!isRetract ? 'iconanniu-quanping' : 'iconanniu-zhanshi');
-      return icon ?
-        <span className={` kant-bottom-icon iconfont ${icon}`}></span> : null;
-    } else if (mark === 'top') {
-      let icon = !isChange ? (!isRetract ? 'iconanniu-quanping' : 'iconanniu-zhanshi')
-        : 'iconxiangshang';
-      return icon ?
-        <span className={` kant-top-icon iconfont ${icon}`}></span> : null;
+  const onCloseRetract = (store) => {
+    console.log('关闭');
+    store.menuStatus.setCollapsed();
+  };
+
+  const onPenRetract = (store) => {
+    console.log('打开');
+    store.menuStatus.clearCollapsed();
+  };
+
+  const [isChange, setIsChange] = useState([
+    { icon: 'iconanniu-zhanshi',
+      onClick: () => {
+        onCloseRetract(store);
+      }
+    },
+    { icon: 'iconicon-zhuti',
+      useIcon: 'iconicon-zhuti1',
+      onClick: () => {
+        console.log('change');
+      }
+    },
+    { icon: 'iconxiangshang',
+      onClick: (props) => {
+        props.scrollToTop();
+      }
     }
-  };
+  ]);
 
-  const onClickHead = (store) => {
-    !isChange ? store.menuStatus.setCollapsed() : store.menuStatus.clearCollapsed();
-    setIsRetract(!isRetract);
-  };
-
-  const changeCollapsed = (store) => {
-    setIsChange(!isChange);
-    onClickHead(store);
+  const dealIcon = (arr) => {
+    let arr3 = {};
+    if(arr.icon === 'iconanniu-quanping') {
+      arr3 = { icon: 'iconanniu-zhanshi',
+        onClick: () => {
+          onCloseRetract(store);
+        }
+      };
+    } else if (arr.icon === 'iconanniu-zhanshi') {
+      arr3 = { icon: 'iconanniu-quanping',
+        onClick: () => {
+          onPenRetract(store);
+        }
+      };
+    }
+    else {
+      arr3 = arr;
+    }
+    return arr3;
   };
 
   const FixedMenuDom = (props) => {
     return (
-      <div className={`kant-side-block-list`}>
-        <div
-          onClick={(e) => {
-            e.stopPropagation();
-            isChange ? props.scrollToTop() : changeCollapsed(store);
-          }}
-          className={
-            `${'kant-side-block-list-weixin'}
-            kant-cp `}>
-          {iconDom(isChange, 'top')}
-        </div>
-        <div
-          onClick={(e) => {
-            e.stopPropagation();
-            !isChange ? props.scrollToTop() : changeCollapsed(store);
-          }}
-          className={
-            `${'kant-side-block-list-arrow'}
-            kant-cp`}>
-          {iconDom(isChange, 'bottom')}
+      <div className="em-content">
+        <div className="em-bottm"
+        >
+          <div className="em-bottm-content"
+            onClick={
+              () => {
+                let arr = isChange[2];
+                let arr3 = dealIcon(arr);
+                let arr2 = [...isChange];
+                arr2.splice(2, 1);
+                arr2.unshift(arr3);
+                arr.onClick(props);
+                setIsChange(arr2);
+              }
+            }
+          >
+            <span className={` kant-bottom-icon iconfont ${isChange[2].icon}`}>
+            </span>
+          </div>
+          <div className="em-overhide-ul">
+            <ul className="em-content-ul">
+              <li className="em-middle"
+                onClick={
+                  () => {
+                    let arr = isChange[0];
+                    let arr3 = dealIcon(arr);
+                    let arr2 = [...isChange];
+                    arr2.splice(0, 1);
+                    arr2.push(arr3);
+                    arr.onClick(props);
+                    setIsChange(arr2);
+                  }
+                }
+              >
+                <span className={` kant-top-icon iconfont ${isChange[0].icon}`}>
+                </span>
+              </li>
+              <i className="em-green"></i>
+              <li className="em-top"
+                onClick={
+                  () => {
+                    let arr = isChange[1];
+                    let arr3 = dealIcon(arr);
+                    let arr2 = [...isChange];
+                    arr2.splice(1, 1);
+                    arr2.push(arr3);
+                    arr.onClick(props);
+                    setIsChange(arr2);
+                  }
+                }
+              >
+                <span
+                  className={` kant-top-icon iconfont ${isChange[1].icon}`}>
+                </span>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     );
   };
+
+  useEffect(() => {
+    FixedMenuDom;
+  }, [isChange]);
+
   return (
     <FixedMenu
-      className="kant-fixedmenu-position"
-      visibilityHeight={300}
+      className="em-fixed-menu"
+      visibilityHeight={0}
       display="always"
       speed={20}
     >
