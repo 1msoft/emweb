@@ -27,7 +27,7 @@ const LoginLoading = () => {
   return (
     <Fragment>
       {
-        false && isShow ?
+        isShow ?
           <div className={'login-content'} >
             <img src={loginImg} className={'login-img'} alt=""/>
             <img src={loginLoading} className={'spin'} alt="" />
