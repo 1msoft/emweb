@@ -17,7 +17,7 @@ export default (props) => {
         <Breadcrumb
           breadcrumbProps={{ separator: "/" }}
           targetItemClass ="kant-link"
-          itemRender={({ path, text }) => <Link to={path}>{text}</Link>}
+          jumpWay={ url => props.history.push(url)}
           breadcrumbs={props.breadcrumbs} />
       </div>
       {/* 内容主题 */}

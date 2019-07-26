@@ -1,6 +1,6 @@
 @import "../../assets/styles/vars.less";
 
-.hover-color(@color: #4576FD) {
+.hover-color(@color: @primary-color) {
   .color(@color);
 };
 
@@ -15,9 +15,9 @@
   & .overlay-notification  {
     top: calc(@header-height - 5px) !important;
     left: -10px !important;
-    background: rgba(255,255,255,1);
-    border: 1px solid rgba(69, 118, 253, 0.25);
-    box-shadow: 0px 2px 12px 0px rgba(26,26,26,0.1);
+    .background-color(#fff);
+    border: 1px solid fade(@primary-color, 25%);
+    box-shadow: 0px 2px 12px 0px fade(@primary-color, 10%);
     border-radius: 4px;
   }
 
@@ -159,7 +159,7 @@
     }
 
     & .notification-menu-item:hover {
-      background-color: rgba(245,248,255,1);
+      background-color: fade(@primary-color, 15%);
 
       & .notification-time {
         display: inline-block;
@@ -168,11 +168,11 @@
   }
 
   .mail-container:hover {
-    background-color: #f5f7ff;
+    background-color: fade(@primary-color, 8%);
     .hover-color();
 
     & .mail-icon {
-      color: #4576FDFF;
+      color: fade(@primary-color, 90%);
     }
   }
 }
