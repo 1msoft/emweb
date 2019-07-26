@@ -157,10 +157,16 @@ div .kant-test {
       background: #fff;
 
       & .em-overhide-ul {
-        position: relative;
-        top: -196px;
-        height: 175px;
+        margin:auto;
+        position: absolute;
+        bottom: 30px;
+        width: 54px;
+        height: 0px;
         overflow: hidden;
+        transition: height 1.5s ease 0s;
+      }
+      &:hover .em-overhide-ul{
+        height: 175px;
       }
     }
     & .em-middle {
