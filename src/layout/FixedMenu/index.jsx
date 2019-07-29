@@ -19,7 +19,7 @@ const FinalyFixedMenu = () => {
   };
 
   const [isChange, setIsChange] = useState([
-    { icon: 'iconanniu-zhanshi',
+    { icon: 'iconanniu-quanping',
       onClick: () => {
         onCloseRetract(store);
       }
@@ -39,14 +39,14 @@ const FinalyFixedMenu = () => {
 
   const dealIcon = (arr) => {
     let arr3 = {};
-    if(arr.icon === 'iconanniu-quanping') {
-      arr3 = { icon: 'iconanniu-zhanshi',
+    if(arr.icon === 'iconanniu-zhanshi') {
+      arr3 = { icon: 'iconanniu-quanping',
         onClick: () => {
           onCloseRetract(store);
         }
       };
-    } else if (arr.icon === 'iconanniu-zhanshi') {
-      arr3 = { icon: 'iconanniu-quanping',
+    } else if (arr.icon === 'iconanniu-quanping') {
+      arr3 = { icon: 'iconanniu-zhanshi',
         onClick: () => {
           onPenRetract(store);
         }
@@ -69,8 +69,7 @@ const FinalyFixedMenu = () => {
                 let arr = isChange[2];
                 let arr3 = dealIcon(arr);
                 let arr2 = [...isChange];
-                arr2.splice(2, 1);
-                arr2.unshift(arr3);
+                arr2.splice(2, 1, arr3);
                 arr.onClick(props);
                 setIsChange(arr2);
               }
