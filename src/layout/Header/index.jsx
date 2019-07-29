@@ -9,12 +9,12 @@ import UserCenter from './UserCenter';
 import LoadingBar from './LoadingBar';
 import HeaderSearch from '@components/header-search';
 import MiniSearch from './MiniSearch';
-
+import { useObserver } from "mobx-react-lite";
 import { useStore } from '@stores';
 import './index.less';
 import logo from '@assets/images/logo.png';
 
-export default (props) => {
+export default (props) => useObserver(() =>{
   const store = useStore();
   const searchList = [
     {
@@ -32,43 +32,44 @@ export default (props) => {
   ];
 
   return (
-    <Header className="header">
-      <div className="sub-nav">
-        <NavButton />
-      </div>
-      <Divider
-        type="vertical"
-        className="between-vertical" />
-      <div className="logo">
-        <img src={logo} alt="" />
-      </div>
-      {
-        props.isMobile ?
-          <span
-            className="drawer-switch-wrapper"
-            onClick={() => store.menuStatus.setProperty('drawer', true)}
-          >
-            <span className="inner-box">
-              <Icon type="swap" />
-            </span>
-          </span> : null
-      }
-      <div className="header-search-wrapper">
+    !store.menuStatus.collapsed.isOpen ?
+      <Header className="header">
+        <div className="sub-nav">
+          <NavButton />
+        </div>
+        <Divider
+          type="vertical"
+          className="between-vertical" />
+        <div className="logo">
+          <img src={logo} alt="" />
+        </div>
         {
-          !props.isMobile ?
-            <HeaderSearch
-              searchList={searchList}
-              searchRecord={[]}
-            /> : null
+          props.isMobile ?
+            <span
+              className="drawer-switch-wrapper"
+              onClick={() => store.menuStatus.setProperty('drawer', true)}
+            >
+              <span className="inner-box">
+                <Icon type="swap" />
+              </span>
+            </span> : null
         }
-      </div>
-      <div className="header-action">
-        <MiniSearch />
-        <Notification/>
-        <Divider type="vertical" className="divider-vertical" />
-        <UserCenter />
-      </div>
-      <LoadingBar />
-    </Header>
+        <div className="header-search-wrapper">
+          {
+            !props.isMobile ?
+              <HeaderSearch
+                searchList={searchList}
+                searchRecord={[]}
+              /> : null
+          }
+        </div>
+        <div className="header-action">
+          <MiniSearch />
+          <Notification/>
+          <Divider type="vertical" className="divider-vertical" />
+          <UserCenter />
+        </div>
+        <LoadingBar />
+      </Header> : ''
   );
-};
+});
