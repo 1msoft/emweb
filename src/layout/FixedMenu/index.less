@@ -1,95 +1,3 @@
-div .kant-test {
-  left: 100px;
-  top: 30px;
-}
-
-.kant-side-block-qr {
-  position: absolute;
-  top: -20px;
-  right: 40px;
-}
-.kant-side-block-qr-wrapper img {
-  width: 100%; height: auto;
-}
-.kant-side-block-qr-wrapper {
-  width: 110px;
-  height: 110px;
-  padding: 20px 30px 20px 20px;
-}
-
-
-.kant-side-block-list{
-  border-radius: 22px;
-  background: #fff;
-}
-
-.kant-side-block-list div{
-  height: 44px;
-}
-
-.kant-fixedmenu-content .kant-side-block-list {
-  position: relative;
-}
-
-.kant-fixedmenu-content .kant-side-block-list-arrow {
-  width: 54px;
-  height: 54px;
-  border-radius: 50%;
-  box-shadow:0px 4px 14px 0px rgba(26,26,26,0.15);
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.kant-fixedmenu-content .kant-side-block-list-weixin {
-  width: 46px;
-  height: 0px;
-  border-radius: 23px;
-  display: block;
-  box-shadow:0px 4px 14px 0px rgba(26,26,26,0.15);
-  margin: 0 4px;
-  position: absolute;
-  top: 19px;
-  transition:top 0.6s, height 0.6s;
-  z-index: -1;
-  display: flex;
-  justify-content: center;
-}
-
-.kant-side-block-list:hover .kant-side-block-list-weixin {
-  top: -43px !important;
-  height: 90px !important;
-}
-
-.kant-fixedmenu-content .kant-changetop {
-  width: 46px;
-  height: 90px;
-  border-radius: 23px;
-  display: block;
-  box-shadow:0px 4px 14px 0px rgba(26,26,26,0.15);
-  margin: 0 4px;
-  position: absolute;
-  top: -43px;
-  transition:top 0.6s, height 0.6s;
-  z-index: -1;
-}
-
-.kant-topIcon {
-  display: inline-block;
-  width: 22px;
-  height: 22px;
-  margin-left: 12px;
-  margin-top: 13px;
-}
-
-.kant-fixedmenu-position {
-  top: auto;
-  left: auto;
-  right: 40px;
-  bottom: 40px;
-}
-
 .kant-top-icon {
   font-size: 30px !important;
 }
@@ -137,9 +45,10 @@ div .kant-test {
       display: inline-block;
       margin: auto;
       position: absolute;
-      left: 9px;
-      width: 38px;
-      height: 1.5px;
+      left: 11px;
+      width:31px;
+      height:1px;
+      background:rgba(238,238,238,1);
     }
 
     & .em-bottm {
@@ -173,11 +82,27 @@ div .kant-test {
       width: 46px;
       height: 49px;
       border-radius: 23px 23px 0px 0px;
+      background: #fff;
+      & svg {
+        height: 30px; width: 30px;
+        margin-top: 10px;
+      }
+      & .show-icon {
+        display: block;
+      }
+      & .hidden-icon {
+        display: none;
+      }
     }
 
     & .em-top {
       width: 46px;
-      height: 80px;
+      height: 55px;
+      display: flex;
+      align-items: center;
+        & span {
+          margin-top: -10px;
+        }
     }
 
   }
@@ -202,6 +127,6 @@ div .kant-test {
 }
 
 .em-bottm:hover .em-content-ul {
-  top: 45px;
+  top: 58px;
   height: 175px;
 }

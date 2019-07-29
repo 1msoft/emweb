@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FixedMenu } from '@1msoft/kant-ui';
 import './index.less';
-import { Icon } from 'antd';
 import { useStore } from '../../stores';
 
 const FinalyFixedMenu = () => {
@@ -19,15 +18,15 @@ const FinalyFixedMenu = () => {
   };
 
   const [isChange, setIsChange] = useState([
+    { icon: 'iconicon-zhuti1',
+      useIcon: 'iconicon-zhuti',
+      onClick: () => {
+        console.log('change');
+      }
+    },
     { icon: 'iconanniu-quanping',
       onClick: () => {
         onCloseRetract(store);
-      }
-    },
-    { icon: 'iconicon-zhuti',
-      useIcon: 'iconicon-zhuti1',
-      onClick: () => {
-        console.log('change');
       }
     },
     { icon: 'iconxiangshang',
@@ -38,24 +37,40 @@ const FinalyFixedMenu = () => {
   ]);
 
   const dealIcon = (arr) => {
-    let arr3 = {};
+    let newArr = {};
     if(arr.icon === 'iconanniu-zhanshi') {
-      arr3 = { icon: 'iconanniu-quanping',
+      newArr = { icon: 'iconanniu-quanping',
         onClick: () => {
           onCloseRetract(store);
         }
       };
     } else if (arr.icon === 'iconanniu-quanping') {
-      arr3 = { icon: 'iconanniu-zhanshi',
+      newArr = { icon: 'iconanniu-zhanshi',
         onClick: () => {
           onPenRetract(store);
         }
       };
     }
     else {
-      arr3 = arr;
+      newArr = arr;
     }
-    return arr3;
+    return newArr;
+  };
+
+  const colorIcon = (icon) => {
+    if (icon === 'iconicon-zhuti1' || icon === 'iconicon-zhuti') {
+      return (
+        <svg className="icon" aria-hidden="true">
+          <use xlinkHref={`#${icon}`}></use>
+        </svg>
+      );
+    } else {
+      return (
+        <span
+          className={` kant-top-icon iconfont ${icon}`}>
+        </span>
+      );
+    }
   };
 
   const FixedMenuDom = (props) => {
@@ -67,11 +82,11 @@ const FinalyFixedMenu = () => {
             onClick={
               () => {
                 let arr = isChange[2];
-                let arr3 = dealIcon(arr);
-                let arr2 = [...isChange];
-                arr2.splice(2, 1, arr3);
+                let newArr = dealIcon(arr);
+                let changeArr = [...isChange];
+                changeArr.splice(2, 1, newArr);
                 arr.onClick(props);
-                setIsChange(arr2);
+                setIsChange(changeArr);
               }
             }
           >
@@ -84,29 +99,23 @@ const FinalyFixedMenu = () => {
                 onClick={
                   () => {
                     let arr = isChange[0];
-                    let arr3 = dealIcon(arr);
-                    let arr2 = [...isChange];
-                    arr2.splice(0, 1);
-                    arr2.push(arr3);
                     arr.onClick(props);
-                    setIsChange(arr2);
                   }
                 }
               >
-                <span className={` kant-top-icon iconfont ${isChange[0].icon}`}>
-                </span>
+                {colorIcon(isChange[0].icon)}
               </li>
               <i className="em-green"></i>
               <li className="em-top"
                 onClick={
                   () => {
                     let arr = isChange[1];
-                    let arr3 = dealIcon(arr);
-                    let arr2 = [...isChange];
-                    arr2.splice(1, 1);
-                    arr2.push(arr3);
+                    let newArr = dealIcon(arr);
+                    let changeArr = [...isChange];
+                    changeArr.splice(1, 1);
+                    changeArr.push(newArr);
                     arr.onClick(props);
-                    setIsChange(arr2);
+                    setIsChange(changeArr);
                   }
                 }
               >
