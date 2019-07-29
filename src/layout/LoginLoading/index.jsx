@@ -14,14 +14,14 @@ const LoginLoading = () => {
   useEffect(() => {
     if (progressMark < 100) {
       setTimeout(() => {
-        let timead = progressMark + 1;
+        let timead = progressMark + 2;
         setProgress(timead);
-      }, 20);
+      }, 0);
     } else {
       setProgressBar(100);
       setTimeout(() => {
         setShow(false);
-      }, 500);
+      }, 300);
     }
   }, [progressMark]);
   return (
