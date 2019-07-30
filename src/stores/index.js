@@ -7,6 +7,7 @@ import { observable } from 'mobx';
 import Request from './request';
 import AppFrame from './AppFrame';
 import MenuStatus from './menuStatus';
+import ThemeModalStatus from './themeModalStatus';
 
 /**
  * 全局 store
@@ -15,6 +16,7 @@ class Store {
   @observable request = new Request();
   @observable appFrame = new AppFrame();
   @observable menuStatus = new MenuStatus();
+  @observable themeModalStatus = new ThemeModalStatus();
 }
 
 const storeContext = React.createContext(null);

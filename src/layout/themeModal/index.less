@@ -1,0 +1,39 @@
+@import '../../assets/styles/vars.less';
+
+.theme-item-outer-layer {
+    visibility: hidden;
+    width: 40px;
+    height: 40px;
+    border-radius:8px;
+    margin-right: 12px;
+    cursor: pointer;
+}
+
+.theme-item-outer-layer:hover {
+    visibility: visible;
+}
+
+.theme-item-outer-layer-selected {
+    .theme-item-outer-layer;
+    visibility: visible;
+}
+
+.theme-item-inner-layer {
+    visibility: visible;
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    border-radius:8px;
+    margin:4px;
+}
+
+.theme-item-icon {
+    visibility: visible;
+    position: absolute;
+    color: #fff;
+    margin: 10px;
+}
+
+.theme-item-panel {
+    display: flex;
+}

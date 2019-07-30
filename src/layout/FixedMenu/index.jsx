@@ -22,7 +22,7 @@ const FinalyFixedMenu = () => {
     { icon: 'iconicon-zhuti1',
       useIcon: 'iconicon-zhuti',
       onClick: () => {
-        console.log('change');
+        store.themeModalStatus.open();
       }
     },
     { icon: 'iconanniu-quanping',

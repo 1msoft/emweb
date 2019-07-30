@@ -12,6 +12,7 @@ import SideMenu from './SideMenu';
 import Content from './Content';
 import FixedMenu from './FixedMenu';
 import LoginLoading from './LoginLoading';
+import ThemeModal from './themeModal';
 
 import Store from '../stores';
 import { useStore } from '@stores/';
@@ -182,6 +183,8 @@ export default () => {
             <SideMenuContent isMobile={isMobile} />
 
             <LoginLoading />
+
+            <ThemeModal/>
 
             <FixedMenu />
 
