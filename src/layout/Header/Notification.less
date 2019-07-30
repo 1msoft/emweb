@@ -54,12 +54,19 @@
           .ant-tabs-nav {
             height: 60px;
             .ant-tabs-tab {
-              padding-top: 16px;
-              padding-bottom: 16px;
               color: #999999FF;
+              height: 3.75rem;
+              line-height: 3.75rem;
+              padding-top: 2px;
+              padding-bottom: 0;
 
               .ant-badge {
+                margin-left: -6px;
                 font-size: 20px;
+              }
+
+              &:hover:not(.ant-tabs-tab-active)  {
+                color: fade(@primary-color, 100%);
               }
             }
 
@@ -104,6 +111,14 @@
 
       & .notification-read {
         color: #999999FF;
+
+        &:hover {
+          color: rgba(51,51,51,1);
+
+          & + .notification-time {
+            color: rgba(51,51,51,1);
+          }
+        }
       }
 
       & .notification-time {

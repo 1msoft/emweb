@@ -7,6 +7,21 @@
   justify-content: center;
   align-items: center;
 
+  &:hover {
+    .icon-allow {
+      color: @primary-color;
+      transform: rotate(90deg);
+    }
+
+    & .user-img {
+      .background-color(#f5f7ff);
+
+      & img {
+        .square(40px, 40px);
+      }
+    }
+  }
+
   & .user-img {
     display: inline-block;
     .circle(54px, 54px, 50%, 54px);
@@ -26,14 +41,6 @@
     }
   }
 
-  & .user-img:hover {
-    .background-color(#f5f7ff);
-
-    & img {
-      .square(40px, 40px);
-    }
-  }
-
   & .user-name {
     display: inline-block;
     font-size: 22px;
@@ -48,15 +55,9 @@
   & .icon-allow {
     font-size: 16px !important;
     color: #B3B3B3;
+    cursor: pointer;
     transform: rotate(0);
     transition: all 0.3s;
-  }
-}
-
-.user-drop-down:hover {
-  .icon-allow {
-    color: @primary-color;
-    transform: rotate(90deg);
   }
 }
 
@@ -81,6 +82,14 @@
       padding-left: 20px;
       margin: 0;
 
+      &:hover {
+        color: @primary-color;
+        background-color: fade(@primary-color, 8%);
+        & .menu-item-icon {
+          color: @primary-color;
+        }
+      }
+
       & .menu-item-icon {
         margin-right: 14px;
         display: inline-block;
@@ -94,14 +103,6 @@
         font-size: 18px;
         font-family: PingFang-SC-Regular;
         font-weight: 400;
-      }
-    }
-
-    & .menu-item:hover {
-      color: @primary-color;
-      background-color: fade(@primary-color, 8%);
-      & .menu-item-icon {
-        color: @primary-color;
       }
     }
 
