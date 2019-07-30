@@ -113,6 +113,7 @@ let QueryBlock = (props) => {
           </Button>
           <Button
             shape="round"
+            type="default"
             className={less["btn-reset"]}
             onClick={state.onReset}
           >
