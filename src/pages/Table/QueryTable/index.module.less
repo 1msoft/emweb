@@ -24,7 +24,7 @@
 }
 
 .btn-reset:hover {
-  background: transparent !important;
+  // background: transparent !important;
 }
 
 .btn-search:hover {
@@ -32,11 +32,12 @@
   background: transparent;
 }
 
-.btn-icon-down {
+.btn-icon-down:hover {
   cursor: pointer;
+  color: @link-color;
 }
 
-.btn-icon-up {
+.btn-icon-up:hover {
   &:extend(.btn-icon-down);
   color: @link-color;
 }
