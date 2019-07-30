@@ -1,69 +1,147 @@
 import React, { useState, useEffect } from 'react';
 import { FixedMenu } from '@1msoft/kant-ui';
 import './index.less';
-import { Icon } from 'antd';
 import { useStore } from '../../stores';
 
 const FinalyFixedMenu = () => {
+
   const store = useStore();
-  const [isChange, setIsChange] = useState(false);
-  const [isRetract, setIsRetract] = useState(false);
 
-  const iconDom = (isChange ,mark) => {
-    //点击后变化iconanniu-zhanshi  //初始iconanniu-quanping //箭头iconjiantou
-    if (mark === 'bottom') {
-      let icon = !isChange ? 'iconxiangshang'
-        : (!isRetract ? 'iconanniu-quanping' : 'iconanniu-zhanshi');
-      return icon ?
-        <span className={` kant-bottom-icon iconfont ${icon}`}></span> : null;
-    } else if (mark === 'top') {
-      let icon = !isChange ? (!isRetract ? 'iconanniu-quanping' : 'iconanniu-zhanshi')
-        : 'iconxiangshang';
-      return icon ?
-        <span className={` kant-top-icon iconfont ${icon}`}></span> : null;
+  const onCloseRetract = (store) => {
+    console.log('关闭');
+    store.menuStatus.setCollapsed();
+  };
+
+  const onPenRetract = (store) => {
+    console.log('打开');
+    store.menuStatus.clearCollapsed();
+  };
+
+  const [isShow, setIsShow] = useState(false);
+  const [isChange, setIsChange] = useState([
+    { icon: 'iconicon-zhuti1',
+      useIcon: 'iconicon-zhuti',
+      onClick: () => {
+        console.log('change');
+      }
+    },
+    { icon: 'iconanniu-quanping',
+      onClick: () => {
+        onCloseRetract(store);
+      }
+    },
+    { icon: 'iconxiangshang',
+      onClick: (props) => {
+        props.scrollToTop();
+      }
     }
+  ]);
+
+  const dealIcon = (arr) => {
+    let newArr = {};
+    if(arr.icon === 'iconanniu-zhanshi') {
+      newArr = { icon: 'iconanniu-quanping',
+        onClick: () => {
+          onCloseRetract(store);
+        }
+      };
+    } else if (arr.icon === 'iconanniu-quanping') {
+      newArr = { icon: 'iconanniu-zhanshi',
+        onClick: () => {
+          onPenRetract(store);
+        }
+      };
+    }
+    else {
+      newArr = arr;
+    }
+    return newArr;
   };
 
-  const onClickHead = (store) => {
-    !isChange ? store.menuStatus.setCollapsed() : store.menuStatus.clearCollapsed();
-    setIsRetract(!isRetract);
-  };
-
-  const changeCollapsed = (store) => {
-    setIsChange(!isChange);
-    onClickHead(store);
+  const colorIcon = (icon) => {
+    if (icon === 'iconicon-zhuti1' || icon === 'iconicon-zhuti') {
+      return (
+        <svg className={`icon hover-icon`} aria-hidden="true">
+          <use xlinkHref={`#${icon}`}></use>
+        </svg>
+      );
+    } else {
+      return (
+        <span
+          className={` kant-top-icon iconfont ${icon}`}>
+        </span>
+      );
+    }
   };
 
   const FixedMenuDom = (props) => {
     return (
-      <div className={`kant-side-block-list`}>
-        <div
-          onClick={(e) => {
-            e.stopPropagation();
-            isChange ? props.scrollToTop() : changeCollapsed(store);
-          }}
-          className={
-            `${'kant-side-block-list-weixin'}
-            kant-cp `}>
-          {iconDom(isChange, 'top')}
-        </div>
-        <div
-          onClick={(e) => {
-            e.stopPropagation();
-            !isChange ? props.scrollToTop() : changeCollapsed(store);
-          }}
-          className={
-            `${'kant-side-block-list-arrow'}
-            kant-cp`}>
-          {iconDom(isChange, 'bottom')}
+      <div className="em-content">
+        <div className="em-bottm"
+        >
+          <div className="em-bottm-content"
+            onClick={
+              () => {
+                let arr = isChange[2];
+                let newArr = dealIcon(arr);
+                let changeArr = [...isChange];
+                changeArr.splice(2, 1, newArr);
+                arr.onClick(props);
+                setIsChange(changeArr);
+              }
+            }
+          >
+            <span className={` kant-bottom-icon iconfont ${isChange[2].icon}`}>
+            </span>
+          </div>
+          <div className="em-overhide-ul">
+            <ul className="em-content-ul">
+              <li className="em-middle"
+                onClick={
+                  () => {
+                    let arr = isChange[0];
+                    arr.onClick(props);
+                  }
+                }
+              >
+                {colorIcon(isChange[0].icon)}
+                <svg className={`icon hover-useIcon`} aria-hidden="true">
+                  <use xlinkHref={`#${isChange[0].useIcon}`}></use>
+                </svg>
+              </li>
+              <i className="em-green"></i>
+              <li className="em-top"
+                onClick={
+                  () => {
+                    let arr = isChange[1];
+                    let newArr = dealIcon(arr);
+                    let changeArr = [...isChange];
+                    changeArr.splice(1, 1);
+                    changeArr.push(newArr);
+                    arr.onClick(props);
+                    setIsChange(changeArr);
+                  }
+                }
+              >
+                <span
+                  className={` kant-top-icon iconfont ${isChange[1].icon}`}>
+                </span>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     );
   };
+
+  useEffect(() => {
+    FixedMenuDom;
+  }, [isChange]);
+
   return (
     <FixedMenu
-      className="kant-fixedmenu-position"
-      visibilityHeight={300}
+      className="em-fixed-menu"
+      visibilityHeight={0}
       display="always"
       speed={20}
     >
