@@ -82,10 +82,14 @@ const FinalyFixedMenu = () => {
           <div className="em-bottm-content"
             onClick={
               () => {
+                let toTopData = isChange[1];
                 let arr = isChange[2];
                 let newArr = dealIcon(arr);
                 let changeArr = [...isChange];
-                changeArr.splice(2, 1, newArr);
+                if (arr.icon === 'iconanniu-zhanshi' || arr.icon === 'iconanniu-quanping') {
+                  changeArr.splice(1, 1, newArr);
+                  changeArr.splice(2, 1, toTopData);
+                }
                 arr.onClick(props);
                 setIsChange(changeArr);
               }
