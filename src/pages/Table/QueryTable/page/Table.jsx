@@ -72,6 +72,7 @@ const Opeartions = (props) => useObserver(() => {
       </Button>
       <Button
         shape="round"
+        type="default"
         disabled={!store.selectedRow.length}
         onClick={() => {}}
         style={{ marginRight: '16px' }}
