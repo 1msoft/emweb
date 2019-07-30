@@ -17,6 +17,7 @@ const FinalyFixedMenu = () => {
     store.menuStatus.clearCollapsed();
   };
 
+  const [isShow, setIsShow] = useState(false);
   const [isChange, setIsChange] = useState([
     { icon: 'iconicon-zhuti1',
       useIcon: 'iconicon-zhuti',
@@ -60,7 +61,7 @@ const FinalyFixedMenu = () => {
   const colorIcon = (icon) => {
     if (icon === 'iconicon-zhuti1' || icon === 'iconicon-zhuti') {
       return (
-        <svg className="icon" aria-hidden="true">
+        <svg className={`icon hover-icon`} aria-hidden="true">
           <use xlinkHref={`#${icon}`}></use>
         </svg>
       );
@@ -104,6 +105,9 @@ const FinalyFixedMenu = () => {
                 }
               >
                 {colorIcon(isChange[0].icon)}
+                <svg className={`icon hover-useIcon`} aria-hidden="true">
+                  <use xlinkHref={`#${isChange[0].useIcon}`}></use>
+                </svg>
               </li>
               <i className="em-green"></i>
               <li className="em-top"

@@ -87,11 +87,14 @@
         height: 30px; width: 30px;
         margin-top: 10px;
       }
-      & .show-icon {
-        display: block;
+      & .hover-icon:hover {
+        opacity: 0;
       }
-      & .hidden-icon {
-        display: none;
+      & .hover-icon {
+        position: absolute;
+      }
+      & .hover-useIcon:hover {
+        opacity: 1;
       }
     }
 
