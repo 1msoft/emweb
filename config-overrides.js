@@ -5,12 +5,15 @@ const {
   addLessLoader,
   addWebpackAlias,
   addPostcssPlugins,
+  addWebpackPlugin,
 } = require('customize-cra');
 
 const modifyVars = require('./src/config/modifyVars');
 const path = require('path');
 const autoprefixer = require('autoprefixer');
 const px2rem = require('postcss-px2rem');
+const KantuiThemeWebpackPlugin = require('@1msoft/kantui-theme-webpack-plugin');
+
 
 // 路径别名配置
 const alias = {
@@ -31,6 +34,16 @@ const postcssPlugins = [
   px2rem({ remUnit: 16 }),
 ];
 
+const themeOption = { 
+  theme: require("./src/config/theme"),
+  antdDir: "./node_modules/antd/lib",
+  kantDir: "./node_modules/@1msoft/kant-ui/lib",
+  customLessDir: "./src",
+  colorOnly: true,
+};
+
+const themePlugin = new KantuiThemeWebpackPlugin(themeOption);
+
 module.exports = override(
   addLessLoader({
     modifyVars,
@@ -40,4 +53,5 @@ module.exports = override(
   useEslintRc(),
   addWebpackAlias(alias),
   addPostcssPlugins(postcssPlugins),
+  addWebpackPlugin(themePlugin),
 );
