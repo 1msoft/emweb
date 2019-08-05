@@ -59,7 +59,7 @@ const SelectForm = (props) => {
     span: 24,
   };
   return (
-    <div style={{ width: '50%', margin: '0 auto' }}>
+    <div className="basis-form">
       {renderFormItems(state.dataSource, props, props.config)}
     </div>
   );

@@ -7,14 +7,14 @@ const getGrid = FormItem.getGrid;
 const options = [
   { label: '公开', value: '1' },
   { label: '部分公开', value: '2' },
-  { label: '不公开', value: '3' },
+  { label: '不公开', value: '3', disabled: true },
   { label: '部分公开', value: '4' },
   { label: '部分公开', value: '5' }
 ];
 
 const CheckboxForm = (props) => {
   return (
-    <div style={{ width: '50%', margin: '0 auto' }}>
+    <div className="basis-form">
       <FormLayout
         colon={true}>
         <FormItem
@@ -27,7 +27,7 @@ const CheckboxForm = (props) => {
               <Radio value={1}>公开</Radio>
               <Radio value={2}>部分公开</Radio>
               <Radio value={3}>不公开</Radio>
-              <Radio value={4}>不公开</Radio>
+              <Radio value={4} disabled>不公开</Radio>
             </Radio.Group>
           </div>
           <div>
