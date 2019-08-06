@@ -31,7 +31,7 @@ const useHookState = (props) => {
 const InputNumberForm = (props) => {
   const state = useHookState(props);
   return (
-    <div className="input-number-form" style={{ width: '50%', margin: '0 auto' }}>
+    <div className="input-number-form basis-form">
       {renderFormItems(state.dataSource, props, props.config)}
     </div>
   );

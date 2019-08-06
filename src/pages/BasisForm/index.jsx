@@ -60,7 +60,7 @@ let BasisForm = (props) => {
         title="基础表单"
         intro="表单页用于向用户收集或验证信息，基础表单常见于数据项较少的表单场景。" />
       <Skeleton dataSource={state.dataSource} />
-      <div style={{ textAlign: 'center' }}>
+      <div className="basis-form" style={{ textAlign: "center" }}>
         <Button
           shape="round"
           type="primary"
