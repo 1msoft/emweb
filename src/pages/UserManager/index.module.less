@@ -1,0 +1,43 @@
+.header {
+  padding-bottom: 40px;
+}
+
+.header-text {
+  color: @heading-color;
+  line-height: 1;
+  font-size: 24px;
+}
+
+.header-icon {
+  color: @primary-color;
+  font-weight: 700;
+  padding-right: 10px;
+  font-size: 20px !important;
+}
+
+.btn-search {
+  margin-right: 10px;
+}
+
+.btn-reset {
+  margin-right: 10px;
+}
+
+.btn-reset:hover {
+  // background: transparent !important;
+}
+
+.btn-search:hover {
+  border-style: none;
+  background: transparent;
+}
+
+.btn-icon-down:hover {
+  cursor: pointer;
+  color: @link-color;
+}
+
+.btn-icon-up:hover {
+  &:extend(.btn-icon-down);
+  color: @link-color;
+}

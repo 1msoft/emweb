@@ -4,7 +4,8 @@ export { default as Demo } from './Demo';
 export { default as LoginRegister } from './LoginRegister';
 
 export { default as Example } from './Example';
-export { default as QueryTable } from './Table/QueryTable';
-export { default as BasisForm } from './BasisForm';
+
+export { default as UserManage } from './UserManager';
+export { default as SystemManage } from './SystemManage';
 
 export { default as NotFound } from './Error/NotFound';

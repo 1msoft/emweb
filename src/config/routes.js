@@ -19,9 +19,15 @@ export default {
     nav: true, exact: false,
   },
 
-  BasisForm: {
-    text: '基础表单', path: '/basis-form', parent: 'Index',
-    component: 'BasisForm', icon: "iconMail-xiaoxi",
+  UserManage: {
+    text: '用户管理', path: '/user-manage', parent: 'Index',
+    component: 'UserManage', icon: "iconMail-xiaoxi",
+    nav: true, exact: false,
+  },
+
+  SystemManage: {
+    text: '系统管理', path: '/system-manage', parent: 'Index',
+    component: 'SystemManage', icon: "iconMail-xiaoxi",
     nav: true, exact: false,
   },
 
@@ -31,9 +37,4 @@ export default {
     nav: false, exact: true,
   },
 
-  QueryTable: {
-    text: '查询表格', path: '/query-table', parent: 'Index',
-    component: 'QueryTable', icon: "iconMail-xiaoxi",
-    nav: true, exact: false,
-  },
 };

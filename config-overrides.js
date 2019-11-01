@@ -34,7 +34,7 @@ const postcssPlugins = [
   px2rem({ remUnit: 16 }),
 ];
 
-const themeOption = { 
+const themeOption = {
   theme: require("./src/config/theme"),
   antdDir: "./node_modules/antd/lib",
   kantDir: "./node_modules/@1msoft/kant-ui/lib",
@@ -53,5 +53,5 @@ module.exports = override(
   useEslintRc(),
   addWebpackAlias(alias),
   addPostcssPlugins(postcssPlugins),
-  addWebpackPlugin(themePlugin),
+  // addWebpackPlugin(themePlugin),
 );

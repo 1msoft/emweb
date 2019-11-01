@@ -2,18 +2,18 @@ import React, {
   useState,
   useMemo,
   useCallback,
+  useEffect,
 } from 'react';
 import { Icon } from "antd";
 import {
   Form,
-  InputNumber,
   Input,
   Button,
-  DatePicker,
-  Select,
 } from "@1msoft/kant-ui";
 import useMedia from 'react-media-hook2';
 import less from '../index.module.less';
+import { useStore } from '../store';
+import { toJS } from 'mobx';
 
 const { FormLayout, FormItem } = Form;
 
@@ -29,13 +29,24 @@ const span = {
   lg: 6,
 };
 
-const useStateHook = () => {
+const useStateHook = (props, store) => {
 
   const [isSingle, setIsSingle] = useState(true);
 
-  const onSearch = () => {};
+  const onSearch = () => {
+    const values = props.form.getFieldsValue();
+    for (let v in values) {
+      if (values[v] === undefined) {
+        delete values[v];
+      }
+    }
+    store.setParams(values);
+    store.getUsers();
+  };
 
-  const onReset = () => {};
+  const onReset = () => {
+    props.form.resetFields();
+  };
 
   const openIconType = useMemo(() => (isSingle ? 'down' : 'up'), [isSingle]);
 
@@ -49,50 +60,29 @@ const useStateHook = () => {
       maxWidth: 991,
     }
   })[0];
+
+  useEffect(() => {
+    onSearch();
+  }, []);
+
   return { onSearch, onReset, isSingle, openIconType, onToggle, screenMd };
 };
 
-const AdvancedSearch = (props) => {
-  const currRow = (props.isSingle || props.screenMd) ? 1 : SEARCH_ROW_NUM;
-  return (
-    [
-      <FormItem key={1} row={currRow} span={span} label="地址">
-        <Input placeholder="地址" />
-      </FormItem>,
-      <FormItem key={2} row={currRow} span={span} label="创建人">
-        <Input placeholder="创建人" />
-      </FormItem>,
-      <FormItem key={3} row={currRow} span={span} label="日期">
-        <DatePicker style={{ width: 'calc(50% - 9.5px)' }}/>
-      </FormItem>
-    ]
-  );
-};
-
 let QueryBlock = (props) => {
-  const state = useStateHook(props);
-  const selectOps = [
-    { title: '红色', value: 'red' },
-    { title: '橙色', value: 'orange' },
-    { title: '黄色', value: 'yellow' },
-  ];
+  const state = useStateHook(props, useStore());
+
   return (
     <div className="container-query-block">
       <FormLayout colon={true} gutter={0}>
-        <FormItem row={1} span={span} label="颜色">
-          <Select
-            data={selectOps}
-            placeholder="请选择颜色"
-            style={{ width: '100%' }}
-          />
+        <FormItem row={1} span={span} label="用户名">
+          {props.form.getFieldDecorator("account")(<Input/>)}
         </FormItem>
-        <FormItem row={1} span={span} label="字典">
-          <Input placeholder="字典" />
+        <FormItem row={1} span={span} label="邮箱">
+          {props.form.getFieldDecorator("email")(<Input/>)}
         </FormItem>
-        <FormItem row={1} span={span} label="年龄">
-          <InputNumber style={{ width: '100%' }} placeholder="年龄" />
+        <FormItem row={1} span={span} label="手机">
+          {props.form.getFieldDecorator("phone")(<Input/>)}
         </FormItem>
-        {!state.isSingle && AdvancedSearch(state)}
         <FormItem
           span={{
             xs: 24,
@@ -101,7 +91,7 @@ let QueryBlock = (props) => {
             lg: 6,
           }}
           wrapperAlign="right"
-          row={state.isSingle ? 1 : 2}
+          row={state.isSingle ? 1 : 1}
         >
           <Button
             shape="round"
@@ -130,4 +120,5 @@ let QueryBlock = (props) => {
   );
 };
 
+QueryBlock = Form.create({})(QueryBlock);
 export default QueryBlock;
